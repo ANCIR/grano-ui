@@ -4,6 +4,7 @@ Grano User Interface
 ``grano`` is a toolkit for building journalistic social network analysis applications on the web. This package contains an administrative user interface based on `AngularJS <http://angularjs.org/>`_. The interface is intended for managing entities 
 and analysis for advanced users, not as a general-purpose interface. 
 
+
 Installation
 ------------
 
@@ -15,4 +16,13 @@ You'll also need to install these external (non-Python dependencies):
 * `UglifyJS <https://github.com/mishoo/UglifyJS/>`_ for JS minification.
 * `Less <http://lesscss.org/>`_ for compiling the CSS resources.
 
+
+Configuration
+-------------
+
+By default, ``grano-ui`` will deploy itself to the web root of any running instance of ``grano`` in the same virtual 
+environment. You can change that path by setting a ``UI_PREFIX`` in the grano settings file, starting with a forward
+slash. 
+
+Further, asset compilation and minification can be enabled by setting the ``ASSETS_DEBUG`` variable to ``False``.
 
