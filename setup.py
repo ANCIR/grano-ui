@@ -18,10 +18,15 @@ setup(
     license='MIT',
     packages=find_packages(exclude=['ez_setup', 'examples', 'tests']),
     namespace_packages=[],
-    include_package_data=False,
+    include_package_data=True,
     zip_safe=False,
     install_requires=[
         'grano>=0.3.1'
     ],
+    entry_points={
+        'grano.startup': [
+            'ui = grano.ui.base:Installer'
+        ]
+    },
     tests_require=[]
 )
