@@ -13,7 +13,6 @@ class Installer(Startup):
 
     def configure(self, manager):
         manager.add_command("assets", ManageAssets(assets))
-        print "HELLO"
         app.register_blueprint(blueprint)
         
 
