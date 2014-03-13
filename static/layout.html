@@ -18,6 +18,7 @@
   <link rel="shortcut icon" href="http://assets.pudo.org/img/favicon.ico" type="image/x-icon" />
 </head>
 <body ng-controller="AppCtrl">
+  {% raw %}
   <div id="page">
     <nav class="navbar navbar-default" role="navigation" id="menu">
       <div class="navbar-header">
@@ -27,7 +28,7 @@
           <span class="icon-bar"></span>
           <span class="icon-bar"></span>
         </button>
-        <a id="appName" class="navbar-brand" href="#/">{{app_name}}</a>
+        <a id="appName" class="navbar-brand" href="#/">{{config.APP_NAME}}</a>
       </div>
 
       <div class="collapse navbar-collapse navbar-ex1-collapse navbar-right">
@@ -36,16 +37,16 @@
             <a ng-click="showAccount()"><i class="fa fa-cogs"></i> Profile</a>
           </li>
           <li ng-hide="session.logged_in">
-            <a href="/api/1/sessions/login/github?next_url={{ui_root}}"><i class="fa fa-github"></i> Sign in via GitHub</a>
+            <a href="/api/1/sessions/login/github?next_url={{config.UI_ROOT}}"><i class="fa fa-github"></i> Sign in via GitHub</a>
           </li>
           <li ng-hide="session.logged_in">
-            <a href="/api/1/sessions/login/twitter?next_url={{ui_root}}"><i class="fa fa-twitter"></i> Sign in via Twitter</a>
+            <a href="/api/1/sessions/login/twitter?next_url={{config.UI_ROOT}}"><i class="fa fa-twitter"></i> Sign in via Twitter</a>
           </li>
           <li ng-hide="session.logged_in">
-            <a href="/api/1/sessions/login/facebook?next_url={{ui_root}}"><i class="fa fa-facebook"></i> Sign in via Facebook</a>
+            <a href="/api/1/sessions/login/facebook?next_url={{config.UI_ROOT}}"><i class="fa fa-facebook"></i> Sign in via Facebook</a>
           </li>
           <li ng-show="session.logged_in">
-            <a href="/api/1/sessions/logout?next_url={{ui_root}}"><i class="fa fa-sign-out"></i> Sign Out</a>
+            <a href="/api/1/sessions/logout?next_url={{config.UI_ROOT}}"><i class="fa fa-sign-out"></i> Sign Out</a>
           </li>
         </ul>
       </div>
@@ -61,7 +62,7 @@
         <div class="span-12 inner">
           <strong>grano: facebook, for terrorists</strong>
           &middot;
-          rev {{app_version}}
+          rev {{config.APP_VERSION}}
           &middot;
           <a href="https://github.com/pudo/grano">source code</a>
           &middot;
@@ -70,6 +71,7 @@
       </div>
     </div>
   </footer>
+  {% endraw %}
 
   {% for path, tmpl in angular_templates %}
     <script id="{{path}}" type="text/ng-template">{{tmpl|safe}}</script>
@@ -80,12 +82,16 @@
     "vendor/bootstrap/js/collapse.js",
   -->
 
-  {% assets filters="jsmin", output="prod/app.js",
+    {% assets filters="jsmin", output="prod/vendor.js",
         "ui/vendor/jquery/dist/jquery.js",    
         "ui/vendor/angular/angular.js",
         "ui/vendor/angular-bootstrap/ui-bootstrap-tpls.js",
-        "ui/vendor/angular-route/angular-route.js",
-
+        "ui/vendor/angular-route/angular-route.js"
+         %}
+      <script type="text/javascript" src="{{ ASSET_URL }}"></script>
+  {% endassets %}
+  <script type="text/javascript" src="{{url_for('ui.config')}}"></script>
+  {% assets filters="jsmin", output="prod/app.js",
         "ui/js/app.js",
         "ui/js/validation.js",
         "ui/js/services/core.js",

@@ -29,6 +29,15 @@ def angular_templates():
 
 @blueprint.route('/')
 def index(**kw):
-    return render_template('layout.html', ui_root=UI_PREFIX,
-        angular_templates=angular_templates(),
-        app_name=app_name, app_version=__version__)
+    return render_template('layout.html', 
+        angular_templates=angular_templates())
+
+
+@blueprint.route('/config.js')
+def config(**kw):
+    api_root = app.config.get('API_ROOT') or url_for('base_api.status')
+    res = render_template('js/config.js', ui_root=UI_PREFIX,
+        api_root=api_root, app_name=app_name, app_version=__version__)
+    res = make_response(res)
+    res.headers['Content-Type'] = 'application/javascript'
+    return res

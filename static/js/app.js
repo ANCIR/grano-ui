@@ -1,4 +1,4 @@
-var grano = angular.module('grano', ['ngRoute', 'ui.bootstrap']);
+var grano = angular.module('grano', ['ngRoute', 'ui.bootstrap', 'grano.config']);
 
 grano.config(['$routeProvider', '$locationProvider',
     function($routeProvider, $locationProvider) {
