@@ -18,19 +18,16 @@ blueprint = Blueprint('ui', __name__, template_folder=STATIC_PATH,
 
 
 def angular_templates():
-    if app.config.get('ASSETS_DEBUG'):
-        return
-    partials_dir = os.path.join(blueprint.static_folder, 'templates')
+    partials_dir = os.path.join(STATIC_PATH, 'templates')
     for (root, dirs, files) in os.walk(partials_dir):
         for file_name in files:
             file_path = os.path.join(root, file_name)
             with open(file_path, 'rb') as fh:
                 file_name = file_path[len(partials_dir)+1:]
-                yield ('/static/templates/%s' % file_name,
-                       fh.read().decode('utf-8'))
+                yield (file_name, fh.read().decode('utf-8'))
 
 
-@blueprint.route(UI_PREFIX)
+@blueprint.route('/')
 def index(**kw):
     return render_template('layout.html', ui_root=UI_PREFIX,
         angular_templates=angular_templates(),

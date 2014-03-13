@@ -4,12 +4,12 @@ grano.config(['$routeProvider', '$locationProvider',
     function($routeProvider, $locationProvider) {
 
   $routeProvider.when('/', {
-    templateUrl: '/static/templates/home.html',
+    templateUrl: 'home.html',
     controller: HomeCtrl
   });
 
   $routeProvider.when('/p/:slug', {
-    templateUrl: '/static/templates/projects/view.html',
+    templateUrl: 'projects/view.html',
     controller: ProjectsViewCtrl
   });
 

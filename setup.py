@@ -21,7 +21,10 @@ setup(
     include_package_data=True,
     zip_safe=False,
     install_requires=[
-        'grano>=0.3.1'
+        'grano>=0.3.1',
+        'cssmin==0.1.4',
+        'Flask-Assets==0.9',
+        'jsmin>=2.0.9'
     ],
     entry_points={
         'grano.startup': [

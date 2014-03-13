@@ -8,7 +8,7 @@
   <title>grano</title>
   <meta name="description" content="A web-based framework for the storage, analysis and presentation of social network information.">
 
-  {% assets filters="less,cssmin,cssrewrite", output="uigen/grano.style.css",
+  {% assets filters="less,cssmin,cssrewrite", output="prod/style.css",
       "ui/vendor/bootstrap/less/bootstrap.less",
       "ui/style/style.less" %}
     <link type="text/css" href="{{ ASSET_URL }}" rel="stylesheet">
@@ -80,7 +80,7 @@
     "vendor/bootstrap/js/collapse.js",
   -->
 
-  {% assets filters="uglifyjs", output="uigen/grano.app.js",
+  {% assets filters="jsmin", output="prod/app.js",
         "ui/vendor/jquery/dist/jquery.js",    
         "ui/vendor/angular/angular.js",
         "ui/vendor/angular-bootstrap/ui-bootstrap-tpls.js",
