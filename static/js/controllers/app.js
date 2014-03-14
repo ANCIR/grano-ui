@@ -10,7 +10,7 @@ function AppCtrl($scope, $window, $routeParams, $location, $modal, session, core
 
     $scope.showAccount = function() {
         var d = $modal.open({
-            templateUrl: '/static/templates/account.html',
+            templateUrl: 'account.html',
             controller: 'AccountCtrl'
         });
     };

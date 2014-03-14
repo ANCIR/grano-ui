@@ -11,7 +11,7 @@ function HomeCtrl($scope, $location, $http, $modal) {
 
     $scope.newProject = function(){
         var d = $modal.open({
-            templateUrl: '/static/templates/projects/new.html',
+            templateUrl: 'projects/new.html',
             controller: 'ProjectsNewCtrl'
         });
     };
