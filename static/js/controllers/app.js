@@ -11,7 +11,8 @@ function AppCtrl($scope, $window, $routeParams, $location, $modal, session, core
     $scope.showAccount = function() {
         var d = $modal.open({
             templateUrl: 'account.html',
-            controller: 'AccountCtrl'
+            controller: 'AccountCtrl',
+            backdrop: false
         });
     };
 }
