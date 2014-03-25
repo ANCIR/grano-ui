@@ -1,0 +1,44 @@
+
+<div class="row breadcrumbs">
+    <div class="col-md-2">
+        <span class="back-button" ng-show="project">
+            <i class="fa fa-chevron-circle-left"></i> <a href="#/">{{project.slug}}</a>
+        </span>
+    </div>
+    <div class="col-md-10">
+        <strong ng-hide="project">Welcome to {{config.APP_NAME}}</strong>
+        <span ng-show="project">
+            <span class="fact-block">
+                Project name: <strong>{{project.label}}</strong>
+            </span>
+            <span class="fact-block">
+                Entities: <strong>{{project.entities_count}}</strong>
+            </span>
+            <span class="fact-block">
+                Relations: <strong>{{project.relations_count}}</strong>
+            </span>
+        </span>
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-md-2">
+        <ul class="nav nav-pills nav-stacked">
+            <li ng-show="project" class="nav-section"><a href="#/p/{{project.slug}}">Entities</a></li>
+            <li ng-show="project" class="nav-section"><a href="#/p/{{project.slug}}">Relations</a></li>
+            <li ng-show="project" class="nav-section">&nbsp;</li>
+            <li ng-show="project"><a href="#/p/{{project.slug}}">Schemata</a></li>
+            <li ng-show="project"><a href="#/p/{{project.slug}}">Permissions</a></li>
+            <li ng-show="project"><a href="#/p/{{project.slug}}">Settings</a></li>
+            <li ng-show="project"><a href="#/p/{{project.slug}}">Data export</a></li>
+            <li ng-show="project"><a href="#/p/{{project.slug}}">Data import</a></li>
+            <li ng-show="project" class="nav-section">&nbsp;</li>
+            <li><a href="http://docs.grano.cc">Documentation</a></li>
+            <li><a href="https://github.com/pudo/grano/issues">Report an issue</a></li>
+        </ul>
+    </div>
+    <div class="col-md-10" ng-transclude>
+    </div>
+</div>
+
+
