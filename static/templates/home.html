@@ -1,12 +1,43 @@
 
+<div class="row breadcrumbs">
+    <div class="col-md-2">
+        &nbsp;
+    </div>
+    <div class="col-md-10">
+        <strong>Welcome to grano</strong>
+    </div>
+</div>
+
 <div class="row">
-    <div class="span-12">
-        <h1 class="page-header">Welcome to grano</h1>
-        <div class="list-group">
-            <a ng-repeat="project in projects.results" href="#/p/{{project.slug}}" class="list-group-item">
-                {{project.label}}
-            </a>
-        </div>
+    <div class="col-md-2">
+        <ul class="nav nav-pills nav-stacked">
+            <li><a href="#">Projects</a></li>
+            <li><a href="#">Documentation</a></li>
+        </ul>
+    </div>
+    <div class="col-md-10">
+        <table class="table table-hover">
+            <thead>
+                <tr>
+                    <th>Title</th>
+                    <th class="numeric">Entities</th>
+                    <th class="numeric">Relations</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr ng-repeat="project in projects.results">
+                    <td>
+                        <a class="strong" href="#/p/{{project.slug}}">{{project.label}}</a> <span class="light">{{project.slug}}</span>
+                    </td>
+                    <td class="numeric" width="10%">
+                        {{project.entities_count}}
+                    </td>
+                    <td class="numeric" width="10%">
+                        {{project.relations_count}}
+                    </td>
+                </tr>
+            </tbody>
+        </table>
     </div>
 </div>
 
