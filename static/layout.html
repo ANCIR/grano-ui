@@ -53,7 +53,8 @@
       </div>
     </nav>
 
-    <div id="airlock" ng-view>
+    <div id="airlock">
+      <div id="viewport" ng-view ng-class="pageAnimationClass"></div>
     </div>
   </div>
 
@@ -87,7 +88,8 @@
         "ui/vendor/jquery/dist/jquery.js",    
         "ui/vendor/angular/angular.js",
         "ui/vendor/angular-bootstrap/ui-bootstrap-tpls.js",
-        "ui/vendor/angular-route/angular-route.js"
+        "ui/vendor/angular-route/angular-route.js",
+        "ui/vendor/angular-animate/angular-animate.js"
          %}
       <script type="text/javascript" src="{{ ASSET_URL }}"></script>
   {% endassets %}

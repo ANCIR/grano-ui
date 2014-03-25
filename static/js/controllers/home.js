@@ -12,7 +12,8 @@ function HomeCtrl($scope, $location, $http, $modal) {
     $scope.newProject = function(){
         var d = $modal.open({
             templateUrl: 'projects/new.html',
-            controller: 'ProjectsNewCtrl'
+            controller: 'ProjectsNewCtrl',
+            backdrop: false
         });
     };
 }

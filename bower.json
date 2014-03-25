@@ -11,6 +11,7 @@
     "jquery": "~2.1.0",
     "angular": "~1.2.13",
     "angular-route": "~1.2.13",
-    "angular-bootstrap": "~0.10.0"
+    "angular-bootstrap": "~0.10.0",
+    "angular-animate": "~1.2.15"
   }
 }

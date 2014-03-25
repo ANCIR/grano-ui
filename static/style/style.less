@@ -31,8 +31,22 @@ body.grano .modal-content {
 }
 
 #airlock {
+    p-osition: relative;
+    height: 100%;
+    width: 100%;
+    transform: translate3d(0,0,0);
+
+    min-height: 90%;
+}
+
+#viewport {
+    p-osition: absolute;
     padding-left: 20px;
     padding-right: 20px;
+    height: 100%;
+    width: 100%;
+    -webkit-backface-visibility: hidden;
+    perspective: 1000;
 }
 
 .navbar#menu {
@@ -81,4 +95,37 @@ td.numeric, th.numeric {
 
 .table thead tr th {
     border-bottom-width: 1px;
+}
+
+
+
+
+/* Transitions */
+
+/* Default Enter/Leave */
+.ng-enter,
+.ng-leave {
+    transition-timing-function: ease;
+    transition-duration: 350ms;
+    transition-property: opacity;
+}
+
+.ng-leave {
+    transition-duration: 0ms;
+}
+
+.ng-enter {
+    opacity: 0;
+}
+
+.ng-enter.ng-enter-active {
+    opacity: 1;
+}
+
+.ng-leave {
+    opacity: 1;
+}
+
+.ng-leave.ng-leave-active {
+    opacity: 0;
 }

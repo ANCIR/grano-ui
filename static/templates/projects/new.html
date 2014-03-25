@@ -1,0 +1,29 @@
+
+<div class="modal-header">
+  <button type="button" class="close" ng-click="cancel()" aria-hidden="true">&times;</button>
+  <h4 class="modal-title">Create a project</h4>
+</div>
+
+<form class="form-horizontal" role="form" name="newProject">
+  <div class="modal-body">
+    <div class="form-group" ng-class="{'has-error': newProject.label.$invalid}">
+      <label class="col-sm-2 control-label" for="label">Title</label>
+      <div class="col-sm-10">
+        <input type="text" class="form-control input-lg" id="label" name="label" ng-model="project.label" placeholder="Project label">
+        <p class="help-block" ng-show="newProject.label.$invalid" ng-bind="newProject.label.$message"></p>
+      </div>
+    </div>
+
+    <div class="form-group" ng-class="{'has-error': newProject.name.$invalid}">
+      <label class="col-sm-2 control-label" for="name">Identifier</label>
+      <div class="col-sm-10">
+        <input type="text" class="form-control" id="name" name="name" ng-model="project.slug" placeholder="project-slug">
+        <p class="help-block" ng-show="newProject.name.$invalid" ng-bind="newProject.name.$message"></p>
+      </div>
+    </div>
+  </div>
+  <div class="modal-footer">
+    <button type="button" class="btn btn-default" ng-click="cancel()">Cancel</button>
+    <button type="submit" class="btn btn-primary" ng-click="create(newProject)">Create project</button>
+  </div>
+</form>

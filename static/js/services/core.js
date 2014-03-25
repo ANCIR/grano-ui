@@ -1,10 +1,9 @@
-grano.factory('core', ['$http', 'config', function($http, config) {
+grano.factory('core', ['$http', '$rootScope', '$location', 'config', function($http, $rootScope, $location, config) {
     var setTitle = function(name) {
         $('title').html(name + ' - ' + config.APP_NAME);
     };
 
     return {
-        appName: appName,
         setTitle: setTitle
     };
 }]);
