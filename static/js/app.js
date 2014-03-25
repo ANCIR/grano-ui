@@ -18,6 +18,16 @@ grano.config(['$routeProvider', '$locationProvider',
     controller: ProjectsEditCtrl
   });
 
+  $routeProvider.when('/p/:slug/entities', {
+    templateUrl: 'entities/index.html',
+    controller: EntitiesIndexCtrl
+  });
+
+  $routeProvider.when('/p/:slug/entities/:id', {
+    templateUrl: 'entities/view.html',
+    controller: EntitiesViewCtrl
+  });
+
   $routeProvider.otherwise({
     redirectTo: '/'
   });

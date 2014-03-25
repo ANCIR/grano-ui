@@ -24,12 +24,16 @@
 <div class="row">
     <div class="col-md-2">
         <ul class="nav nav-pills nav-stacked">
-            <li ng-show="project" class="nav-section"><a href="#/p/{{project.slug}}">Entities</a></li>
+            <li ng-show="project" class="nav-section" ng-class="{'active': navSection=='entities'}">
+                <a href="#/p/{{project.slug}}/entities">Entities</a>
+            </li>
             <li ng-show="project" class="nav-section"><a href="#/p/{{project.slug}}">Relations</a></li>
             <li ng-show="project" class="nav-section">&nbsp;</li>
-            <li ng-show="project"><a href="#/p/{{project.slug}}">Schemata</a></li>
-            <li ng-show="project"><a href="#/p/{{project.slug}}">Permissions</a></li>
-            <li ng-show="project"><a href="#/p/{{project.slug}}/settings">Settings</a></li>
+            <li gn-permission project="project" role="admin" ng-show="project"><a href="#/p/{{project.slug}}">Schemata</a></li>
+            <li gn-permission project="project" role="admin" ng-show="project"><a href="#/p/{{project.slug}}">Permissions</a></li>
+            <li gn-permission project="project" role="admin" ng-show="project" ng-class="{'active': navSection=='settings'}">
+                <a href="#/p/{{project.slug}}/settings">Settings</a>
+            </li>
             <li ng-show="project"><a href="#/p/{{project.slug}}">Data export</a></li>
             <li ng-show="project"><a href="#/p/{{project.slug}}">Data import</a></li>
             <li ng-show="project" class="nav-section">&nbsp;</li>

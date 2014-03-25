@@ -1,5 +1,5 @@
 
-grano.directive('granoFrame', function() {
+grano.directive('gnFrame', function() {
     return {
         restrict: 'E',
         transclude: true,

@@ -30,11 +30,13 @@ function ProjectsNewCtrl($scope, $routeParams, $modalInstance, $location, $http,
 ProjectsNewCtrl.$inject = ['$scope', '$routeParams', '$modalInstance', '$location', '$http', 'session'];
 
 
-function ProjectsEditCtrl($scope, $route, $routeParams, $location, $http) {
+function ProjectsEditCtrl($scope, $route, $routeParams, $location, $http, core) {
+    $scope.navSection = 'settings';
     $scope.project = {};
 
     $http.get('/api/1/projects/' + $routeParams.slug).then(function(res) {
         $scope.project = res.data;
+        core.setTitle($scope.project.label);
     });
 
     $scope.update = function(form) {
@@ -46,4 +48,4 @@ function ProjectsEditCtrl($scope, $route, $routeParams, $location, $http) {
     };
 }
 
-ProjectsEditCtrl.$inject = ['$scope', '$route', '$routeParams', '$location', '$http'];
+ProjectsEditCtrl.$inject = ['$scope', '$route', '$routeParams', '$location', '$http', 'core'];
