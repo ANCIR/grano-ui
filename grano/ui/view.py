@@ -10,7 +10,7 @@ from grano.views.cache import validate_cache, disable_cache
 from grano.background import ping
 
 
-UI_PREFIX = app.config.get('UI_PREFIX', '/')
+UI_PREFIX = app.config.get('UI_PREFIX', '')
 STATIC_PATH = os.path.abspath(os.path.join(os.path.dirname(__file__), '../../static'))
 
 blueprint = Blueprint('ui', __name__, template_folder=STATIC_PATH,
