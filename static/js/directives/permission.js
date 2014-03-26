@@ -10,7 +10,7 @@ grano.directive('gnPermission', ['$timeout', 'session', function ($timeout, sess
             scope.$watch('project', function(n, o, project) {
                 if (scope.project && scope.project.slug) {
                     session.get(function(res) {
-                        var perms = res.permissions[scope.project.slug];
+                        var perms = res.permissions[scope.project.slug] || {};
                         if (perms[scope.role]) {
                             element.removeClass('hidden');
                         }

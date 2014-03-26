@@ -84,7 +84,7 @@
     "vendor/bootstrap/js/collapse.js",
   -->
 
-    {% assets filters="jsmin", output="prod/vendor.js",
+    {% assets filters="uglifyjs", output="prod/vendor.js",
         "ui/vendor/jquery/dist/jquery.js",    
         "ui/vendor/angular/angular.js",
         "ui/vendor/angular-bootstrap/ui-bootstrap-tpls.js",

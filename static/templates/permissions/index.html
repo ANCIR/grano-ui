@@ -1,5 +1,12 @@
 
 <gn-frame>
+
+    <div class="alert alert-info">
+        <strong>Permissions</strong> regulate the activities which individual users (accounts) can 
+        perform in the context of this project. Whether or not the project is visible to everyone 
+        visiting {{config.APP_NAME}} is defined in the
+        <a class="alert-link" href="#/p/{{project.slug}}/settings">project settings</a>.
+    </div>
     <table class="table table-hover table-condensed">
         <thead>
             <tr>
@@ -35,11 +42,14 @@
                 <td></td>
             </tr>
         </tbody>
-        <tbody>
+        <tfoot>
+            <form ng-submit="create()">
             <tr>
                 <td>
-                    <input type="text">
-
+                    <input type="text" placeholder="Select an account" ng-model="newPermission.account"
+                        class="form-control input-sm"
+                        style="width: 60%;"
+                        typeahead="a as a.display_name for a in loadAccounts($viewValue)">
                 </td>
                 <td>
                     <label class="checkbox-inline">
@@ -56,9 +66,12 @@
                       <input type="checkbox" id="admin" ng-model="newPermission.admin" ng-change="sanify()"> Manage
                     </label>
                 </td>
-                <td><button class="btn btn-success btn-sm">Add</button>
+                <td>
+                    <button class="btn btn-success btn-sm" ng-click="create()">Add</button>
+                </td>
             </tr>
-        </tbody>
+            </form>
+        </tfoot>
     </table>
     <gn-pager class="pull-right" response="permissions" load="loadPermissions(url)"></gn-pager>
 </gn-frame>

@@ -6,7 +6,7 @@
         <div class="col-sm-10">
           <input type="text" class="form-control" id="label" name="label" ng-model="project.label" placeholder="Project label">
           <p class="help-block" ng-show="editProject.label.$invalid" ng-bind="editProject.label.$message"></p>
-          <span class="help-block">Will be shown to visitors of your dataset.</span>
+          <span class="help-block">Will be shown to visitors of your project.</span>
         </div>
       </div>
 
@@ -16,6 +16,17 @@
           <input type="text" class="form-control" id="name" name="name" ng-model="project.slug" disabled placeholder="project-slug">
           <p class="help-block" ng-show="editProject.name.$invalid" ng-bind="editProject.name.$message"></p>
           <span class="help-block">Will be used in URLs for this project. It cannot be changed once the project has been created.</span>
+        </div>
+      </div>
+
+      <div class="form-group">
+        <div class="col-sm-offset-2 col-sm-10">
+          <div class="checkbox">
+            <label>
+              <input type="checkbox" ng-model="project.private"> Hide this project from the public.
+            </label>
+            <span class="help-block">The project will only be visible to those with specific <a href="#/p/{{project.slug}}/permissions">permissions</a>.</span>
+          </div>
         </div>
       </div>
     </div>
