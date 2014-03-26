@@ -5,7 +5,7 @@ grano.directive('gnPager', ['$timeout', function ($timeout) {
             'response': '=',
             'load': '&load'
         },
-        templateUrl: 'pager.html',
+        templateUrl: 'directives/pager.html',
         link: function (scope, element, attrs, model) {
             scope.showPager = false;
             scope.$watch('response', function(e) {
