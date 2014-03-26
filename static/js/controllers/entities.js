@@ -20,7 +20,7 @@ function EntitiesIndexCtrl($scope, $routeParams, $location, $http, $modal, $time
 
         filterTimeout = $timeout(function() {
             var fparams = angular.copy(params);
-            fparams.q = $scope.query.value;
+            fparams.q = $scope.query.value + '*';
             $scope.loadEntities('/api/1/entities/_search', fparams);
         }, 500);
     };
@@ -40,7 +40,7 @@ EntitiesIndexCtrl.$inject = ['$scope', '$routeParams', '$location', '$http', '$m
 
 function EntitiesViewCtrl($scope, $routeParams, $location, $http, $modal, $timeout, core, session) {
     $scope.navSection = 'entities';
-    
+
     $scope.project = {};
     $scope.entity = {};
     
