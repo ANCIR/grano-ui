@@ -1,5 +1,11 @@
 
 <gn-frame>
+  <div class="alert alert-info">
+        <strong>Schemata</strong> are models of the objects managed by {{config.APP_NAME}}. They 
+        can be used to define both different kinds of entities (such as people, companies or public
+        bodies) and relations (such as employment, friendships, tenders). Entities can be associated
+        to multiple schemata, while relations have only one schema.
+    </div>
   <div class="row">
     <div class="col-md-6">
       <table class="table table-hover table-condensed">
@@ -19,7 +25,7 @@
               </tr>
           </tbody>
       </table>
-      <button type="button" class="btn btn-success" disabled="disabled">Add entity schema</button>
+      <a href="#/p/{{project.slug}}/schemata/new/entity" class="btn btn-success">Add entity schema</a>
     </div>
     <div class="col-md-6">
       <table class="table table-hover table-condensed">
@@ -39,7 +45,7 @@
               </tr>
           </tbody>
       </table>
-      <button type="button" class="btn btn-success" disabled="disabled">Add relation schema</button>
+      <a href="#/p/{{project.slug}}/schemata/new/relation" class="btn btn-success">Add relation schema</a>
     </div>
   </div>
 </gn-frame>

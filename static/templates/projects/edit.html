@@ -4,7 +4,8 @@
       <div class="form-group" ng-class="{'has-error': editProject.label.$invalid}">
         <label class="col-sm-2 control-label" for="label">Project title</label>
         <div class="col-sm-10">
-          <input type="text" class="form-control" id="label" name="label" ng-model="project.label" placeholder="Project label">
+          <input type="text" class="form-control" id="label" name="label" ng-model="project.label"
+            autofocus placeholder="Project label">
           <p class="help-block" ng-show="editProject.label.$invalid" ng-bind="editProject.label.$message"></p>
           <span class="help-block">Will be shown to visitors of your project.</span>
         </div>

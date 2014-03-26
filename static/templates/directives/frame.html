@@ -27,7 +27,6 @@
             <li ng-show="project" class="nav-section" ng-class="{'active': navSection=='entities'}">
                 <a href="#/p/{{project.slug}}/entities">Entities</a>
             </li>
-            <li ng-show="project" class="nav-section"><a href="#/p/{{project.slug}}">Relations</a></li>
             <li ng-show="project" class="nav-section">&nbsp;</li>
             <li gn-permission project="project" role="admin" ng-show="project" ng-class="{'active': navSection=='schemata'}">
                 <a href="#/p/{{project.slug}}/schemata">Schemata</a>
