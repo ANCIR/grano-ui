@@ -77,61 +77,67 @@
             </div>
           </div>
 
-          <table class="table">
-            <thead>
-                <tr>
-                    <th>Attribute</th>
-                    <th>Field</th>
-                    <th>Data type</th>
-                    <th width="5%" class="boolean">Hidden</th>
-                    <th width="1%">&nbsp;</th>
-                </tr>
-            </thead>
-            <tbody>
-                <tr ng-repeat="attribute in schema.attributes">
-                  <td>
-                      <input type="text" class="form-control input-sm" name="label"
-                        ng-model="attribute.label">
-                  </td>
-                  <td>
-                    <input type="text" class="form-control input-sm" name="name" ng-disabled="!attribute.fresh"
-                      ng-model="attribute.name">
-                  </td>
-                  <td>
-                    <select class="form-control input-sm" name="datatype" ng-disabled="!attribute.fresh"
-                      ng-model="attribute.datatype" ng-options="key as value for (key, value) in config.DATA_TYPES">
-                  </td>
-                  <td class="boolean">
-                    <input type="checkbox" ng-model="attribute.hidden">
-                  </td>
-                  <td>
-                    <button class="btn btn-danger btn-sm" ng-show="attribute.fresh"
-                      ng-click="removeAttribute(attribute)"><i class="fa fa-minus"></i></button>
-                  </td>
-                </tr>
-                <tr>
-                  <td>
-                    <input type="text" class="form-control input-sm" name="label"
-                      placeholder="Attribute label" ng-model="newAttribute.label">
-                  </td>
-                  <td>
-                    <input type="text" class="form-control input-sm" name="name"
-                      placeholder="field_name" ng-model="newAttribute.name">
-                  </td>
-                  <td>
-                    <select class="form-control input-sm" name="datatype"
-                      ng-model="newAttribute.datatype" ng-options="key as value for (key, value) in config.DATA_TYPES">
-                  </td>
-                  <td class="boolean">
-                      <input type="checkbox" ng-model="newAttribute.hidden">
-                  </td>
-                  <td>
-                    <button class="btn btn-success btn-sm"
-                      ng-click="addAttribute()"><i class="fa fa-plus"></i></button>
-                  </td>
-              </tr>
-            </tbody>
-          </table>
+          <div class="form-group" ng-class="{'has-error': editSchema.label.$invalid}">
+            <label class="col-sm-2 control-label">Attributes</label>
+            <div class="col-sm-10">          
+              <table class="table">
+                <thead>
+                    <tr>
+                        <th>Label</th>
+                        <th>Field</th>
+                        <th>Data type</th>
+                        <th width="5%" class="boolean">Hidden</th>
+                        <th width="1%">&nbsp;</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr ng-repeat="attribute in schema.attributes">
+                      <td>
+                          <input type="text" class="form-control input-sm" name="label"
+                            ng-model="attribute.label">
+                      </td>
+                      <td>
+                        <input type="text" class="form-control input-sm" name="name" ng-disabled="!attribute.fresh"
+                          ng-model="attribute.name">
+                      </td>
+                      <td>
+                        <select class="form-control input-sm" name="datatype" ng-disabled="!attribute.fresh"
+                          ng-model="attribute.datatype" ng-options="key as value for (key, value) in config.DATA_TYPES">
+                      </td>
+                      <td class="boolean">
+                        <input type="checkbox" ng-model="attribute.hidden">
+                      </td>
+                      <td>
+                        <button class="btn btn-danger btn-sm" ng-show="attribute.fresh"
+                          ng-click="removeAttribute(attribute)"><i class="fa fa-minus"></i></button>
+                      </td>
+                    </tr>
+                    <tr>
+                      <td>
+                        <input type="text" class="form-control input-sm" name="label"
+                          placeholder="Attribute label" ng-model="newAttribute.label">
+                      </td>
+                      <td>
+                        <input type="text" class="form-control input-sm" name="name"
+                          placeholder="field_name" ng-model="newAttribute.name">
+                      </td>
+                      <td>
+                        <select class="form-control input-sm" name="datatype"
+                          ng-model="newAttribute.datatype" ng-options="key as value for (key, value) in config.DATA_TYPES">
+                      </td>
+                      <td class="boolean">
+                          <input type="checkbox" ng-model="newAttribute.hidden">
+                      </td>
+                      <td>
+                        <button class="btn btn-success btn-sm"
+                          ng-click="addAttribute()"><i class="fa fa-plus"></i></button>
+                      </td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+
 
 
         </div>
