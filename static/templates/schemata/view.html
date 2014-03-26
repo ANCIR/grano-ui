@@ -39,7 +39,7 @@
     <gn-permission project="project" role="admin">
         <form class="form-horizontal" role="form" name="editSchema">
           <div class="form-group" ng-class="{'has-error': editSchema.label.$invalid}">
-            <label class="col-sm-2 control-label" for="label">Label</label>
+            <label class="col-sm-2 control-label" for="label">Schema label</label>
             <div class="col-sm-10">
               <input type="text" class="form-control" id="label" name="label" ng-model="schema.label" placeholder="Project label">
               <p class="help-block" ng-show="editSchema.label.$invalid" ng-bind="editSchema.label.$message"></p>
@@ -49,21 +49,19 @@
 
           <div class="form-group" ng-class="{'has-error': editSchema.name.$invalid}">
             <label class="col-sm-2 control-label" for="name">Identifier</label>
-            <div class="col-sm-10">
+            <div class="col-sm-4">
               <input type="text" class="form-control" id="name" name="name" ng-model="schema.name" disabled placeholder="project-slug">
               <p class="help-block" ng-show="editSchema.name.$invalid" ng-bind="editSchema.name.$message"></p>
-              <span class="help-block">Cannot be changed once the schema has been created.</span>
+              <!--span class="help-block">Cannot be changed once the schema has been created.</span-->
             </div>
-          </div>
 
-          <div class="form-group" ng-class="{'has-error': editSchema.obj.$invalid}">
-            <label class="col-sm-2 control-label" for="obj">Type</label>
-            <div class="col-sm-10">
+            <label class="col-sm-2 control-label" for="obj">Applies&nbsp;to</label>
+            <div class="col-sm-2">
               <select class="form-control" id="obj" name="obj"
                 ng-model="schema.obj" ng-options="key as value for (key, value) in config.SCHEMA_OBJS" disabled>
               </select>
               <p class="help-block" ng-show="editSchema.obj.$invalid" ng-bind="editSchema.obj.$message"></p>
-              <span class="help-block">Schemata can apply either to entities or to relations.</span>
+              <!--span class="help-block">Schemata can apply either to entities or to relations.</span-->
             </div>
           </div>
 
@@ -76,6 +74,31 @@
               </div>
             </div>
           </div>
+
+          <table class="table">
+            <thead>
+                <tr>
+                    <th>Attribute</th>
+                    <th>Field</th>
+                    <th>Data type</th>
+                    <th width="5%" class="boolean">Hidden</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr ng-repeat="attribute in schema.attributes">
+                    <td>
+                        <input type="text" class="form-control input-sm" id="name" name="name" ng-model="attribute.label">
+                    </td>
+                    <td class="light">{{attribute.name}}</td>
+                    <td>{{attribute.datatype}}</td>
+                    <td class="boolean">
+                        <input type="checkbox" ng-model="attribute.hidden">
+                    </td>
+                </tr>
+            </tbody>
+          </table>
+
+
         </div>
         <div class="form-group">
           <div class="col-sm-offset-2 col-sm-10">
