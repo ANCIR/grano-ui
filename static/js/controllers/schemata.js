@@ -34,6 +34,11 @@ function SchemataViewCtrl($scope, $routeParams, $location, $http, $route, $modal
         $scope.project = res.data;
     });
 
+    $http.get('/api/1/projects/' + $routeParams.slug + '/schemata/' + $routeParams.name).then(function(res) {
+        $scope.schema = res.data;
+        core.setTitle($scope.schema.label);
+    });
+
     $scope.update = function(form) {
         var res = $http.post($scope.schema.api_url, $scope.schema);
         res.success(function(res) {
@@ -43,13 +48,8 @@ function SchemataViewCtrl($scope, $routeParams, $location, $http, $route, $modal
     };
 
     $scope.reset = function() { 
-        $http.get('/api/1/projects/' + $routeParams.slug + '/schemata/' + $routeParams.name).then(function(res) {
-            $scope.schema = res.data;
-            core.setTitle($scope.schema.label);
-        });
+        $route.reload();
     }
-
-    $scope.reset();
 
 }
 
