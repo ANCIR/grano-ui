@@ -18,6 +18,16 @@ grano.config(['$routeProvider', '$locationProvider',
     controller: ProjectsEditCtrl
   });
 
+  $routeProvider.when('/p/:slug/schemata', {
+    templateUrl: 'schemata/index.html',
+    controller: SchemataIndexCtrl
+  });
+
+  $routeProvider.when('/p/:slug/permissions', {
+    templateUrl: 'permissions/index.html',
+    controller: PermissionsIndexCtrl
+  });
+
   $routeProvider.when('/p/:slug/entities', {
     templateUrl: 'entities/index.html',
     controller: EntitiesIndexCtrl

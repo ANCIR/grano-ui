@@ -29,8 +29,12 @@
             </li>
             <li ng-show="project" class="nav-section"><a href="#/p/{{project.slug}}">Relations</a></li>
             <li ng-show="project" class="nav-section">&nbsp;</li>
-            <li gn-permission project="project" role="admin" ng-show="project"><a href="#/p/{{project.slug}}">Schemata</a></li>
-            <li gn-permission project="project" role="admin" ng-show="project"><a href="#/p/{{project.slug}}">Permissions</a></li>
+            <li gn-permission project="project" role="admin" ng-show="project" ng-class="{'active': navSection=='schemata'}">
+                <a href="#/p/{{project.slug}}/schemata">Schemata</a>
+            </li>
+            <li gn-permission project="project" role="admin" ng-show="project" ng-class="{'active': navSection=='permissions'}">
+                <a href="#/p/{{project.slug}}/permissions">Permissions</a>
+            </li>
             <li gn-permission project="project" role="admin" ng-show="project" ng-class="{'active': navSection=='settings'}">
                 <a href="#/p/{{project.slug}}/settings">Settings</a>
             </li>

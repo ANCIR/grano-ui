@@ -26,7 +26,6 @@ function EntitiesIndexCtrl($scope, $routeParams, $location, $http, $modal, $time
     };
 
     $scope.loadEntities = function(url, params) {
-        console.log(url);
         $http.get(url, {params: params}).then(function(res) {
             $scope.entities = res.data;
         });
