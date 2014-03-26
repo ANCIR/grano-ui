@@ -19,11 +19,19 @@ function EntitiesIndexCtrl($scope, $routeParams, $location, $http, $modal, $time
         }
 
         filterTimeout = $timeout(function() {
-            var fparams = angular.copy(params);
-            fparams.q = $scope.query.value + '*';
-            $scope.loadEntities('/api/1/entities/_search', fparams);
+            $location.search('q', $scope.query.value);
+            $scope.updateSearch();
         }, 500);
     };
+
+    $scope.updateSearch = function() {
+        var fparams = angular.copy(params);
+        angular.extend(fparams, $location.search());
+        if (fparams.q) {
+            fparams.q += '*';
+        }
+        $scope.loadEntities('/api/1/entities/_search', fparams);
+    }
 
     $scope.loadEntities = function(url, params) {
         $http.get(url, {params: params}).then(function(res) {
@@ -31,7 +39,7 @@ function EntitiesIndexCtrl($scope, $routeParams, $location, $http, $modal, $time
         });
     };
 
-    $scope.loadEntities('/api/1/entities/_search', params);
+    $scope.updateSearch();
 }
 
 EntitiesIndexCtrl.$inject = ['$scope', '$routeParams', '$location', '$http', '$modal', '$timeout', 'core', 'session'];

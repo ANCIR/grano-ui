@@ -40,7 +40,8 @@ grano.config(['$routeProvider', '$locationProvider',
 
   $routeProvider.when('/p/:slug/entities', {
     templateUrl: 'entities/index.html',
-    controller: EntitiesIndexCtrl
+    controller: EntitiesIndexCtrl,
+    reloadOnSearch: false
   });
 
   $routeProvider.when('/p/:slug/entities/:id', {
