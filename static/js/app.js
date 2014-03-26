@@ -23,6 +23,11 @@ grano.config(['$routeProvider', '$locationProvider',
     controller: SchemataIndexCtrl
   });
 
+  $routeProvider.when('/p/:slug/schemata/:name', {
+    templateUrl: 'schemata/view.html',
+    controller: SchemataViewCtrl
+  });
+
   $routeProvider.when('/p/:slug/permissions', {
     templateUrl: 'permissions/index.html',
     controller: PermissionsIndexCtrl

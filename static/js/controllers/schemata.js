@@ -24,3 +24,34 @@ function SchemataIndexCtrl($scope, $routeParams, $location, $http, $modal, $time
 
 SchemataIndexCtrl.$inject = ['$scope', '$routeParams', '$location', '$http', '$modal', '$timeout', 'core', 'session'];
 
+
+function SchemataViewCtrl($scope, $routeParams, $location, $http, $route, $modal, $timeout, core, session) {
+    $scope.navSection = 'schemata';
+    $scope.project = {};
+    $scope.schema = {};
+    
+    $http.get('/api/1/projects/' + $routeParams.slug).then(function(res) {
+        $scope.project = res.data;
+    });
+
+    $scope.update = function(form) {
+        var res = $http.post($scope.schema.api_url, $scope.schema);
+        res.success(function(res) {
+            $route.reload();
+        });
+        res.error(grano.handleFormError(form));
+    };
+
+    $scope.reset = function() { 
+        $http.get('/api/1/projects/' + $routeParams.slug + '/schemata/' + $routeParams.name).then(function(res) {
+            $scope.schema = res.data;
+            core.setTitle($scope.schema.label);
+        });
+    }
+
+    $scope.reset();
+
+}
+
+SchemataViewCtrl.$inject = ['$scope', '$routeParams', '$location', '$http', '$route', '$modal', '$timeout', 'core', 'session'];
+

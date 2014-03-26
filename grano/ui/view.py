@@ -1,4 +1,5 @@
 import os
+from json import dumps
 
 from flask import Blueprint, render_template, request
 from flask import redirect, make_response, url_for
@@ -37,7 +38,11 @@ def index(**kw):
 def config(**kw):
     api_root = app.config.get('API_ROOT') or url_for('base_api.status')
     res = render_template('js/config.js', ui_root=UI_PREFIX,
-        api_root=api_root, app_name=app_name, app_version=__version__)
+        data_types=dumps(app.config['DATA_TYPES']),
+        schema_objs=dumps(app.config['SCHEMA_OBJS']),
+        api_root=api_root,
+        app_name=app_name,
+        app_version=__version__)
     res = make_response(res)
     res.headers['Content-Type'] = 'application/javascript'
     return res

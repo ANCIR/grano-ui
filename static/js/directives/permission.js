@@ -3,6 +3,7 @@ grano.directive('gnPermission', ['$timeout', 'session', function ($timeout, sess
         restrict: 'AE',
         scope: {
             'project': '=',
+            'inverted': '=',
             'role': '@role',
         },
         link: function (scope, element, attrs, model) {
@@ -11,7 +12,7 @@ grano.directive('gnPermission', ['$timeout', 'session', function ($timeout, sess
                 if (scope.project && scope.project.slug) {
                     session.get(function(res) {
                         var perms = res.permissions[scope.project.slug] || {};
-                        if (perms[scope.role]) {
+                        if ((!scope.inverted && perms[scope.role]) || (scope.inverted && !perms[scope.role])) {
                             element.removeClass('hidden');
                         }
                     });
