@@ -42,7 +42,7 @@ function ProjectsEditCtrl($scope, $route, $routeParams, $location, $http, core) 
     $scope.update = function(form) {
         var res = $http.post('/api/1/projects/' + $scope.project.slug, $scope.project);
         res.success(function(data) {
-            $location.path('/p/' + $scope.project.slug);
+            $route.reload();
         });
         res.error(grano.handleFormError(form));
     };
