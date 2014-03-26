@@ -24,6 +24,9 @@
 <div class="row">
     <div class="col-sm-2">
         <ul class="nav nav-pills nav-stacked">
+            <li ng-show="project" class="nav-section" ng-class="{'active': navSection=='project'}">
+                <a href="#/p/{{project.slug}}">Overview</a>
+            </li>
             <li ng-show="project" class="nav-section" ng-class="{'active': navSection=='entities'}">
                 <a href="#/p/{{project.slug}}/entities">Entities</a>
             </li>

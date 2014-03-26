@@ -37,34 +37,35 @@
     </gn-permission>
 
     <gn-permission project="project" role="admin">
-        <form class="form-horizontal" role="form" name="editSchema">
+        <form class="form-horizontal" role="form" name="editSchema" ng-submit="update(editSchema)">
           <div class="form-group" ng-class="{'has-error': editSchema.label.$invalid}">
             <label class="col-sm-2 control-label" for="label">Schema label</label>
             <div class="col-sm-10">
               <input type="text" class="form-control" id="label" name="label" ng-model="schema.label"
                 placeholder="My Schema" autofocus>
               <p class="help-block" ng-show="editSchema.label.$invalid" ng-bind="editSchema.label.$message"></p>
-              <span class="help-block">Will be visible on entity pages.</span>
+              <span class="help-block">Will be visible on entity or relation pages.</span>
             </div>
           </div>
 
           <div class="form-group" ng-class="{'has-error': editSchema.name.$invalid}">
             <label class="col-sm-2 control-label" for="name">Identifier</label>
-            <div class="col-sm-4">
+            <div class="col-sm-10">
               <input type="text" class="form-control" id="name" name="name" ng-model="schema.name"
                 ng-disabled="!schema.fresh" placeholder="my_schema">
               <p class="help-block" ng-show="editSchema.name.$invalid" ng-bind="editSchema.name.$message"></p>
-              <!--span class="help-block">Cannot be changed once the schema has been created.</span-->
+              <span class="help-block" ng-show="schema.fresh">
+                The identifier cannot be changed once the schema has been created.
+              </span>
             </div>
 
-            <label class="col-sm-2 control-label" for="obj">Applies&nbsp;to</label>
+            <!--label class="col-sm-2 control-label" for="obj">Applies&nbsp;to</label>
             <div class="col-sm-2">
               <select class="form-control" id="obj" name="obj"
                 ng-model="schema.obj" ng-options="key as value for (key, value) in config.SCHEMA_OBJS" disabled>
               </select>
               <p class="help-block" ng-show="editSchema.obj.$invalid" ng-bind="editSchema.obj.$message"></p>
-              <!--span class="help-block">Schemata can apply either to entities or to relations.</span-->
-            </div>
+            </div-->
           </div>
 
           <div class="form-group">
@@ -79,7 +80,12 @@
 
           <div class="form-group" ng-class="{'has-error': editSchema.label.$invalid}">
             <label class="col-sm-2 control-label">Attributes</label>
-            <div class="col-sm-10">          
+            <div class="col-sm-10">
+              <div class="alert alert-info" ng-show="schema.fresh">
+                Attributes define the set of properties that can be set for entities or relations which are
+                part of this schema. Note that neither the field name nor the data type can be changed once
+                an attribute has been created.
+              </div>
               <table class="table">
                 <thead>
                     <tr>
@@ -108,7 +114,7 @@
                         <input type="checkbox" ng-model="attribute.hidden">
                       </td>
                       <td>
-                        <button class="btn btn-danger btn-sm" ng-show="attribute.fresh"
+                        <button class="btn btn-danger btn-sm"
                           ng-click="removeAttribute(attribute)"><i class="fa fa-minus"></i></button>
                       </td>
                     </tr>

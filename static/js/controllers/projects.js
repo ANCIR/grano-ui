@@ -1,5 +1,6 @@
 
 function ProjectsViewCtrl($scope, $routeParams, $location, $http, $modal, $timeout, session) {
+    $scope.navSection = 'project';
     $scope.project = {};
     
     $http.get('/api/1/projects/' + $routeParams.slug).then(function(res) {
