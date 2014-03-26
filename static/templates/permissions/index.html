@@ -7,72 +7,72 @@
         visiting {{config.APP_NAME}} is defined in the
         <a class="alert-link" href="#/p/{{project.slug}}/settings">project settings</a>.
     </div>
-    <table class="table table-hover table-condensed">
-        <thead>
-            <tr>
-                <th width="50%">
-                  Account name
-                </th>
-                <th colspan="3">
-                  Permissions
-                </th>
-                <th width="1%"></th>
-            </tr>
-        </thead>
-        <tbody>
-            <tr ng-repeat="permission in permissions.results">
-                <td>
-                    {{permission.account.display_name}}
-                    <span class="light">ID {{permission.account.id}}</span>
-                </td>
-                <td>
-                    <label class="checkbox-inline">
-                      <input type="checkbox" id="reader" ng-model="permission.reader" ng-change="save(permission)"> Read
-                    </label>
-                </td>
-                <td>
-                    <label class="checkbox-inline">
-                      <input type="checkbox" id="editor" ng-model="permission.editor" ng-change="save(permission)"> Edit
-                    </label>
-                </td>
-                <td>
-                    <label class="checkbox-inline">
-                      <input type="checkbox" id="admin" ng-model="permission.admin" ng-change="save(permission)"> Manage
-                    </label>
-                </td>
-                <td></td>
-            </tr>
-        </tbody>
-        <tfoot>
-            <form ng-submit="create()">
-            <tr>
-                <td>
-                    <input type="text" placeholder="Select an account" ng-model="newPermission.account"
-                        class="form-control input-sm"
-                        style="width: 60%;"
-                        typeahead="a as a.display_name for a in loadAccounts($viewValue)">
-                </td>
-                <td>
-                    <label class="checkbox-inline">
-                      <input type="checkbox" id="reader" ng-model="newPermission.reader" ng-change="sanify()"> Read
-                    </label>
-                </td>
-                <td>
-                    <label class="checkbox-inline">
-                      <input type="checkbox" id="editor" ng-model="newPermission.editor" ng-change="sanify()"> Edit
-                    </label>
-                </td>
-                <td>
-                    <label class="checkbox-inline">
-                      <input type="checkbox" id="admin" ng-model="newPermission.admin" ng-change="sanify()"> Manage
-                    </label>
-                </td>
-                <td>
-                    <button class="btn btn-success btn-sm" ng-click="create()"><i class="fa fa-plus"></i></button>
-                </td>
-            </tr>
-            </form>
-        </tfoot>
-    </table>
+    <form ng-submit="create()">
+        <table class="table table-hover table-condensed">
+            <thead>
+                <tr>
+                    <th width="50%">
+                      Account name
+                    </th>
+                    <th colspan="3">
+                      Permissions
+                    </th>
+                    <th width="1%"></th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr ng-repeat="permission in permissions.results">
+                    <td>
+                        {{permission.account.display_name}}
+                        <span class="light">ID {{permission.account.id}}</span>
+                    </td>
+                    <td>
+                        <label class="checkbox-inline">
+                          <input type="checkbox" id="reader" ng-model="permission.reader" ng-change="save(permission)"> Read
+                        </label>
+                    </td>
+                    <td>
+                        <label class="checkbox-inline">
+                          <input type="checkbox" id="editor" ng-model="permission.editor" ng-change="save(permission)"> Edit
+                        </label>
+                    </td>
+                    <td>
+                        <label class="checkbox-inline">
+                          <input type="checkbox" id="admin" ng-model="permission.admin" ng-change="save(permission)"> Manage
+                        </label>
+                    </td>
+                    <td></td>
+                </tr>
+            </tbody>
+            <tfoot>
+                <tr>
+                    <td>
+                        <input type="text" placeholder="Select an account" ng-model="newPermission.account"
+                            class="form-control input-sm"
+                            style="width: 60%;" autofocus
+                            typeahead="a as a.display_name for a in loadAccounts($viewValue)">
+                    </td>
+                    <td>
+                        <label class="checkbox-inline">
+                          <input type="checkbox" id="reader" ng-model="newPermission.reader" ng-change="sanify()"> Read
+                        </label>
+                    </td>
+                    <td>
+                        <label class="checkbox-inline">
+                          <input type="checkbox" id="editor" ng-model="newPermission.editor" ng-change="sanify()"> Edit
+                        </label>
+                    </td>
+                    <td>
+                        <label class="checkbox-inline">
+                          <input type="checkbox" id="admin" ng-model="newPermission.admin" ng-change="sanify()"> Manage
+                        </label>
+                    </td>
+                    <td>
+                        <button class="btn btn-success btn-sm" ng-click="create()"><i class="fa fa-plus"></i></button>
+                    </td>
+                </tr>
+            </tfoot>
+        </table>
+    </form>
     <gn-pager class="pull-right" response="permissions" load="loadPermissions(url)"></gn-pager>
 </gn-frame>
