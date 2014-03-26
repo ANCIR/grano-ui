@@ -3,6 +3,7 @@ function PermissionsIndexCtrl($scope, $routeParams, $location, $http, $modal, $t
     $scope.url = '/api/1/projects/'+$routeParams.slug+'/permissions';
     $scope.navSection = 'permissions';
     $scope.permissions = {};
+    $scope.newPermission = {'reader': true};
     
     $http.get('/api/1/projects/' + $routeParams.slug).then(function(res) {
         $scope.project = res.data;
@@ -17,11 +18,15 @@ function PermissionsIndexCtrl($scope, $routeParams, $location, $http, $modal, $t
     };
 
     $scope.save = function(permission) {
-        
         if (!permission.reader) permission.editor = false;
         if (!permission.editor) permission.admin = false;
         var res = $http.post(permission.api_url, permission);
     };
+
+    $scope.sanify = function() {
+        if ($scope.newPermission.admin) $scope.newPermission.editor = true;
+        if ($scope.newPermission.editor) $scope.newPermission.reader = true;
+    }
 
     $scope.loadPermissions($scope.url);
 }
