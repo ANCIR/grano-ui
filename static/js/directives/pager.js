@@ -7,8 +7,9 @@ grano.directive('gnPager', ['$timeout', function ($timeout) {
         },
         templateUrl: 'directives/pager.html',
         link: function (scope, element, attrs, model) {
-            scope.showPager = false;
             scope.$watch('response', function(e) {
+                scope.showPager = false;
+                scope.pages = [];
                 if (scope.response.pages <= 1) {
                     return;
                 }
