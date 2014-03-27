@@ -48,16 +48,25 @@ function EntitiesIndexCtrl($scope, $routeParams, $location, $http, $modal, $time
     };
 
     $scope.showEntityPreview = function(entity) {
-        if ($scope.previewEntity && $scope.previewEntity.id==entity.id) {
+        if ($scope.previewEntity != null && $scope.previewEntity.id==entity.id) {
             $scope.previewEntity = null;
             $location.search('preview', null);
+            core.setTitle($scope.project.label);
             return;
         }
-        $location.search('preview', entity.id);
+        if ($location.search('preview') != entity.id) {
+            $location.search('preview', entity.id);    
+        }
         $scope.previewEntity = entity;
     };
 
     $scope.updateSearch();
+
+    if ($location.search().preview) {
+        $scope.showEntityPreview({'id': $location.search().preview});
+    }
+
+    console.log($location.search().preview);
 }
 
 EntitiesIndexCtrl.$inject = ['$scope', '$routeParams', '$location', '$http', '$modal', '$timeout', 'core', 'session'];

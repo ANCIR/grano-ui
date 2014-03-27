@@ -10,7 +10,7 @@
                       <div class="input-group">
                         <span class="input-group-addon"><i class="fa fa-search"></i></span>
                         <input type="text" class="search-query form-control" autofocus
-                                ng-model="query.value" ng-keyup="updateFilter()" placeholder="Search entities">
+                                ng-model="query.value" ng-change="updateFilter()" placeholder="Search entities">
                       </div>
                     </form>
                   </th>
@@ -29,7 +29,7 @@
       </table>
     </div>
     <div ng-show="previewEntity" class="col-md-9">
-      huhu
+      <gn-entity-preview preview="previewEntity"></gn-entity-preview>
     </div>
   </div>
   <gn-pager class="pull-right" response="entities" load="loadEntities(url)"></gn-pager>
