@@ -84,7 +84,39 @@ function SchemataViewCtrl($scope, $routeParams, $location, $http, $route, $modal
         $route.reload();
     }
 
+    $scope.deleteSchema = function() {
+        var d = $modal.open({
+            templateUrl: 'schemata/delete.html',
+            controller: 'SchemataDeleteCtrl',
+            backdrop: false,
+            resolve: {
+                schema: function () { return $scope.schema; }
+            }
+        });
+    }
+
 }
 
 SchemataViewCtrl.$inject = ['$scope', '$routeParams', '$location', '$http', '$route', '$modal', '$timeout', 'schemata', 'core', 'session'];
+
+
+function SchemataDeleteCtrl($scope, $location, $modalInstance, $http, session, schema) {
+    $scope.schema = schema;
+    
+    $scope.cancel = function() {
+        $modalInstance.dismiss('cancel');
+    };
+
+    $scope.delete = function() {
+        var res = $http.delete($scope.schema.api_url);
+        res.error(function(data) {
+            $modalInstance.dismiss('ok');
+            $location.path('/p/' + $scope.schema.project.slug + '/schemata');
+        });
+    };
+    
+}
+
+SchemataDeleteCtrl.$inject = ['$scope', '$location', '$modalInstance', '$http', 'session', 'schema'];
+
 

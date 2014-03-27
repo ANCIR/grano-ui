@@ -148,7 +148,8 @@
         <div class="form-group">
           <div class="col-sm-offset-2 col-sm-10">
             <button type="submit" class="btn btn-primary" ng-click="update(editSchema)">Save</button>
-            <button type="submit" class="btn btn-default" ng-click="reset()">Reset</button>
+            <button type="submit" class="btn btn-default" ng-show="!schema.fresh"  ng-click="reset()">Reset</button>
+            <button type="submit" class="btn btn-danger" ng-show="!schema.fresh" ng-click="deleteSchema()">Delete</button>
           </div>
         </div>
     </gn-permission>
