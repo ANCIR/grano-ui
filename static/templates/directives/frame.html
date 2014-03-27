@@ -22,7 +22,9 @@
 </div>
 
 <div class="row">
-    <div class="col-sm-2">
+    <div class="col-sm-10 col-sm-push-2" ng-transclude></div>
+    <div class="clearfix visible-xs"></div>
+    <div class="col-sm-2 col-sm-pull-10">
         <ul class="nav nav-pills nav-stacked">
             <li ng-show="project" class="nav-section heading" ng-class="{'active': navSection=='project'}">
                 <a href="#/p/{{project.slug}}">Overview</a>
@@ -49,8 +51,6 @@
             <li><a href="http://docs.grano.cc">Documentation</a></li>
             <li><a href="https://github.com/pudo/grano/issues">Report an issue</a></li>
         </ul>
-    </div>
-    <div class="col-sm-10" ng-transclude>
     </div>
 </div>
 
