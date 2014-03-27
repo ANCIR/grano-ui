@@ -12,7 +12,6 @@ grano.directive('gnEntityPreview', ['core', '$http', '$route', '$location', '$mo
             scope.attributes = {};
             scope.inbound = {};
             scope.outbound = {};
-            scope.schemata = {};
 
             scope.previewNext = function(entity) {
                 $location.search('preview', entity.id);
