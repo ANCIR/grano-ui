@@ -11,6 +11,7 @@
 
   {% assets filters="less,cssmin,cssrewrite", output="prod/ui.style.css",
       "ui/vendor/bootstrap/less/bootstrap.less",
+      "ui/vendor/angular-datepicker/dist/index.css",
       "ui/style/style.less" %}
     <link type="text/css" href="{{ ASSET_URL }}" rel="stylesheet">
   {% endassets %}
@@ -88,7 +89,8 @@
         "ui/vendor/angular/angular.js",
         "ui/vendor/angular-bootstrap/ui-bootstrap-tpls.js",
         "ui/vendor/angular-route/angular-route.js",
-        "ui/vendor/angular-animate/angular-animate.js"
+        "ui/vendor/angular-animate/angular-animate.js",
+        "ui/vendor/angular-datepicker/dist/index.js"
          %}
       <script type="text/javascript" src="{{ ASSET_URL }}"></script>
   {% endassets %}
@@ -103,6 +105,7 @@
         "ui/js/directives/permission.js",
         "ui/js/directives/pager.js",
         "ui/js/directives/propview.js",
+        "ui/js/directives/propedit.js",
         "ui/js/directives/entitypreview.js",
         "ui/js/controllers/app.js",
         "ui/js/controllers/home.js",

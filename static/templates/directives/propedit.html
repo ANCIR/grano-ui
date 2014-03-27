@@ -1,0 +1,19 @@
+
+<input type="text" class="form-control" name="value" ng-model="property.value"
+    placeholder="The meaning of life" ng-show="attribute.datatype=='string'">
+
+<input type="number" class="form-control" name="value" ng-model="property.value"
+    placeholder="23" ng-show="attribute.datatype=='integer'">
+
+<input type="text" class="form-control" name="value" ng-model="property.value"
+    placeholder="3.1415" ng-show="attribute.datatype=='float'">
+
+<label ng-show="attribute.datatype=='boolean'">
+    <input type="checkbox" name="value" ng-model="property.value">
+    {{attribute.label}}
+</label>
+
+<input ng-show="attribute.datatype=='datetime'" class="form-control"
+    type="text" date-time ng-model="property.value" required="true" view="date" min-view="date">
+
+

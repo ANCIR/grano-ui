@@ -21,8 +21,7 @@
     <div class="form-group" ng-class="{'has-error': editProperty.value.$invalid}" ng-show="property.attribute">
       <label class="col-sm-2 control-label" for="full_name">Value</label>
       <div class="col-sm-10">
-        <input type="text" class="form-control" id="value" name="value" ng-model="property.value"
-          placeholder="The meaning of life">
+        <gn-prop-edit property="property" attribute="property.attribute"></gn-prop-value>
         <p class="help-block" ng-show="editProperty.value.$invalid" ng-bind="editProperty.value.$message"></p>
       </div>
     </div>

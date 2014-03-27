@@ -11,12 +11,16 @@ function PropertiesEditCtrl($scope, $location, $modalInstance, $http, $route, sc
     $scope.update = function(form) {
         var attr = $scope.property.attribute;
         delete $scope.property.attribute;
+
+        if (!angular.isUndefined($scope.obj.schemata)) {
+            $scope.obj.schemata.push(attr.schema.name);
+        };
+
         $scope.obj.properties[attr.name] = $scope.property;
 
         var res = $http.post($scope.obj.api_url, $scope.obj);
         res.success(function(data) {
             $modalInstance.dismiss('ok');
-            $route.reload();
         });
         res.error(grano.handleFormError(form));
     };
@@ -26,6 +30,7 @@ function PropertiesEditCtrl($scope, $location, $modalInstance, $http, $route, sc
         $scope.property.attribute = attribute;
     } else {
         var obj_type = $scope.obj.schema ? 'relation' : 'entity';
+        // TODO: for relations, we need to fix the schema here.
         schemata.attributes(obj.project.slug, obj_type).then(function(as) {
             angular.forEach(as, function(k, v) {
                 if (angular.isUndefined($scope.obj.properties[v])) {

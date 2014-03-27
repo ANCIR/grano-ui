@@ -17,9 +17,17 @@ grano.directive('gnPropView', ['core', '$http', '$sce', 'schemata', function (co
                         value = "<a href='" + value + "' target='_blank'>" + name + "</a>";
                     }
                 } else if (scope.attribute.datatype == 'float') {
-                        value = value.toFixed(2);
+                    value = new Number(value).toFixed(2);
+                } else if (scope.attribute.datatype == 'boolean') {
+                    var icon = 'fa-square-o';
+                    if (value) {
+                        icon = 'fa-check-square-o'
+                    }
+                    value = '<i class="fa ' + icon + '"></i>';
                 } else if (scope.attribute.datatype == 'datetime') {
-                        value = moment(value).format('LLL');
+                    value = moment(value).format('LL');
+                } else {
+                    value = value + ''
                 }
                 scope.display_value = $sce.trustAsHtml(value);
             }

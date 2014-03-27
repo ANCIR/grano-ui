@@ -13,6 +13,13 @@ grano.directive('gnEntityPreview', ['core', '$http', '$route', '$location', '$mo
             scope.inbound = {};
             scope.outbound = {};
 
+            scope.reloadEntity = function(id) {
+                $http.get('/api/1/entities/' + id).then(function(res) {
+                    scope.entity = res.data;
+                    core.setTitle(scope.entity.properties.name.value);
+                });
+            };
+
             scope.previewNext = function(entity) {
                 $location.search('preview', entity.id);
                 $route.reload();
@@ -40,6 +47,16 @@ grano.directive('gnEntityPreview', ['core', '$http', '$route', '$location', '$mo
                         attribute: function () { return attribute; }
                     }
                 });
+                d.result.finally(function() {
+                    scope.reloadEntity(scope.entity.id);
+                });
+            };
+
+            scope.disableProperty = function(attribute) {
+                delete scope.entity.properties[attribute.name];
+                $http.post(scope.entity.api_url, scope.entity).then(function(res) {
+                    scope.entity = res.data;
+                });
             };
 
             scope.$watch('preview', function(e) {
@@ -47,12 +64,7 @@ grano.directive('gnEntityPreview', ['core', '$http', '$route', '$location', '$mo
                 scope.entity = e;
                 
                 // check for the full REST:
-                if (!e.created_at) {
-                    $http.get('/api/1/entities/' + e.id).then(function(res) {
-                        scope.entity = res.data;
-                        core.setTitle(scope.entity.properties.name.value);
-                    });
-                }
+                if (!e.created_at) scope.reloadEntity(e.id);
 
                 scope.loadInbound('/api/1/relations?target=' + e.id);
                 scope.loadOutbound('/api/1/relations?source=' + e.id);
