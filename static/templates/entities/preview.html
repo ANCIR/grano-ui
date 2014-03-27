@@ -1,1 +1,29 @@
-I AM A BANANA! - {{entity.id}}
+<!--div class="panel panel-default">
+  <div class="panel-body">
+    <div class="row">
+        {{entity.properties.name.value}} <code>{{entity.id}}</code>
+    </div>
+  </div>
+</div-->
+
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>Attribute</th>
+            <th>Value</th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr ng-repeat="(name, property) in entity.properties">
+            <td>{{attributes[name].label}}</td>
+            <td>{{property.value}}</td>
+            <td>
+                <span ng-show="property.source_url">
+                    <a href="{{property.source_url}}" target="_blank">Source</a>
+                </span>
+            </td>
+        </tr>
+    </tbody>
+</table>

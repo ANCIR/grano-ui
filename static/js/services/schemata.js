@@ -14,7 +14,7 @@ grano.factory('schemata', ['$http', '$rootScope', '$location', '$q', 'config',
             dfd.resolve(schemata[slug]); 
         } else {
             var url = '/api/1/projects/' + slug + '/schemata';
-            $http.get(url, {params: {limit: 1000}}).then(function(res) {
+            $http.get(url, {params: {limit: 1000, full: true}}).then(function(res) {
                 schemata[slug] = res.data.results;
                 dfd.resolve(schemata[slug]);
             })
@@ -22,8 +22,27 @@ grano.factory('schemata', ['$http', '$rootScope', '$location', '$q', 'config',
         return dfd.promise;
     }
 
+    var attributes = function(slug, obj) {
+        var dfd = $q.defer();
+        get(slug).then(function(schemata) {
+            var attributes = {};
+            angular.forEach(schemata, function(s) {
+                console.log(s);
+                console.log(obj);
+                if (!obj || s.obj == obj) {
+                    angular.forEach(s.attributes, function(a) {
+                        attributes[a.name] = a;
+                    });
+                }
+            });
+            dfd.resolve(attributes);
+        });
+        return dfd.promise;
+    }
+
     return {
         get: get,
-        reset: reset
+        reset: reset,
+        attributes: attributes
     };
 }]);
