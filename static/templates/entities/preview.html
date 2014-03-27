@@ -29,13 +29,15 @@
             <td>
                 <gn-prop-view property="property" attribute="attributes[name]"></gn-prop-value>
             </td>
-            <td class="pull-right">
-                <span ng-show="property.source_url">
-                    <a href="{{property.source_url}}" target="_blank">Source</a>
-                </span>
-                <gn-permission project="project" role="editor">
-                    <a ng-click="editProperty(property)">Edit</a>
-                </gn-permission>
+            <td>
+                <div class="pull-right">
+                    <a class="btn btn-xs btn-default" href="{{property.source_url}}"
+                        ng-show="property.source_url" target="_blank"><i class="fa fa-link"></i></a>
+                    <gn-permission project="project" role="editor">
+                        <a class="btn btn-xs btn-default"
+                            ng-click="editProperty(attributes[name])"><i class="fa fa-edit"></i></a>
+                    </gn-permission>
+                </div>
             </td>
         </tr>
     </tbody>

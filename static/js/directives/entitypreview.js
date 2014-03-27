@@ -1,5 +1,5 @@
-grano.directive('gnEntityPreview', ['core', '$http', '$route', '$location', 'schemata',
-    function (core, $http, $route, $location, schemata) {
+grano.directive('gnEntityPreview', ['core', '$http', '$route', '$location', '$modal', 'schemata',
+    function (core, $http, $route, $location, $modal, schemata) {
     return {
         restrict: 'E',
         scope: {
@@ -31,8 +31,16 @@ grano.directive('gnEntityPreview', ['core', '$http', '$route', '$location', 'sch
                 });
             };
 
-            scope.editProperty = function(property) {
-                
+            scope.editProperty = function(attribute) {
+                var d = $modal.open({
+                    templateUrl: 'properties/edit.html',
+                    controller: 'PropertiesEditCtrl',
+                    backdrop: false,
+                    resolve: {
+                        obj: function () { return scope.entity; },
+                        attribute: function () { return attribute; }
+                    }
+                });
             };
 
             scope.$watch('preview', function(e) {
