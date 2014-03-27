@@ -1,8 +1,7 @@
 
 function PropertiesEditCtrl($scope, $location, $modalInstance, $http, $route, schemata, obj, attribute) {
-    $scope.attribute = attribute;
     $scope.obj = obj;
-    $scope.property = {fresh: true};
+    $scope.property = {fresh: true, attribute: attribute};
     $scope.attributeChoices = [];
 
     $scope.cancel = function() {
@@ -10,7 +9,10 @@ function PropertiesEditCtrl($scope, $location, $modalInstance, $http, $route, sc
     };
 
     $scope.update = function(form) {
-        $scope.obj.properties[attribute.name] = $scope.property;
+        var attr = $scope.property.attribute;
+        delete $scope.property.attribute;
+        $scope.obj.properties[attr.name] = $scope.property;
+
         var res = $http.post($scope.obj.api_url, $scope.obj);
         res.success(function(data) {
             $modalInstance.dismiss('ok');
@@ -19,8 +21,9 @@ function PropertiesEditCtrl($scope, $location, $modalInstance, $http, $route, sc
         res.error(grano.handleFormError(form));
     };
 
-    if ($scope.attribute) {
-        $scope.property = obj.properties[attribute.name];
+    if (attribute) {
+        $scope.property = obj.properties[attribute.name] || {};
+        $scope.property.attribute = attribute;
     } else {
         var obj_type = $scope.obj.schema ? 'relation' : 'entity';
         schemata.attributes(obj.project.slug, obj_type).then(function(as) {
@@ -29,8 +32,6 @@ function PropertiesEditCtrl($scope, $location, $modalInstance, $http, $route, sc
                     $scope.attributeChoices.push(k);
                 }
             });
-            
-            console.log($scope.attributeChoices);
         });
     }
 }
