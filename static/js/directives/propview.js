@@ -1,11 +1,11 @@
-grano.directive('gnPropValue', ['core', '$http', '$sce', 'schemata', function (core, $http, $sce, schemata) {
+grano.directive('gnPropView', ['core', '$http', '$sce', 'schemata', function (core, $http, $sce, schemata) {
     return {
         restrict: 'E',
         scope: {
             'property': '=',
             'attribute': '='
         },
-        templateUrl: 'directives/propvalue.html',
+        templateUrl: 'directives/propview.html',
         link: function (scope, element, attrs, model) {
             scope.display_value = null;
             var update = function() {
@@ -13,7 +13,7 @@ grano.directive('gnPropValue', ['core', '$http', '$sce', 'schemata', function (c
                 var value = scope.property ? scope.property.value : '';
                 if (scope.attribute.datatype == 'string') {
                     if (/https?:\/\/.*/i.test(value)) {
-                        name = value.replace(/^https?:\/\//i, '');
+                        name = value.replace(/^https?:\/\/(www\.)?/i, '');
                         value = "<a href='" + value + "' target='_blank'>" + name + "</a>";
                     }
                 } else if (scope.attribute.datatype == 'float') {

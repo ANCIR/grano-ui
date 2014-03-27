@@ -1,4 +1,5 @@
-grano.directive('gnEntityPreview', ['core', '$http', 'schemata', function (core, $http, schemata) {
+grano.directive('gnEntityPreview', ['core', '$http', '$route', '$location', 'schemata',
+    function (core, $http, $route, $location, schemata) {
     return {
         restrict: 'E',
         scope: {
@@ -9,6 +10,31 @@ grano.directive('gnEntityPreview', ['core', '$http', 'schemata', function (core,
         link: function (scope, element, attrs, model) {
             scope.entity = {};
             scope.attributes = {};
+            scope.inbound = {};
+            scope.outbound = {};
+            scope.schemata = {};
+
+            scope.previewNext = function(entity) {
+                $location.search('preview', entity.id);
+                $route.reload();
+            };
+
+            scope.loadInbound = function(url) {
+                $http.get(url).then(function(res) {
+                    scope.inbound = res.data;
+                });
+            };
+
+            scope.loadOutbound = function(url) {
+                $http.get(url).then(function(res) {
+                    scope.outbound = res.data;
+                });
+            };
+
+            scope.editProperty = function(property) {
+                
+            };
+
             scope.$watch('preview', function(e) {
                 if (!e || !e.id) return;
                 scope.entity = e;
@@ -20,6 +46,9 @@ grano.directive('gnEntityPreview', ['core', '$http', 'schemata', function (core,
                         core.setTitle(scope.entity.properties.name.value);
                     });
                 }
+
+                scope.loadInbound('/api/1/relations?target=' + e.id);
+                scope.loadOutbound('/api/1/relations?source=' + e.id);
             });
 
             scope.$watch('project', function(p) {

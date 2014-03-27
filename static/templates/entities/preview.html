@@ -6,27 +6,100 @@
   </div>
 </div-->
 
+<div class="btn-group pull-right">
+  <button type="button" class="btn btn-default">Edit</button>
+  <button type="button" class="btn btn-default">Merge</button>
+  <button type="button" class="btn btn-default">Download</button>
+  <button type="button" class="btn btn-default">Delete</button>
+</div>
+
 
 <table class="table">
     <thead>
         <tr>
-            <th>Attribute</th>
-            <th>Value</th>
-            <th width="1%"></th>
+            <th colspan="2">Properties</th>
+            <th></th>
         </tr>
     </thead>
     <tbody>
         <tr ng-repeat="(name, property) in entity.properties">
-            <td>
+            <td width="40%">
                 <a href="#/p/{{project.slug}}/schemata/{{attributes[name].schema.name}}">{{attributes[name].label}}</a>
             </td>
             <td>
-                <gn-prop-value property="property" attribute="attributes[name]"></gn-prop-value>
+                <gn-prop-view property="property" attribute="attributes[name]"></gn-prop-value>
             </td>
-            <td>
+            <td class="pull-right">
                 <span ng-show="property.source_url">
                     <a href="{{property.source_url}}" target="_blank">Source</a>
                 </span>
+                <gn-permission project="project" role="editor">
+                    <a ng-click="editProperty(property)">Edit</a>
+                </gn-permission>
+            </td>
+        </tr>
+    </tbody>
+</table>
+
+<hr>
+
+<table class="table">
+    <thead>
+        <tr>
+            <th colspan="2">Inbound relations</th>
+            <th width="1%">
+                <button type="button" class="btn btn-xs btn-success pull-right"><i class="fa fa-plus"></i></button>
+            </th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr ng-hide="inbound.results">
+            <td colspan="3">
+                <div class="alert alert-info">
+                    This entity does not have any inbound connections.
+                </div>
+            </td>
+        </tr>
+        <tr ng-repeat="relation in inbound.results">
+            <td width="40%">
+                <a ng-click="previewNext(relation.source)">{{relation.source.properties.name.value}}</a>
+            </td>
+            <td>
+                <a href="#/p/{{project.slug}}/schemata/{{relation.schema.name}}">{{relation.schema.label}}</a>
+            </td>
+            <td>
+                <a href="#">Details</a>
+            </td>
+        </tr>
+    </tbody>
+</table>
+
+<div class="clearfix"></div>
+
+<table class="table">
+    <thead>
+        <tr>
+            <th colspan="2">Outbound relations</th>
+            <th width="1%"><button type="button" class="btn btn-xs btn-success pull-right"><i class="fa fa-plus"></i></button></th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr ng-hide="outbound.results">
+            <td colspan="3">
+                <div class="alert alert-info">
+                    This entity does not have any outbound connections.
+                </div>
+            </td>
+        </tr>
+        <tr ng-repeat="relation in outbound.results">
+            <td width="40%">
+                <a ng-click="previewNext(relation.target)">{{relation.target.properties.name.value}}</a>
+            </td>
+            <td>
+                <a href="#/p/{{project.slug}}/schemata/{{relation.schema.name}}">{{relation.schema.label}}</a>
+            </td>
+            <td>
+                <a href="#">Details</a>
             </td>
         </tr>
     </tbody>
