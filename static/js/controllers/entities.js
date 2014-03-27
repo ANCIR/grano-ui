@@ -7,6 +7,7 @@ function EntitiesIndexCtrl($scope, $routeParams, $location, $http, $modal, $time
     $scope.query = {value: ''};
     $scope.project = {};
     $scope.entities = {};
+    $scope.previewEntity = null;
     
     $http.get('/api/1/projects/' + $routeParams.slug).then(function(res) {
         $scope.project = res.data;
@@ -40,9 +41,20 @@ function EntitiesIndexCtrl($scope, $routeParams, $location, $http, $modal, $time
     }
 
     $scope.loadEntities = function(url, params) {
+        $scope.previewEntity = null;
         $http.get(url, {params: params}).then(function(res) {
             $scope.entities = res.data;
         });
+    };
+
+    $scope.showEntityPreview = function(entity) {
+        if ($scope.previewEntity && $scope.previewEntity.id==entity.id) {
+            $scope.previewEntity = null;
+            $location.search('preview', null);
+            return;
+        }
+        $location.search('preview', entity.id);
+        $scope.previewEntity = entity;
     };
 
     $scope.updateSearch();

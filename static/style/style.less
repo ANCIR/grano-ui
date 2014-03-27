@@ -1,6 +1,7 @@
 
 @bgColor: #f8f8f8;
 @borderColor: #e7e7e7;
+@selectedColor: #e7e7e7;
 
 
 /* General styles */
@@ -99,6 +100,10 @@ footer {
 
 td.numeric, th.numeric, td.boolean, th.boolean {
     text-align: right;
+}
+
+tr.selected {
+    background-color: @selectedColor;
 }
 
 .table thead tr th {
