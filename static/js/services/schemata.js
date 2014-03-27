@@ -13,7 +13,7 @@ grano.factory('schemata', ['$http', '$rootScope', '$location', '$q', 'config',
         if(schemata[slug]) {
             dfd.resolve(schemata[slug]); 
         } else {
-            var url = '/api/1/projects/' + slug + '/schemata';
+            var url = config.API_ROOT + '/projects/' + slug + '/schemata';
             $http.get(url, {params: {limit: 1000, full: true}}).then(function(res) {
                 schemata[slug] = res.data.results;
                 dfd.resolve(schemata[slug]);

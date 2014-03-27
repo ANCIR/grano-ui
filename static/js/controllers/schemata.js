@@ -1,16 +1,16 @@
 
-function SchemataIndexCtrl($scope, $routeParams, $location, $http, $modal, $timeout, core, session) {
+function SchemataIndexCtrl($scope, $routeParams, $location, $http, $modal, $timeout, config, core, session) {
     $scope.navSection = 'schemata';
     $scope.project = {};
     $scope.entity_schemata = [];
     $scope.relation_schemata = [];
     
-    $http.get('/api/1/projects/' + $routeParams.slug).then(function(res) {
+    $http.get(config.API_ROOT + '/projects/' + $routeParams.slug).then(function(res) {
         $scope.project = res.data;
         core.setTitle($scope.project.label);
     });
 
-    $http.get('/api/1/projects/' + $routeParams.slug + '/schemata', {params: {limit: 1000}}).then(function(res) {
+    $http.get(config.API_ROOT + '/projects/' + $routeParams.slug + '/schemata', {params: {limit: 1000}}).then(function(res) {
         angular.forEach(res.data.results, function(e) {
             if (e.obj == 'entity') {
                 if (e.name != 'base') {
@@ -24,10 +24,10 @@ function SchemataIndexCtrl($scope, $routeParams, $location, $http, $modal, $time
 
 }
 
-SchemataIndexCtrl.$inject = ['$scope', '$routeParams', '$location', '$http', '$modal', '$timeout', 'core', 'session'];
+SchemataIndexCtrl.$inject = ['$scope', '$routeParams', '$location', '$http', '$modal', '$timeout', 'config', 'core', 'session'];
 
 
-function SchemataViewCtrl($scope, $routeParams, $location, $http, $route, $modal, $timeout, schemata, core, session) {
+function SchemataViewCtrl($scope, $routeParams, $location, $http, $route, $modal, $timeout, config, schemata, core, session) {
     $scope.navSection = 'schemata';
     $scope.project = {};
     $scope.schema = {};
@@ -35,12 +35,12 @@ function SchemataViewCtrl($scope, $routeParams, $location, $http, $route, $modal
     $scope.newAttributeBase = {fresh: true, datatype: 'string'};
     $scope.newAttribute = angular.copy($scope.newAttributeBase);
     
-    $http.get('/api/1/projects/' + $routeParams.slug).then(function(res) {
+    $http.get(config.API_ROOT + '/projects/' + $routeParams.slug).then(function(res) {
         $scope.project = res.data;
     });
 
     if ($routeParams.name) {
-        $http.get('/api/1/projects/' + $routeParams.slug + '/schemata/' + $routeParams.name).then(function(res) {
+        $http.get(config.API_ROOT + '/projects/' + $routeParams.slug + '/schemata/' + $routeParams.name).then(function(res) {
             $scope.schema = res.data;
             core.setTitle($scope.schema.label);
         });    
@@ -49,7 +49,7 @@ function SchemataViewCtrl($scope, $routeParams, $location, $http, $route, $modal
             obj: $routeParams.obj,
             attributes: [],
             fresh: true,
-            api_url: '/api/1/projects/' + $routeParams.slug + '/schemata'
+            api_url: config.API_ROOT + '/projects/' + $routeParams.slug + '/schemata'
         };
         core.setTitle("New Schema");
     }
@@ -97,7 +97,7 @@ function SchemataViewCtrl($scope, $routeParams, $location, $http, $route, $modal
 
 }
 
-SchemataViewCtrl.$inject = ['$scope', '$routeParams', '$location', '$http', '$route', '$modal', '$timeout', 'schemata', 'core', 'session'];
+SchemataViewCtrl.$inject = ['$scope', '$routeParams', '$location', '$http', '$route', '$modal', '$timeout', 'config', 'schemata', 'core', 'session'];
 
 
 function SchemataDeleteCtrl($scope, $location, $modalInstance, $http, session, schema) {

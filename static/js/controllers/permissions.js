@@ -1,11 +1,11 @@
 
-function PermissionsIndexCtrl($scope, $routeParams, $location, $http, $modal, $q, $timeout, core, session) {
-    $scope.url = '/api/1/projects/'+$routeParams.slug+'/permissions';
+function PermissionsIndexCtrl($scope, $routeParams, $location, $http, $modal, $q, $timeout, config, core, session) {
+    $scope.url = config.API_ROOT + '/projects/'+$routeParams.slug+'/permissions';
     $scope.navSection = 'permissions';
     $scope.permissions = {};
     $scope.newPermission = {'reader': true};
     
-    $http.get('/api/1/projects/' + $routeParams.slug).then(function(res) {
+    $http.get(config.API_ROOT + '/projects/' + $routeParams.slug).then(function(res) {
         $scope.project = res.data;
         core.setTitle($scope.project.label);
     });
@@ -34,7 +34,7 @@ function PermissionsIndexCtrl($scope, $routeParams, $location, $http, $modal, $q
     };
 
     $scope.create = function() {
-        var url = '/api/1/projects/' + $routeParams.slug + '/permissions',
+        var url = config.API_ROOT + '/projects/' + $routeParams.slug + '/permissions',
             res = $http.post(url, $scope.newPermission);
 
         res.then(function(res) {
@@ -44,7 +44,7 @@ function PermissionsIndexCtrl($scope, $routeParams, $location, $http, $modal, $q
     };
 
     $scope.loadAccounts = function(query) {
-        var res = $http.get('/api/1/accounts/_suggest', {params: {q: query}});
+        var res = $http.get(config.API_ROOT + '/accounts/_suggest', {params: {q: query}});
         return res.then(function(res) {
             return res.data.results;
         });
@@ -53,4 +53,4 @@ function PermissionsIndexCtrl($scope, $routeParams, $location, $http, $modal, $q
     $scope.loadPermissions($scope.url);
 }
 
-PermissionsIndexCtrl.$inject = ['$scope', '$routeParams', '$location', '$http', '$modal', '$q', '$timeout', 'core', 'session'];
+PermissionsIndexCtrl.$inject = ['$scope', '$routeParams', '$location', '$http', '$modal', '$q', '$timeout', 'config', 'core', 'session'];

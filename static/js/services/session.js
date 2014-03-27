@@ -1,5 +1,5 @@
-grano.factory('session', ['$http', function($http) {
-    var dfd = $http.get('/api/1/sessions');
+grano.factory('session', ['$http', 'config', function($http, config) {
+    var dfd = $http.get(config.API_ROOT + '/sessions');
 
     return {
         get: dfd.success

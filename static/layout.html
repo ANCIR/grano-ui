@@ -39,16 +39,16 @@
             <a ng-click="showAccount()"><i class="fa fa-cogs"></i> Profile</a>
           </li>
           <li ng-hide="session.logged_in">
-            <a href="/api/1/sessions/login/github?next_url={{config.UI_ROOT}}"><i class="fa fa-github"></i> Sign in via GitHub</a>
+            <a href="{{config.API_ROOT}}/sessions/login/github?next_url={{config.UI_ROOT}}"><i class="fa fa-github"></i> Sign in via GitHub</a>
           </li>
           <li ng-hide="session.logged_in">
-            <a href="/api/1/sessions/login/twitter?next_url={{config.UI_ROOT}}"><i class="fa fa-twitter"></i> Sign in via Twitter</a>
+            <a href="{{config.API_ROOT}}/sessions/login/twitter?next_url={{config.UI_ROOT}}"><i class="fa fa-twitter"></i> Sign in via Twitter</a>
           </li>
           <li ng-hide="session.logged_in">
-            <a href="/api/1/sessions/login/facebook?next_url={{config.UI_ROOT}}"><i class="fa fa-facebook"></i> Sign in via Facebook</a>
+            <a href="{{config.API_ROOT}}/sessions/login/facebook?next_url={{config.UI_ROOT}}"><i class="fa fa-facebook"></i> Sign in via Facebook</a>
           </li>
           <li ng-show="session.logged_in">
-            <a href="/api/1/sessions/logout?next_url={{config.UI_ROOT}}"><i class="fa fa-sign-out"></i> Sign Out</a>
+            <a href="{{config.API_ROOT}}/sessions/logout?next_url={{config.UI_ROOT}}"><i class="fa fa-sign-out"></i> Sign Out</a>
           </li>
         </ul>
       </div>
