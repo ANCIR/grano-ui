@@ -27,7 +27,7 @@ function SchemataIndexCtrl($scope, $routeParams, $location, $http, $modal, $time
 SchemataIndexCtrl.$inject = ['$scope', '$routeParams', '$location', '$http', '$modal', '$timeout', 'core', 'session'];
 
 
-function SchemataViewCtrl($scope, $routeParams, $location, $http, $route, $modal, $timeout, core, session) {
+function SchemataViewCtrl($scope, $routeParams, $location, $http, $route, $modal, $timeout, schemata, core, session) {
     $scope.navSection = 'schemata';
     $scope.project = {};
     $scope.schema = {};
@@ -70,6 +70,7 @@ function SchemataViewCtrl($scope, $routeParams, $location, $http, $route, $modal
     $scope.update = function(form) {
         var res = $http.post($scope.schema.api_url, $scope.schema);
         res.success(function(res) {
+            schemata.reset();
             if ($scope.schema.fresh) {
                 $location.path('/p/' + $routeParams.slug + '/schemata/' + res.name);
             } else {
@@ -85,5 +86,5 @@ function SchemataViewCtrl($scope, $routeParams, $location, $http, $route, $modal
 
 }
 
-SchemataViewCtrl.$inject = ['$scope', '$routeParams', '$location', '$http', '$route', '$modal', '$timeout', 'core', 'session'];
+SchemataViewCtrl.$inject = ['$scope', '$routeParams', '$location', '$http', '$route', '$modal', '$timeout', 'schemata', 'core', 'session'];
 

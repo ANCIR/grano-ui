@@ -28,7 +28,11 @@
                 <a href="#/p/{{project.slug}}">Overview</a>
             </li>
             <li ng-show="project" class="nav-section" ng-class="{'active': navSection=='entities'}">
-                <a href="#/p/{{project.slug}}/entities">Entities</a>
+                <a ng-click="frameSearch(project.slug, '')">Entities</a>
+            </li>
+            <li ng-show="project" ng-repeat="schema in frameSchemata"
+                class="nav-section" ng-class="{'active': navSection=='entities.' + schema.name}">
+                <a ng-click="frameSearch(project.slug, schema.name)">{{schema.label}}</a>
             </li>
             <li ng-show="project" class="nav-section">&nbsp;</li>
             <li gn-permission project="project" role="admin" ng-show="project" ng-class="{'active': navSection=='schemata'}">

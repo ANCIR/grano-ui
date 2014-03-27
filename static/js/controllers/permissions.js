@@ -44,7 +44,6 @@ function PermissionsIndexCtrl($scope, $routeParams, $location, $http, $modal, $q
     };
 
     $scope.loadAccounts = function(query) {
-        var dfd = $q.defer();
         var res = $http.get('/api/1/accounts/_suggest', {params: {q: query}});
         return res.then(function(res) {
             return res.data.results;

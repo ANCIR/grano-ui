@@ -30,6 +30,12 @@ function EntitiesIndexCtrl($scope, $routeParams, $location, $http, $modal, $time
         if (fparams.q) {
             fparams.q += '*';
         }
+        if (fparams.schema) {
+            fparams['filter-schemata.name'] = fparams.schema;
+            $scope.navSection = 'entities.' + fparams.schema;
+        } else {
+            $scope.navSection = 'entities';
+        }
         $scope.loadEntities('/api/1/entities/_search', fparams);
     }
 
