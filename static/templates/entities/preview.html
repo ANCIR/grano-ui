@@ -12,13 +12,17 @@
         <tr>
             <th>Attribute</th>
             <th>Value</th>
-            <th></th>
+            <th width="1%"></th>
         </tr>
     </thead>
     <tbody>
         <tr ng-repeat="(name, property) in entity.properties">
-            <td>{{attributes[name].label}}</td>
-            <td>{{property.value}}</td>
+            <td>
+                <a href="#/p/{{project.slug}}/schemata/{{attributes[name].schema.name}}">{{attributes[name].label}}</a>
+            </td>
+            <td>
+                <gn-prop-value property="property" attribute="attributes[name]"></gn-prop-value>
+            </td>
             <td>
                 <span ng-show="property.source_url">
                     <a href="{{property.source_url}}" target="_blank">Source</a>

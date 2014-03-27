@@ -12,6 +12,7 @@
     "angular": "~1.2.13",
     "angular-route": "~1.2.13",
     "angular-bootstrap": "~0.10.0",
-    "angular-animate": "~1.2.15"
+    "angular-animate": "~1.2.15",
+    "moment": "~2.5.1"
   }
 }

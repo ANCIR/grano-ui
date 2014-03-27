@@ -27,10 +27,9 @@ grano.factory('schemata', ['$http', '$rootScope', '$location', '$q', 'config',
         get(slug).then(function(schemata) {
             var attributes = {};
             angular.forEach(schemata, function(s) {
-                console.log(s);
-                console.log(obj);
                 if (!obj || s.obj == obj) {
                     angular.forEach(s.attributes, function(a) {
+                        a.schema = s;
                         attributes[a.name] = a;
                     });
                 }
