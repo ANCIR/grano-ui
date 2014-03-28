@@ -53,7 +53,12 @@ grano.directive('gnPropertyList', ['core', '$http', '$sce', '$modal', 'schemata'
                 } else if (o.schema) {
                     //scope.obj_type = 'relation';
                     schemata.byName(o.project.slug, o.schema.name).then(function(schema) {
-                        scope.attributes = schema.attributes;
+                        scope.attributes = [];
+                        angular.forEach(schema.attributes, function(attr) {
+                            attr.schema = schema;
+                            scope.attributes[attr.name] = attr;
+                        });
+                        //scope.attributes = schema.attributes;
                     });
                 }
             });

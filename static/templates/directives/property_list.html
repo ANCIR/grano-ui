@@ -5,6 +5,7 @@
             <th colspan="2">Properties</th>
             <th>
                 <button type="button" ng-click="editProperty(null)"
+                    gn-permission project="project" role="editor"
                     class="btn btn-xs btn-success pull-right"><i class="fa fa-plus"></i></button>
             </th>
         </tr>
@@ -21,7 +22,7 @@
             <td>
                 <div class="pull-right">
                     <a class="btn btn-xs btn-default" href="{{property.source_url}}"
-                        tooltip-placement="bottom" tooltip="Source URL"
+                        tooltip-placement="bottom" tooltip="Source&nbsp;URL"
                         ng-show="property.source_url" target="_blank"><i class="fa fa-link"></i></a>
                     <gn-permission project="project" role="editor">
                         <a class="btn btn-xs btn-default"

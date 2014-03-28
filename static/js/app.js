@@ -49,6 +49,11 @@ grano.config(['$routeProvider', '$locationProvider',
     controller: EntitiesViewCtrl
   });
 
+  $routeProvider.when('/p/:slug/relations/:id', {
+    templateUrl: 'relations/view.html',
+    controller: RelationsViewCtrl
+  });
+
   $routeProvider.otherwise({
     redirectTo: '/'
   });
