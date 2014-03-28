@@ -1,38 +1,16 @@
 
-<div class="btn-group pull-right">
-  <button type="button" class="btn btn-default"
-    gn-permission project="project" role="editor"><i class="fa fa-pencil-square-o"></i> Edit</button>
-  <button type="button" class="btn btn-default"
-    gn-permission project="project" role="editor"><i class="fa fa-link"></i> Merge</button>
-  <!--button type="button" class="btn btn-default">Download</button-->
-
-  <div class="btn-group">
-    <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown">
-      <i class="fa fa-download"></i> Data
-      <span class="caret"></span>
-    </button>
-    <ul class="dropdown-menu">
-        <li>
-            <a href="{{config.API_ROOT}}/entities/{{entity.id}}">Entity data (JSON)</a>
-            <a href="{{config.API_ROOT}}/entities/{{entity.id}}/graph?format=json">Neighbourhood (JSON)</a>
-            <a href="{{config.API_ROOT}}/entities/{{entity.id}}/graph?format=gexf">Neighbourhood (GEXF)</a>
-        </li>
-    </ul>
-  </div>
-
-  <button type="button" class="btn btn-default"
-    gn-permission project="project" role="editor"
-    ng-click="deleteEntity()"><i class="fa fa-trash-o"></i> Delete</button>
+<div class="panel panel-default">
+    <gn-entity-header entity="entity"></gn-entity-header>
+    <div class="panel-body"> 
+        <div class="row">
+            <div class="col-md-12">
+                <gn-property-list obj="entity" refresh="reloadEntity"></gn-property-list>
+            </div>
+            <div class="col-md-12">
+                <gn-relation-list entity="entity" direction="inbound"></gn-relation-list>
+                <div class="clearfix"></div>
+                <gn-relation-list entity="entity" direction="outbound"></gn-relation-list>
+            </div>
+        </div>
+    </div>
 </div>
-
-<div class="clearfix"></div>
-
-<gn-property-list obj="entity" refresh="reloadEntity"></gn-property-list>
-
-<hr>
-
-<gn-relation-list entity="entity" direction="inbound"></gn-relation-list>
-
-<div class="clearfix"></div>
-
-<gn-relation-list entity="entity" direction="outbound"></gn-relation-list>

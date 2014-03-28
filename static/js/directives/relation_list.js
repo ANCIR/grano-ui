@@ -1,4 +1,5 @@
-grano.directive('gnRelationList', ['core', '$http', '$sce', 'schemata', function (core, $http, $sce, schemata) {
+grano.directive('gnRelationList', ['core', '$http', '$sce', '$modal', 'schemata',
+    function (core, $http, $sce, $modal, schemata) {
     return {
         restrict: 'E',
         scope: {
@@ -17,9 +18,20 @@ grano.directive('gnRelationList', ['core', '$http', '$sce', 'schemata', function
                 });
             };
 
+            scope.deleteRelation = function(relation) {
+                var d = $modal.open({
+                    templateUrl: 'relations/delete.html',
+                    controller: 'RelationsDeleteCtrl',
+                    resolve: {
+                        relation: function () { return relation; }
+                    }
+                });
+            };
+
             scope.$watch('entity', function(e) {
                 if (!e || !e.id) return;
 
+                scope.project = e.project;
                 var url = core.call('/relations?' + scope.localName + '=' + e.id);
                 scope.load(url);
             });

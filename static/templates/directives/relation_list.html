@@ -31,11 +31,15 @@
                     {{relation[oppositeName].properties.name.value}}</a>
             </td>
             <td>
-                <a href="#/p/{{entity.project.slug}}/schemata/{{relation.schema.name}}">
+                <a href="#/p/{{entity.project.slug}}/relations/{{relation.id}}">
                     {{relation.schema.label}}</a>
             </td>
             <td>
-                <a href="#/p/{{entity.project.slug}}/relations/{{relation.id}}">Details</a>
+                <gn-permission project="project" role="editor">
+                    <a class="btn btn-xs btn-default"
+                       tooltip-placement="bottom" tooltip="Remove"
+                       ng-click="deleteRelation(relation)"><i class="fa fa-minus"></i></a>
+                </gn-permission>
             </td>
         </tr>
     </tbody>

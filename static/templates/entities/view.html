@@ -1,42 +1,7 @@
 
 <gn-frame>
     <div class="panel panel-default">
-        <div class="panel-heading panel-heading-buttons">
-            <div class="row">
-                <div class="col-md-7">
-                    <h3 class="panel-title">
-                        <strong>
-                            {{entity.properties.name.value}}
-                        </strong>
-                    </h3>
-                </div>
-                <div class="col-md-5">
-                    <div class="btn-group pull-right">
-                      <button type="button" class="btn btn-sm btn-default"
-                        gn-permission project="project" role="editor"><i class="fa fa-pencil-square-o"></i> Edit</button>
-                      <button type="button" class="btn btn-sm btn-default"
-                        gn-permission project="project" role="editor"><i class="fa fa-link"></i> Merge</button>
-                      <div class="btn-group">
-                        <button type="button" class="btn btn-sm btn-default dropdown-toggle" data-toggle="dropdown">
-                          <i class="fa fa-download"></i> Data
-                          <span class="caret"></span>
-                        </button>
-                        <ul class="dropdown-menu">
-                            <li>
-                                <a href="{{config.API_ROOT}}/entities/{{entity.id}}">Entity data (JSON)</a>
-                                <a href="{{config.API_ROOT}}/entities/{{entity.id}}/graph?format=json">Neighbourhood (JSON)</a>
-                                <a href="{{config.API_ROOT}}/entities/{{entity.id}}/graph?format=gexf">Neighbourhood (GEXF)</a>
-                            </li>
-                        </ul>
-                      </div>
-
-                      <button type="button" class="btn btn-sm btn-default"
-                        gn-permission project="project" role="editor"
-                        ng-click="deleteEntity()"><i class="fa fa-trash-o"></i> Delete</button>
-                    </div>
-                </div>
-            </div>
-        </div>
+        <gn-entity-header entity="entity"></gn-entity-header>
         <div class="panel-body"> 
             <div class="row">
                 <div class="col-md-6">
