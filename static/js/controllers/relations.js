@@ -46,4 +46,4 @@ function RelationsDeleteCtrl($scope, $routeParams, $location, $http, $route, $mo
     };
 }
 
-EntitiesDeleteCtrl.$inject = ['$scope', '$routeParams', '$location', '$http', '$route', '$modal', '$modalInstance', 'session', 'relation'];
+RelationsDeleteCtrl.$inject = ['$scope', '$routeParams', '$location', '$http', '$route', '$modal', '$modalInstance', 'session', 'relation'];

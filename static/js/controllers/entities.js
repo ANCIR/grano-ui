@@ -80,6 +80,16 @@ function EntitiesViewCtrl($scope, $routeParams, $location, $http, $modal, core, 
         });    
     };
 
+    $scope.deleteEntity = function() {
+        var d = $modal.open({
+            templateUrl: 'entities/delete.html',
+            controller: 'EntitiesDeleteCtrl',
+            resolve: {
+                entity: function () { return $scope.entity; }
+            }
+        });
+    };
+
     $scope.reloadEntity($routeParams.id);
     
 }
