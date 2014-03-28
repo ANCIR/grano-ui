@@ -36,6 +36,8 @@
                         <a class="btn btn-xs btn-default"
                             tooltip-placement="bottom" tooltip="Edit"
                             ng-click="editProperty(attributes[name])"><i class="fa fa-edit"></i></a>
+                    </gn-permission>
+                    <gn-permission project="project" role="editor">
                         <a class="btn btn-xs btn-default" ng-disabled="name=='name'"
                             tooltip-placement="bottom" tooltip="Remove"
                             ng-click="disableProperty(attributes[name])"><i class="fa fa-minus"></i></a>
@@ -77,6 +79,7 @@
             </td>
         </tr>
     </tbody>
+    <gn-pager class="pull-right" response="inbound" load="loadInbound(url)"></gn-pager>
 </table>
 
 <div class="clearfix"></div>
@@ -108,4 +111,5 @@
             </td>
         </tr>
     </tbody>
+    <gn-pager class="pull-right" response="outbound" load="loadOutbound(url)"></gn-pager>
 </table>

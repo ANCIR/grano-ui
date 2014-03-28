@@ -28,10 +28,10 @@
               </tr>
           </tbody>
       </table>
+      <gn-pager class="pull-right" response="entities" load="loadEntities(url)"></gn-pager>
     </div>
     <div ng-show="previewEntity" class="col-md-9">
       <gn-entity-preview preview="previewEntity" project="project"></gn-entity-preview>
     </div>
   </div>
-  <gn-pager class="pull-right" response="entities" load="loadEntities(url)"></gn-pager>
 </gn-frame>
