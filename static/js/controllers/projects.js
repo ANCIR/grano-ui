@@ -1,11 +1,7 @@
 
 function ProjectsViewCtrl($scope, $routeParams, $location, $http, $modal, $timeout, core, session) {
     $scope.navSection = 'project';
-    $scope.project = {};
-    
-    $http.get(core.call('/projects/' + $routeParams.slug)).then(function(res) {
-        $scope.project = res.data;
-    });
+    $scope.loadProject($routeParams.slug);
 }
 
 ProjectsViewCtrl.$inject = ['$scope', '$routeParams', '$location', '$http', '$modal', '$timeout', 'core', 'session'];
@@ -33,12 +29,7 @@ ProjectsNewCtrl.$inject = ['$scope', '$routeParams', '$modalInstance', '$locatio
 
 function ProjectsEditCtrl($scope, $route, $routeParams, $location, $http, core) {
     $scope.navSection = 'settings';
-    $scope.project = {};
-
-    $http.get(core.call('/projects/' + $routeParams.slug)).then(function(res) {
-        $scope.project = res.data;
-        core.setTitle($scope.project.label);
-    });
+    $scope.loadProject($routeParams.slug);
 
     $scope.update = function(form) {
         var res = $http.post(core.call('/projects/' + $scope.project.slug), $scope.project);

@@ -1,14 +1,11 @@
 
 function PermissionsIndexCtrl($scope, $routeParams, $location, $http, $modal, $q, $timeout, core, session) {
+    $scope.loadProject($routeParams.slug);
     $scope.url = core.call('/projects/'+$routeParams.slug+'/permissions');
+
     $scope.navSection = 'permissions';
     $scope.permissions = {};
     $scope.newPermission = {'reader': true, 'editor': true};
-    
-    $http.get(core.call('/projects/' + $routeParams.slug)).then(function(res) {
-        $scope.project = res.data;
-        core.setTitle($scope.project.label);
-    });
 
     $scope.loadPermissions = function(url) {
         $http.get(url).then(function(res) {

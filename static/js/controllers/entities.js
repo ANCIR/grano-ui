@@ -3,12 +3,13 @@ function EntitiesIndexCtrl($scope, $routeParams, $location, $http, $modal, $time
     var params = {project: $routeParams.slug, 'limit': 25},
         filterTimeout = null;
 
+    $scope.loadProject($routeParams.slug);
     $scope.navSection = 'entities';
     $scope.query = {value: $location.search().q};
     $scope.project = {};
     $scope.entities = {};
     $scope.previewEntity = null;
-    
+
     $http.get(core.call('/projects/' + $routeParams.slug)).then(function(res) {
         $scope.project = res.data;
         core.setTitle($scope.project.label);
@@ -69,12 +70,8 @@ EntitiesIndexCtrl.$inject = ['$scope', '$routeParams', '$location', '$http', '$m
 function EntitiesViewCtrl($scope, $routeParams, $location, $http, $modal, core, session) {
     $scope.navSection = 'entities';
 
-    $scope.project = {};
+    $scope.loadProject($routeParams.slug);
     $scope.entity = {};
-    
-    $http.get(core.call('/projects/' + $routeParams.slug)).then(function(res) {
-        $scope.project = res.data;
-    });
 
     $http.get(core.call('/entities/' + $routeParams.id)).then(function(res) {
         $scope.entity = res.data;

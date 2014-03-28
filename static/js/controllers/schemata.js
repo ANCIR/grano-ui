@@ -1,14 +1,9 @@
 
 function SchemataIndexCtrl($scope, $routeParams, $location, $http, $modal, $timeout, core, session) {
     $scope.navSection = 'schemata';
-    $scope.project = {};
+    $scope.loadProject($routeParams.slug);
     $scope.entity_schemata = [];
     $scope.relation_schemata = [];
-    
-    $http.get(core.call('/projects/' + $routeParams.slug)).then(function(res) {
-        $scope.project = res.data;
-        core.setTitle($scope.project.label);
-    });
 
     $http.get(core.call('/projects/' + $routeParams.slug + '/schemata'), {params: {limit: 1000}}).then(function(res) {
         angular.forEach(res.data.results, function(e) {
@@ -29,16 +24,12 @@ SchemataIndexCtrl.$inject = ['$scope', '$routeParams', '$location', '$http', '$m
 
 function SchemataViewCtrl($scope, $routeParams, $location, $http, $route, $modal, $timeout, schemata, core, session) {
     $scope.navSection = 'schemata';
-    $scope.project = {};
+    $scope.loadProject($routeParams.slug);
     $scope.schema = {};
 
     $scope.newAttributeBase = {fresh: true, datatype: 'string'};
     $scope.newAttribute = angular.copy($scope.newAttributeBase);
     
-    $http.get(core.call('/projects/' + $routeParams.slug)).then(function(res) {
-        $scope.project = res.data;
-    });
-
     if ($routeParams.name) {
         $http.get(core.call('/projects/' + $routeParams.slug + '/schemata/' + $routeParams.name)).then(function(res) {
             $scope.schema = res.data;
