@@ -1,11 +1,11 @@
-grano.directive('gnPropView', ['core', '$http', '$sce', 'schemata', function (core, $http, $sce, schemata) {
+grano.directive('gnPropertyView', ['core', '$http', '$sce', 'schemata', function (core, $http, $sce, schemata) {
     return {
         restrict: 'E',
         scope: {
             'property': '=',
             'attribute': '='
         },
-        templateUrl: 'directives/propview.html',
+        templateUrl: 'directives/property_view.html',
         link: function (scope, element, attrs, model) {
             scope.display_value = null;
             var update = function() {

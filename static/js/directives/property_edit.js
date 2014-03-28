@@ -1,11 +1,11 @@
-grano.directive('gnPropEdit', ['core', '$http', '$sce', 'schemata', function (core, $http, $sce, schemata) {
+grano.directive('gnPropertyEdit', ['core', '$http', '$sce', 'schemata', function (core, $http, $sce, schemata) {
     return {
         restrict: 'E',
         scope: {
             'property': '=',
             'attribute': '='
         },
-        templateUrl: 'directives/propedit.html',
+        templateUrl: 'directives/property_edit.html',
         link: function (scope, element, attrs, model) {
             var update = function() {
                 if(scope.attribute && scope.property && scope.attribute.datatype == 'datetime') {
