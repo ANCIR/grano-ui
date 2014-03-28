@@ -29,12 +29,11 @@ function EntitiesIndexCtrl($scope, $routeParams, $location, $http, $modal, $time
         var fparams = angular.copy(params);
         angular.extend(fparams, $location.search());
         if (fparams.schema) {
-        //    fparams['filter-schemata.name'] = fparams.schema;
             $scope.navSection = 'entities.' + fparams.schema;
         } else {
             $scope.navSection = 'entities';
         }
-        $scope.loadEntities(core.call('/entities', fparams));
+        $scope.loadEntities(core.call('/entities'), fparams);
     }
 
     $scope.loadEntities = function(url, params) {
