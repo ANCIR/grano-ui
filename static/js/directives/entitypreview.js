@@ -8,38 +8,13 @@ grano.directive('gnEntityPreview', ['core', '$http', '$route', '$location', '$mo
         },
         templateUrl: 'entities/preview.html',
         link: function (scope, element, attrs, model) {
-            scope.config = config;
+            //scope.config = config;
             scope.entity = {};
-            scope.attributes = {};
-            scope.inbound = {};
-            scope.outbound = {};
 
             scope.reloadEntity = function(id) {
                 $http.get(core.call('/entities/' + id)).then(function(res) {
                     scope.entity = res.data;
                     core.setTitle(scope.entity.properties.name.value);
-                });
-            };
-
-            scope.editProperty = function(attribute) {
-                var d = $modal.open({
-                    templateUrl: 'properties/edit.html',
-                    controller: 'PropertiesEditCtrl',
-                    backdrop: false,
-                    resolve: {
-                        obj: function () { return scope.entity; },
-                        attribute: function () { return attribute; }
-                    }
-                });
-                d.result.finally(function() {
-                    scope.reloadEntity(scope.entity.id);
-                });
-            };
-
-            scope.disableProperty = function(attribute) {
-                delete scope.entity.properties[attribute.name];
-                $http.post(scope.entity.api_url, scope.entity).then(function(res) {
-                    scope.entity = res.data;
                 });
             };
 

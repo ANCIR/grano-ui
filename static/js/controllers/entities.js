@@ -73,11 +73,15 @@ function EntitiesViewCtrl($scope, $routeParams, $location, $http, $modal, core, 
     $scope.loadProject($routeParams.slug);
     $scope.entity = {};
 
-    $http.get(core.call('/entities/' + $routeParams.id)).then(function(res) {
-        $scope.entity = res.data;
-        $scope.json = JSON.stringify(res.data, null, "  ");
-        core.setTitle(res.data.properties.name.value);
-    });
+    $scope.reloadEntity = function(id) {
+        $http.get(core.call('/entities/' + id)).then(function(res) {
+            $scope.entity = res.data;
+            core.setTitle(res.data.properties.name.value);
+        });    
+    };
+
+    $scope.reloadEntity($routeParams.id);
+    
 }
 
 EntitiesViewCtrl.$inject = ['$scope', '$routeParams', '$location', '$http', '$modal', 'core', 'session'];

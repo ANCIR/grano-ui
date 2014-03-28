@@ -6,7 +6,7 @@
 
   <div class="btn-group">
     <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown">
-      <i class="fa fa-download"></i> Download
+      <i class="fa fa-download"></i> Data
       <span class="caret"></span>
     </button>
     <ul class="dropdown-menu">
@@ -24,45 +24,7 @@
 
 <div class="clearfix"></div>
 
-<table class="table">
-    <thead>
-        <tr>
-            <th colspan="2">Properties</th>
-            <th>
-                <button type="button" ng-click="editProperty(null)"
-                    class="btn btn-xs btn-success pull-right"><i class="fa fa-plus"></i></button>
-            </th>
-        </tr>
-    </thead>
-    <tbody>
-        <tr ng-repeat="(name, property) in entity.properties">
-            <td width="40%">
-                <a href="#/p/{{project.slug}}/schemata/{{attributes[name].schema.name}}"
-                   tooltip-placement="bottom" tooltip="Schema: {{attributes[name].schema.label}}">{{attributes[name].label}}</a>
-            </td>
-            <td>
-                <gn-property-view property="property" attribute="attributes[name]"></gn-prop-value>
-            </td>
-            <td>
-                <div class="pull-right">
-                    <a class="btn btn-xs btn-default" href="{{property.source_url}}"
-                        tooltip-placement="bottom" tooltip="Source URL"
-                        ng-show="property.source_url" target="_blank"><i class="fa fa-link"></i></a>
-                    <gn-permission project="project" role="editor">
-                        <a class="btn btn-xs btn-default"
-                            tooltip-placement="bottom" tooltip="Edit"
-                            ng-click="editProperty(attributes[name])"><i class="fa fa-edit"></i></a>
-                    </gn-permission>
-                    <gn-permission project="project" role="editor">
-                        <a class="btn btn-xs btn-default" ng-disabled="name=='name'"
-                            tooltip-placement="bottom" tooltip="Remove"
-                            ng-click="disableProperty(attributes[name])"><i class="fa fa-minus"></i></a>
-                    </gn-permission>
-                </div>
-            </td>
-        </tr>
-    </tbody>
-</table>
+<gn-property-list obj="entity" refresh="reloadEntity"></gn-property-list>
 
 <hr>
 

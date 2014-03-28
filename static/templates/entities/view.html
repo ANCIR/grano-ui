@@ -1,6 +1,13 @@
 
 <gn-frame>
-    <h3 class="page-header">{{entity.properties.name.value}}</h3>
-
-    <pre>{{json}}</pre>
+    <div class="row">
+        <div class="col-md-6">
+            <gn-property-list obj="entity" refresh="reloadEntity"></gn-property-list>
+        </div>
+        <div class="col-md-6">
+            <gn-relation-list entity="entity" direction="inbound"></gn-relation-list>
+            <div class="clearfix"></div>
+            <gn-relation-list entity="entity" direction="outbound"></gn-relation-list>
+        </div>
+    </div>
 </gn-frame>

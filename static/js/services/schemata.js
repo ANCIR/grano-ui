@@ -5,7 +5,7 @@ grano.factory('schemata', ['$http', '$rootScope', '$location', '$q', 'core',
 
     var reset = function(slug) {
         schemata[slug] = null;
-    }
+    };
 
     var get = function(slug) {
         var dfd = $q.defer();
@@ -20,7 +20,19 @@ grano.factory('schemata', ['$http', '$rootScope', '$location', '$q', 'core',
             })
         }
         return dfd.promise;
-    }
+    };
+
+    var byName = function(slug, name) {
+        var dfd = $q.defer();
+        get(slug).then(function(schemata) {
+            angular.forEach(schemata, function(schema) {
+                if (schema.name==name) {
+                    dfd.resolve(schema);
+                }
+            });
+        });
+        return dfd.promise;
+    };
 
     var attributes = function(slug, obj) {
         var dfd = $q.defer();
@@ -37,11 +49,12 @@ grano.factory('schemata', ['$http', '$rootScope', '$location', '$q', 'core',
             dfd.resolve(attributes);
         });
         return dfd.promise;
-    }
+    };
 
     return {
         get: get,
         reset: reset,
-        attributes: attributes
+        attributes: attributes,
+        byName: byName
     };
 }]);
