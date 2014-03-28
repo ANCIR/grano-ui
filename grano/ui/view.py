@@ -37,7 +37,7 @@ def index(**kw):
 @blueprint.route('/config.js')
 def config(**kw):
     api_root = app.config.get('API_ROOT') or url_for('base_api.status')
-    res = render_template('js/config.js', ui_root=UI_PREFIX,
+    res = render_template('js/config.js', ui_root=url_for('ui.index'),
         data_types=dumps(app.config['DATA_TYPES']),
         schema_objs=dumps(app.config['SCHEMA_OBJS']),
         api_root=api_root,
