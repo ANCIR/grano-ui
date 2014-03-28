@@ -21,23 +21,6 @@ grano.directive('gnEntityPreview', ['core', '$http', '$route', '$location', '$mo
                 });
             };
 
-            scope.previewNext = function(entity) {
-                $location.search('preview', entity.id);
-                $route.reload();
-            };
-
-            scope.loadInbound = function(url) {
-                $http.get(url).then(function(res) {
-                    scope.inbound = res.data;
-                });
-            };
-
-            scope.loadOutbound = function(url) {
-                $http.get(url).then(function(res) {
-                    scope.outbound = res.data;
-                });
-            };
-
             scope.editProperty = function(attribute) {
                 var d = $modal.open({
                     templateUrl: 'properties/edit.html',
@@ -75,10 +58,9 @@ grano.directive('gnEntityPreview', ['core', '$http', '$route', '$location', '$mo
                 scope.entity = e;
                 
                 // check for the full REST:
-                if (!e.created_at) scope.reloadEntity(e.id);
-
-                scope.loadInbound(core.call('/relations?target=' + e.id));
-                scope.loadOutbound(core.call('/relations?source=' + e.id));
+                if (!e.created_at) {
+                    scope.reloadEntity(e.id);
+                }
             });
 
             scope.$watch('project', function(p) {

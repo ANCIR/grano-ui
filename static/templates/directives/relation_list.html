@@ -1,0 +1,43 @@
+
+<table class="table">
+    <thead>
+        <tr>
+            <th colspan="2">
+                <span ng-show="direction=='outbound'">Outbound relations</span>
+                <span ng-show="direction=='inbound'">Inbound relations</span>
+            </th>
+            <th width="1%">
+                <button type="button"
+                    class="btn btn-xs btn-success pull-right"><i class="fa fa-plus"></i></button>
+            </th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr ng-hide="relations.results">
+            <td colspan="3">
+                <div class="alert alert-info">
+                    <span ng-show="direction=='outbound'">
+                        This entity does not have any outbound connections.
+                    </span>
+                    <span ng-show="direction=='inbound'">
+                        This entity does not have any inbound connections.
+                    </span>
+                </div>
+            </td>
+        </tr>
+        <tr ng-repeat="relation in relations.results">
+            <td width="40%">
+                <a href="#/p/{{entity.project.slug}}/entities/{{relation[oppositeName].id}}">
+                    {{relation[oppositeName].properties.name.value}}</a>
+            </td>
+            <td>
+                <a href="#/p/{{entity.project.slug}}/schemata/{{relation.schema.name}}">
+                    {{relation.schema.label}}</a>
+            </td>
+            <td>
+                <a href="#">Details</a>
+            </td>
+        </tr>
+    </tbody>
+    <gn-pager class="pull-right" response="relations" load="load(url)"></gn-pager>
+</table>

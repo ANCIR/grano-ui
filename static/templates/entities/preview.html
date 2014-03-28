@@ -66,66 +66,8 @@
 
 <hr>
 
-<table class="table">
-    <thead>
-        <tr>
-            <th colspan="2">Inbound relations</th>
-            <th width="1%">
-                <button type="button" class="btn btn-xs btn-success pull-right"><i class="fa fa-plus"></i></button>
-            </th>
-        </tr>
-    </thead>
-    <tbody>
-        <tr ng-hide="inbound.results">
-            <td colspan="3">
-                <div class="alert alert-info">
-                    This entity does not have any inbound connections.
-                </div>
-            </td>
-        </tr>
-        <tr ng-repeat="relation in inbound.results">
-            <td width="40%">
-                <a ng-click="previewNext(relation.source)">{{relation.source.properties.name.value}}</a>
-            </td>
-            <td>
-                <a href="#/p/{{project.slug}}/schemata/{{relation.schema.name}}">{{relation.schema.label}}</a>
-            </td>
-            <td>
-                <a href="#">Details</a>
-            </td>
-        </tr>
-    </tbody>
-    <gn-pager class="pull-right" response="inbound" load="loadInbound(url)"></gn-pager>
-</table>
+<gn-relation-list entity="entity" direction="inbound"></gn-relation-list>
 
 <div class="clearfix"></div>
 
-<table class="table">
-    <thead>
-        <tr>
-            <th colspan="2">Outbound relations</th>
-            <th width="1%"><button type="button" class="btn btn-xs btn-success pull-right"><i class="fa fa-plus"></i></button></th>
-        </tr>
-    </thead>
-    <tbody>
-        <tr ng-hide="outbound.results">
-            <td colspan="3">
-                <div class="alert alert-info">
-                    This entity does not have any outbound connections.
-                </div>
-            </td>
-        </tr>
-        <tr ng-repeat="relation in outbound.results">
-            <td width="40%">
-                <a ng-click="previewNext(relation.target)">{{relation.target.properties.name.value}}</a>
-            </td>
-            <td>
-                <a href="#/p/{{project.slug}}/schemata/{{relation.schema.name}}">{{relation.schema.label}}</a>
-            </td>
-            <td>
-                <a href="#">Details</a>
-            </td>
-        </tr>
-    </tbody>
-    <gn-pager class="pull-right" response="outbound" load="loadOutbound(url)"></gn-pager>
-</table>
+<gn-relation-list entity="entity" direction="outbound"></gn-relation-list>
