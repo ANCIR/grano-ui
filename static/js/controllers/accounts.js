@@ -1,4 +1,4 @@
-function AccountCtrl($scope, $location, $modalInstance, $http, config, session) {
+function AccountCtrl($scope, $location, $modalInstance, $http, core, session) {
     $scope.session = {logged_in: false};
     $scope.account = {};
 
@@ -12,7 +12,7 @@ function AccountCtrl($scope, $location, $modalInstance, $http, config, session) 
     };
 
     $scope.update = function(form) {
-        var res = $http.post(config.API_ROOT + '/accounts/' + $scope.account.id,
+        var res = $http.post(core.call('/accounts/' + $scope.account.id),
             $scope.account);
         res.success(function(data) {
             $scope.account = data;
@@ -25,4 +25,4 @@ function AccountCtrl($scope, $location, $modalInstance, $http, config, session) 
     
 }
 
-AccountCtrl.$inject = ['$scope', '$location', '$modalInstance', '$http', 'config', 'session'];
+AccountCtrl.$inject = ['$scope', '$location', '$modalInstance', '$http', 'core', 'session'];

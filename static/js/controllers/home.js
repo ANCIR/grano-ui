@@ -1,4 +1,4 @@
-function HomeCtrl($scope, $location, $http, $modal, config) {
+function HomeCtrl($scope, $location, $http, $modal, core) {
     $scope.projects = {};
 
     $scope.loadProjects = function(url) {
@@ -7,7 +7,7 @@ function HomeCtrl($scope, $location, $http, $modal, config) {
         });
     };
     
-    $scope.loadProjects(config.API_ROOT + '/projects');
+    $scope.loadProjects(core.call('/projects'));
 
     $scope.newProject = function(){
         var d = $modal.open({
@@ -18,4 +18,4 @@ function HomeCtrl($scope, $location, $http, $modal, config) {
     };
 }
 
-HomeCtrl.$inject = ['$scope', '$location', '$http', '$modal', 'config'];
+HomeCtrl.$inject = ['$scope', '$location', '$http', '$modal', 'core'];

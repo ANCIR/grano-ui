@@ -1,5 +1,5 @@
-grano.directive('gnEntityPreview', ['core', '$http', '$route', '$location', '$modal', 'config', 'schemata',
-    function (core, $http, $route, $location, $modal, schemata) {
+grano.directive('gnEntityPreview', ['core', '$http', '$route', '$location', '$modal', 'core', 'schemata',
+    function (core, $http, $route, $location, $modal, core, schemata) {
     return {
         restrict: 'E',
         scope: {
@@ -14,7 +14,7 @@ grano.directive('gnEntityPreview', ['core', '$http', '$route', '$location', '$mo
             scope.outbound = {};
 
             scope.reloadEntity = function(id) {
-                $http.get(config.API_ROOT + '/entities/' + id).then(function(res) {
+                $http.get(core.call('/entities/' + id)).then(function(res) {
                     scope.entity = res.data;
                     core.setTitle(scope.entity.properties.name.value);
                 });
@@ -66,8 +66,8 @@ grano.directive('gnEntityPreview', ['core', '$http', '$route', '$location', '$mo
                 // check for the full REST:
                 if (!e.created_at) scope.reloadEntity(e.id);
 
-                scope.loadInbound(config.API_ROOT + '/relations?target=' + e.id);
-                scope.loadOutbound(config.API_ROOT + '/relations?source=' + e.id);
+                scope.loadInbound(core.call('/relations?target=' + e.id));
+                scope.loadOutbound(core.call('/relations?source=' + e.id));
             });
 
             scope.$watch('project', function(p) {
