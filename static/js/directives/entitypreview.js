@@ -59,6 +59,20 @@ grano.directive('gnEntityPreview', ['core', '$http', '$route', '$location', '$mo
                 });
             };
 
+            scope.deleteEntity = function() {
+                var d = $modal.open({
+                    templateUrl: 'entities/delete.html',
+                    controller: 'EntitiesDeleteCtrl',
+                    resolve: {
+                        entity: function () { return scope.entity; }
+                    }
+                });
+                d.result.finally(function() {
+                    $location.search('preview', null);
+                    $route.reload();
+                });
+            };
+
             scope.$watch('preview', function(e) {
                 if (!e || !e.id) return;
                 scope.entity = e;

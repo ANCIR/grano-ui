@@ -1,5 +1,5 @@
 
-function EntitiesIndexCtrl($scope, $routeParams, $location, $http, $modal, $timeout, core, session) {
+function EntitiesIndexCtrl($scope, $routeParams, $location, $http, $modal, core, session) {
     var params = {project: $routeParams.slug, 'limit': 25},
         filterTimeout = null;
 
@@ -63,10 +63,10 @@ function EntitiesIndexCtrl($scope, $routeParams, $location, $http, $modal, $time
     }
 }
 
-EntitiesIndexCtrl.$inject = ['$scope', '$routeParams', '$location', '$http', '$modal', '$timeout', 'core', 'session'];
+EntitiesIndexCtrl.$inject = ['$scope', '$routeParams', '$location', '$http', '$modal', 'core', 'session'];
 
 
-function EntitiesViewCtrl($scope, $routeParams, $location, $http, $modal, $timeout, core, session) {
+function EntitiesViewCtrl($scope, $routeParams, $location, $http, $modal, core, session) {
     $scope.navSection = 'entities';
 
     $scope.project = {};
@@ -83,4 +83,23 @@ function EntitiesViewCtrl($scope, $routeParams, $location, $http, $modal, $timeo
     });
 }
 
-EntitiesViewCtrl.$inject = ['$scope', '$routeParams', '$location', '$http', '$modal', '$timeout', 'core', 'session'];
+EntitiesViewCtrl.$inject = ['$scope', '$routeParams', '$location', '$http', '$modal', 'core', 'session'];
+
+
+function EntitiesDeleteCtrl($scope, $routeParams, $location, $http, $modal, $modalInstance, session, entity) {
+    $scope.entity = entity;
+
+    $scope.cancel = function() {
+        $modalInstance.dismiss('cancel');
+    };
+
+    $scope.delete = function() {
+        var res = $http.delete($scope.entity.api_url);
+        res.error(function(data) {
+            $modalInstance.dismiss('ok');
+            //$location.path('/p/' + $scope.schema.project.slug + '/entities');
+        });
+    };
+}
+
+EntitiesDeleteCtrl.$inject = ['$scope', '$routeParams', '$location', '$http', '$modal', '$modalInstance', 'session', 'entity'];

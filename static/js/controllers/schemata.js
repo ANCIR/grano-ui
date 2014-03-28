@@ -88,7 +88,6 @@ function SchemataViewCtrl($scope, $routeParams, $location, $http, $route, $modal
         var d = $modal.open({
             templateUrl: 'schemata/delete.html',
             controller: 'SchemataDeleteCtrl',
-            backdrop: false,
             resolve: {
                 schema: function () { return $scope.schema; }
             }
