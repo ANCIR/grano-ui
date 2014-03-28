@@ -34,6 +34,10 @@ grano.directive('gnPropertyList', ['core', '$http', '$sce', '$modal', 'schemata'
                 return true;
             };
 
+            scope.canCreate = function() {
+                return _.keys(scope.attributes).length > _.keys(scope.obj.properties).length;
+            };
+
             scope.disableProperty = function(attribute) {
                 delete scope.entity.properties[attribute.name];
                 $http.post(scope.entity.api_url, scope.entity).then(function(res) {
@@ -53,7 +57,7 @@ grano.directive('gnPropertyList', ['core', '$http', '$sce', '$modal', 'schemata'
                 } else if (o.schema) {
                     //scope.obj_type = 'relation';
                     schemata.byName(o.project.slug, o.schema.name).then(function(schema) {
-                        scope.attributes = [];
+                        scope.attributes = {};
                         angular.forEach(schema.attributes, function(attr) {
                             attr.schema = schema;
                             scope.attributes[attr.name] = attr;

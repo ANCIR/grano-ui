@@ -1,0 +1,14 @@
+<div class="modal-header">
+  <button type="button" class="close" ng-click="cancel()" aria-hidden="true">&times;</button>
+  <h4 class="modal-title">Delete: {{relation.schema.label}}</h4>
+</div>
+
+<div class="modal-body">
+  <p>Deleting this <strong>{{relation.schema.label}}</strong> will also delete 
+  the properties associated with this relation. Are you sure?</p>
+</div>
+
+<div class="modal-footer">
+  <button type="button" class="btn btn-default" ng-click="cancel()">Cancel</button>
+  <button type="submit" class="btn btn-danger" ng-click="delete()">Delete</button>
+</div>

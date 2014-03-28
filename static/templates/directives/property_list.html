@@ -6,6 +6,7 @@
             <th>
                 <button type="button" ng-click="editProperty(null)"
                     gn-permission project="project" role="editor"
+                    ng-disabled="!canCreate()"
                     class="btn btn-xs btn-success pull-right"><i class="fa fa-plus"></i></button>
             </th>
         </tr>
