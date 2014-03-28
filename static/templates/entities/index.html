@@ -17,12 +17,13 @@
               </tr>
           </thead>
           <tbody>
-              <tr ng-repeat="entity in entities.results" ng-class="{'selected': previewEntity && previewEntity.id==entity.id}">
+              <tr ng-repeat="entity in entities.results" class="longname"
+                  ng-class="{'selected': previewEntity && previewEntity.id==entity.id}">
                   <td ng-click="showEntityPreview(entity)">
-                      <a class="structured">{{entity.properties.name.value}}</a>
-                      <span class="light" ng-repeat="schema in entity.schemata" ng-hide="schema.hidden || previewEntity">
-                           &middot; {{schema.label}}
-                      </span>
+                    <a class="structured">{{entity.properties.name.value}}</a>
+                    <span class="light" ng-repeat="schema in entity.schemata" ng-hide="schema.hidden || previewEntity">
+                         &middot; {{schema.label}}
+                    </span>
                   </td>
               </tr>
           </tbody>
