@@ -1,21 +1,22 @@
 
 <gn-frame>
+  <div class="row bottom-padded">
+    <div class="col-xs-12">
+      <form role="form">
+        <div class="input-group">
+          <span class="input-group-addon"><i class="fa fa-search"></i></span>
+          <input type="text" class="search-query form-control" autofocus
+                  ng-model="query.value" ng-change="updateFilter()" placeholder="Search entities">
+          <span class="input-group-btn">
+            <button class="btn btn-default btn-success" type="button">New entity</button>
+          </span>
+        </div>
+      </form>
+    </div>
+  </div>
   <div class="row">
     <div ng-class="{'col-md-12': !previewEntity, 'col-md-3': previewEntity}">
       <table class="table table-hover table-condensed">
-          <thead>
-              <tr>
-                  <th>
-                    <form class="" role="form">
-                      <div class="input-group">
-                        <span class="input-group-addon"><i class="fa fa-search"></i></span>
-                        <input type="text" class="search-query form-control" autofocus
-                                ng-model="query.value" ng-change="updateFilter()" placeholder="Search entities">
-                      </div>
-                    </form>
-                  </th>
-              </tr>
-          </thead>
           <tbody>
               <tr ng-repeat="entity in entities.results" class="longname"
                   ng-class="{'selected': previewEntity && previewEntity.id==entity.id}">

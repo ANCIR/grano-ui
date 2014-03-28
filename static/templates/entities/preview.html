@@ -1,10 +1,25 @@
 
 <div class="btn-group pull-right">
-  <button type="button" class="btn btn-default">Edit</button>
-  <button type="button" class="btn btn-default">Merge</button>
-  <button type="button" class="btn btn-default">Download</button>
+  <button type="button" class="btn btn-default"><i class="fa fa-pencil-square-o"></i> Edit</button>
+  <button type="button" class="btn btn-default"><i class="fa fa-link"></i> Merge</button>
+  <!--button type="button" class="btn btn-default">Download</button-->
+
+  <div class="btn-group">
+    <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown">
+      <i class="fa fa-download"></i> Download
+      <span class="caret"></span>
+    </button>
+    <ul class="dropdown-menu">
+        <li>
+            <a href="{{config.API_ROOT}}/entities/{{entity.id}}">Entity data (JSON)</a>
+            <a href="{{config.API_ROOT}}/entities/{{entity.id}}/graph?format=json">Neighbourhood (JSON)</a>
+            <a href="{{config.API_ROOT}}/entities/{{entity.id}}/graph?format=gexf">Neighbourhood (GEXF)</a>
+        </li>
+    </ul>
+  </div>
+
   <button type="button" class="btn btn-default"
-    ng-click="deleteEntity()">Delete</button>
+    ng-click="deleteEntity()"><i class="fa fa-trash-o"></i> Delete</button>
 </div>
 
 <div class="clearfix"></div>
