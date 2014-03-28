@@ -78,12 +78,7 @@
     <script id="{{path}}" type="text/ng-template">{{tmpl|safe}}</script>
   {% endfor %}
 
-  <!--
-    
-    "vendor/bootstrap/js/collapse.js",
-  -->
-
-    {% assets filters="uglifyjs", output="prod/ui.vendor.js",
+  {% assets filters="uglifyjs", output="prod/ui.vendor.js",
         "ui/vendor/jquery/dist/jquery.js",
         "ui/vendor/moment/moment.js",
         "ui/vendor/underscore/underscore.js",   
