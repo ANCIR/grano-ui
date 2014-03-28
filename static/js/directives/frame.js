@@ -1,5 +1,6 @@
 
-grano.directive('gnFrame', ['$location', 'schemata', function($location, schemata) {
+grano.directive('gnFrame', ['$location', '$route', 'schemata',
+    function($location, $route, schemata) {
     return {
         restrict: 'E',
         transclude: true,
@@ -19,14 +20,10 @@ grano.directive('gnFrame', ['$location', 'schemata', function($location, schemat
             });
 
             scope.frameSearch = function(slug, schema) {
+                $location.path('/p/' + slug + '/entities');
+                $location.search({'schema': schema});
                 if (!angular.isUndefined(scope.updateSearch)) {
-                    $location.search('schema', schema);
-                    scope.updateSearch();
-                } else {
-                    $location.path('/p/' + slug + '/entities');
-                    if (schema) {
-                        $location.search('schema', schema);
-                    }
+                    $route.reload();
                 }
             };
         }

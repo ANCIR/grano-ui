@@ -1,5 +1,5 @@
-grano.directive('gnEntityPreview', ['core', '$http', '$route', '$location', '$modal', 'core', 'schemata',
-    function (core, $http, $route, $location, $modal, core, schemata) {
+grano.directive('gnEntityPreview', ['core', '$http', '$route', '$location', '$modal', 'core', 'config', 'schemata',
+    function (core, $http, $route, $location, $modal, core, config, schemata) {
     return {
         restrict: 'E',
         scope: {
@@ -8,6 +8,7 @@ grano.directive('gnEntityPreview', ['core', '$http', '$route', '$location', '$mo
         },
         templateUrl: 'entities/preview.html',
         link: function (scope, element, attrs, model) {
+            scope.config = config;
             scope.entity = {};
             scope.attributes = {};
             scope.inbound = {};
@@ -66,10 +67,6 @@ grano.directive('gnEntityPreview', ['core', '$http', '$route', '$location', '$mo
                     resolve: {
                         entity: function () { return scope.entity; }
                     }
-                });
-                d.result.finally(function() {
-                    $location.search('preview', null);
-                    $route.reload();
                 });
             };
 
