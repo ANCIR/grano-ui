@@ -17,8 +17,6 @@ function AppCtrl($scope, $window, $routeParams, $location, $modal, $http, sessio
         $scope.session = data;
     });
 
-    console.log($routeParams);
-
     $scope.showAccount = function() {
         var d = $modal.open({
             templateUrl: 'account.html',
