@@ -1,7 +1,7 @@
 grano.directive('gnEntityHeader', ['core', '$http', '$route', '$location', '$modal', 'core', 'config', 'schemata',
     function (core, $http, $route, $location, $modal, core, config, schemata) {
     return {
-        restrict: 'E',
+        restrict: 'AE',
         scope: {
             'entity': '='
         },

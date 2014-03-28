@@ -1,13 +1,15 @@
 
 <gn-frame>
     <div class="panel panel-default">
-        <gn-entity-header entity="entity"></gn-entity-header>
+        <div class="panel-heading panel-heading-buttons">
+            <gn-entity-header entity="entity"></gn-entity-header>
+        </div>
         <div class="panel-body"> 
             <div class="row">
-                <div class="col-md-6">
+                <div class="col-lg-6">
                     <gn-property-list obj="entity" refresh="reloadEntity"></gn-property-list>
                 </div>
-                <div class="col-md-6">
+                <div class="col-lg-6">
                     <gn-relation-list entity="entity" direction="inbound"></gn-relation-list>
                     <div class="clearfix"></div>
                     <gn-relation-list entity="entity" direction="outbound"></gn-relation-list>
