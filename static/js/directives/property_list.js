@@ -39,9 +39,9 @@ grano.directive('gnPropertyList', ['core', '$http', '$sce', '$modal', 'schemata'
             };
 
             scope.disableProperty = function(attribute) {
-                delete scope.entity.properties[attribute.name];
-                $http.post(scope.entity.api_url, scope.entity).then(function(res) {
-                    scope.entity = res.data;
+                delete scope.obj.properties[attribute.name];
+                $http.post(scope.obj.api_url, scope.obj).then(function(res) {
+                    scope.obj = res.data;
                 });
             };
 
