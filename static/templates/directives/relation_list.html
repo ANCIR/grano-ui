@@ -7,7 +7,7 @@
                 <span ng-show="direction=='inbound'">Inbound relations</span>
             </th>
             <th width="1%">
-                <button type="button"
+                <button type="button" gn-permission project="project" role="editor"
                     class="btn btn-xs btn-success pull-right"><i class="fa fa-plus"></i></button>
             </th>
         </tr>
@@ -35,7 +35,7 @@
                     {{relation.schema.label}}</a>
             </td>
             <td>
-                <a href="#">Details</a>
+                <a href="#/p/{{entity.project.slug}}/relations/{{relation.id}}">Details</a>
             </td>
         </tr>
     </tbody>

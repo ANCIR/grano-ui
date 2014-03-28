@@ -1,7 +1,9 @@
 
 <div class="btn-group pull-right">
-  <button type="button" class="btn btn-default"><i class="fa fa-pencil-square-o"></i> Edit</button>
-  <button type="button" class="btn btn-default"><i class="fa fa-link"></i> Merge</button>
+  <button type="button" class="btn btn-default"
+    gn-permission project="project" role="editor"><i class="fa fa-pencil-square-o"></i> Edit</button>
+  <button type="button" class="btn btn-default"
+    gn-permission project="project" role="editor"><i class="fa fa-link"></i> Merge</button>
   <!--button type="button" class="btn btn-default">Download</button-->
 
   <div class="btn-group">
@@ -19,6 +21,7 @@
   </div>
 
   <button type="button" class="btn btn-default"
+    gn-permission project="project" role="editor"
     ng-click="deleteEntity()"><i class="fa fa-trash-o"></i> Delete</button>
 </div>
 

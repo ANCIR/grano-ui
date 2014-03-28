@@ -7,7 +7,7 @@
           <span class="input-group-addon"><i class="fa fa-search"></i></span>
           <input type="text" class="search-query form-control" autofocus
                   ng-model="query.value" ng-change="updateFilter()" placeholder="Search entities">
-          <span class="input-group-btn">
+          <span class="input-group-btn" gn-permission project="project" role="editor">
             <button class="btn btn-default btn-success" type="button">New entity</button>
           </span>
         </div>
