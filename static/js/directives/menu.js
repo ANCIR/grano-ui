@@ -28,8 +28,8 @@ grano.directive('gnMenu', ['$timeout', '$location', '$route', 'schemata', 'sessi
 
             scope.applyFacet = function(schema) {
                 $location.path('/p/' + scope.project.slug + '/entities');
-                $location.search({'schema': schema});
-                $route.reload();
+                $location.search('schema', schema);
+                scope.$emit('updateSearch');
             };
         }
     };

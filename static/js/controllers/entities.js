@@ -1,5 +1,5 @@
 
-function EntitiesIndexCtrl($scope, $routeParams, $location, $http, $modal, $timeout, core, session) {
+function EntitiesIndexCtrl($scope, $rootScope, $routeParams, $location, $http, $modal, $timeout, core, session) {
     var params = {project: $routeParams.slug, 'limit': 25},
         filterTimeout = null;
 
@@ -35,7 +35,9 @@ function EntitiesIndexCtrl($scope, $routeParams, $location, $http, $modal, $time
             $scope.setSection('entities');
         }
         $scope.loadEntities(core.call('/entities'), fparams);
-    }
+    };
+
+    $rootScope.$on('updateSearch', $scope.updateSearch);
 
     $scope.loadEntities = function(url, params) {
         $scope.showEntityPreview(null);
@@ -64,7 +66,7 @@ function EntitiesIndexCtrl($scope, $routeParams, $location, $http, $modal, $time
     }
 }
 
-EntitiesIndexCtrl.$inject = ['$scope', '$routeParams', '$location', '$http', '$modal', '$timeout', 'core', 'session'];
+EntitiesIndexCtrl.$inject = ['$scope', '$rootScope', '$routeParams', '$location', '$http', '$modal', '$timeout', 'core', 'session'];
 
 
 function EntitiesViewCtrl($scope, $routeParams, $location, $http, $modal, core, session) {
