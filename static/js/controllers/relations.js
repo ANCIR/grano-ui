@@ -52,11 +52,7 @@ function RelationsNewCtrl($scope, $routeParams, $modalInstance, $location, $http
     };
 
     $scope.create = function(form) {
-        if ($scope.relation == null) {
-            return;
-        }
         var res = $http.post(core.call('/relations'), $scope.relation);
-        $scope.relation = null;
         res.success(function(data) {
             $modalInstance.dismiss('ok');
             $location.path('/p/' + data.project.slug + '/relations/' + data.id);
