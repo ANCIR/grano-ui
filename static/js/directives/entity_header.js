@@ -19,6 +19,16 @@ grano.directive('gnEntityHeader', ['core', '$http', '$route', '$location', '$mod
                 });
             };
 
+            scope.mergeEntity = function() {
+                var d = $modal.open({
+                    templateUrl: 'entities/merge.html',
+                    controller: 'EntitiesMergeCtrl',
+                    resolve: {
+                        orig: function () { return scope.entity; }
+                    }
+                });
+            };
+
             scope.$watch('entity', function(e) {
                 if (!e || !e.project) return;
                 scope.project = e.project;

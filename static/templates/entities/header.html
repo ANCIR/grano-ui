@@ -8,10 +8,11 @@
   </div>
   <div class="col-md-6">
     <div class="btn-group pull-right">
+      <!--button type="button" class="btn btn-sm btn-default"
+        gn-permission project="project" role="editor"><i class="fa fa-pencil-square-o"></i> Edit</button-->
       <button type="button" class="btn btn-sm btn-default"
-        gn-permission project="project" role="editor"><i class="fa fa-pencil-square-o"></i> Edit</button>
-      <button type="button" class="btn btn-sm btn-default"
-        gn-permission project="project" role="editor"><i class="fa fa-link"></i> Merge</button>
+        gn-permission project="project" role="editor"
+        ng-click="mergeEntity()"><i class="fa fa-link"></i> Merge</button>
       <div class="btn-group">
         <button type="button" class="btn btn-sm btn-default dropdown-toggle" data-toggle="dropdown">
           <i class="fa fa-download"></i> Data

@@ -160,3 +160,23 @@ function EntitiesDeleteCtrl($scope, $routeParams, $location, $http, $route, $mod
 }
 
 EntitiesDeleteCtrl.$inject = ['$scope', '$routeParams', '$location', '$http', '$route', '$modal', '$modalInstance', 'session', 'entity'];
+
+
+function EntitiesMergeCtrl($scope, $routeParams, $location, $http, $route, $modal, $modalInstance, core, orig) {
+    $scope.merge = {'orig': orig, 'dest': null};
+
+    $scope.cancel = function() {
+        $modalInstance.dismiss('cancel');
+    };
+
+    $scope.save = function(form) {
+        var res = $http.post(core.call('/entities/_merge'), $scope.merge);
+        res.success(function(data) {
+            $location.path('/p/' + data.project.slug + '/entities/' + data.id);
+            $modalInstance.dismiss('ok');
+        });
+        res.error(grano.handleFormError(form));
+    };
+}
+
+EntitiesMergeCtrl.$inject = ['$scope', '$routeParams', '$location', '$http', '$route', '$modal', '$modalInstance', 'core', 'orig'];
