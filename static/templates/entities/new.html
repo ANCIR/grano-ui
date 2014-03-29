@@ -7,9 +7,11 @@
     <div class="panel-body"> 
       <form role="form" name="newEntity" ng-submit="createEntity(newEntity)">
         <div class="form-group">
-          xxx
+          <gn-property-multi-edit obj="entity" attributes="attributes"></gn-property-multi-edit>
         </div>
-        <button type="submit" class="btn btn-default">Create</button>
+        <button type="submit"
+          ng-disabled="canCreate()"
+          class="btn btn-default">Create</button>
       </form>
     </div>
   </div>

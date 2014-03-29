@@ -4,13 +4,14 @@
   <h4 class="modal-title" ng-show="property.fresh">Create a new property</h4>
 </div>
 
-<form class="form-horizontal" role="form" name="editProperty">
+<form class="form-horizontal" role="form" name="editProperty" ng-submit="update(editProperty)">
   <div class="modal-body">
     <div class="form-group" ng-show="property.fresh">
       <label class="col-sm-2 control-label" for="attribute">Attribute</label>
       <div class="col-sm-10">
         <select class="form-control" id="attribute" name="attribute"
           ng-options="a as a.label group by a.schema.label for a in attributeChoices"
+          ng-init="property.attribute = property.attribute ? property.attribute : attributeChoices[0]"
           ng-model="property.attribute"></select>
         <p class="help-block">
           Select the attribute which you want to set.
@@ -43,7 +44,6 @@
   <div class="modal-footer">
     <button type="button" class="btn btn-default" ng-click="cancel()">Cancel</button>
     <button type="submit" class="btn btn-primary"
-      ng-disabled="!property.attribute"
-      ng-click="update(editProperty)">Save</button>
+      ng-disabled="!property.attribute">Save</button>
   </div>
 </form>

@@ -97,22 +97,47 @@ function EntitiesViewCtrl($scope, $routeParams, $location, $http, $modal, core, 
 EntitiesViewCtrl.$inject = ['$scope', '$routeParams', '$location', '$http', '$modal', 'core', 'session'];
 
 
-function EntitiesNewCtrl($scope, $routeParams, $location, $http, $modal, core, session) {
+function EntitiesNewCtrl($scope, $routeParams, $location, $http, $modal, core, schemata) {
     $scope.navSection = 'entities';
 
     $scope.loadProject($routeParams.slug);
     $scope.entity = {
-        project: $scope.project,
+        project: $routeParams.slug,
         properties: {name: {value: null, datatype: 'string', name: 'name'}}
     };
 
-    $scope.createEntity = function(newEntity) {
-        console.log($scope.entity);
-        // set up schemata list.
+    $scope.createEntity = function(form) {
+        $scope.$broadcast('save', $scope.entity);
+        $scope.entity.schemata = [];
+        angular.forEach($scope.entity.properties, function(p, k) {
+            var schema = $scope.attributes[k].schema.name;
+            if (p.attribute) {
+                delete p.attribute;
+            }
+            if ($scope.entity.schemata.indexOf(schema) == -1) {
+                $scope.entity.schemata.push(schema);
+            }
+        });
+
+        var res = $http.post(core.call('/entities'), $scope.entity);
+        res.success(function(data) {
+            $location.path('/p/' + $scope.project.slug + '/entities/' + data.id);
+        });
+        res.error(grano.handleFormError(form));
+
     };
+
+    $scope.canCreate = function() {
+        return !$scope.entity.properties.name.value;
+    };
+
+    schemata.attributes($routeParams.slug, 'entity').then(function(attributes) {
+        $scope.attributes = attributes;
+        $scope.entity.properties.name.attribute = attributes.name;
+    });
 }
 
-EntitiesNewCtrl.$inject = ['$scope', '$routeParams', '$location', '$http', '$modal', 'core', 'session'];
+EntitiesNewCtrl.$inject = ['$scope', '$routeParams', '$location', '$http', '$modal', 'core', 'schemata'];
 
 
 function EntitiesDeleteCtrl($scope, $routeParams, $location, $http, $route, $modal, $modalInstance, session, entity) {
