@@ -16,7 +16,7 @@ grano.directive('gnPager', ['$timeout', function ($timeout) {
                 var pages = [],
                     current = (scope.response.offset / scope.response.limit) + 1,
                     num = Math.ceil(scope.response.total / scope.response.limit),
-                    range = 3,
+                    range = 2,
                     low = current - range,
                     high = current + range;
 
