@@ -10,7 +10,7 @@
   <link href='http://fonts.googleapis.com/css?family=Open+Sans:400,300,600,700' rel='stylesheet' type='text/css'>
 
   {% assets filters="less,cssmin,cssrewrite", output="prod/ui.style.css",
-      "ui/vendor/bootstrap/less/bootstrap.less",
+      "ui/style/local.less",
       "ui/vendor/angular-datepicker/dist/index.css",
       "ui/style/style.less" %}
     <link type="text/css" href="{{ ASSET_URL }}" rel="stylesheet">
@@ -34,6 +34,12 @@
       </div>
 
       <div class="collapse navbar-collapse navbar-ex1-collapse navbar-right">
+        <div class="visible-xs visible-sm">
+          <ul class="nav navbar-nav">
+            <li><a href="">huhu</a></li>
+            <li><a href="">haha</a></li>
+          </ul>
+        </div>
         <ul class="nav navbar-nav">
           <li ng-show="session.logged_in">
             <a ng-click="showAccount()"><i class="fa fa-cogs"></i> Profile</a>
