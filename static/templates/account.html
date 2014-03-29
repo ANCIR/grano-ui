@@ -3,7 +3,7 @@
   <h4 class="modal-title">Profile: {{session.account.display_name}}</h4>
 </div>
 
-<form class="form-horizontal" role="form" name="editAccount">
+<form class="form-horizontal" role="form" name="editAccount" ng-submit="update(editAccount)">
   <div class="modal-body">
     <div class="form-group" ng-class="{'has-error': editAccount.full_name.$invalid}">
       <label class="col-sm-2 control-label" for="full_name">Full name</label>
