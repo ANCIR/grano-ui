@@ -8,7 +8,7 @@
           <input type="text" class="search-query form-control" autofocus
                   ng-model="query.value" ng-change="updateFilter()" placeholder="Search entities">
           <span class="input-group-btn" gn-permission project="project" role="editor">
-            <button class="btn btn-default btn-success" type="button">New entity</button>
+            <a class="btn btn-default btn-success" href="#/p/{{project.slug}}/entities/new">New entity</a>
           </span>
         </div>
       </form>

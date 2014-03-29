@@ -97,6 +97,24 @@ function EntitiesViewCtrl($scope, $routeParams, $location, $http, $modal, core, 
 EntitiesViewCtrl.$inject = ['$scope', '$routeParams', '$location', '$http', '$modal', 'core', 'session'];
 
 
+function EntitiesNewCtrl($scope, $routeParams, $location, $http, $modal, core, session) {
+    $scope.navSection = 'entities';
+
+    $scope.loadProject($routeParams.slug);
+    $scope.entity = {
+        project: $scope.project,
+        properties: {name: {value: null, datatype: 'string', name: 'name'}}
+    };
+
+    $scope.createEntity = function(newEntity) {
+        console.log($scope.entity);
+        // set up schemata list.
+    };
+}
+
+EntitiesNewCtrl.$inject = ['$scope', '$routeParams', '$location', '$http', '$modal', 'core', 'session'];
+
+
 function EntitiesDeleteCtrl($scope, $routeParams, $location, $http, $route, $modal, $modalInstance, session, entity) {
     $scope.entity = entity;
 
