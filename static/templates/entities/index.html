@@ -1,38 +1,35 @@
-
-<gn-frame>
-  <div class="row bottom-padded">
-    <div class="col-xs-12">
-      <form role="form">
-        <div class="input-group">
-          <span class="input-group-addon"><i class="fa fa-search"></i></span>
-          <input type="text" class="search-query form-control" autofocus
-                  ng-model="query.value" ng-change="updateFilter()" placeholder="Search entities">
-          <span class="input-group-btn" gn-permission project="project" role="editor">
-            <a class="btn btn-default btn-success" href="#/p/{{project.slug}}/entities/new">New entity</a>
-          </span>
-        </div>
-      </form>
-    </div>
+<div class="row bottom-padded">
+  <div class="col-xs-12">
+    <form role="form">
+      <div class="input-group">
+        <span class="input-group-addon"><i class="fa fa-search"></i></span>
+        <input type="text" class="search-query form-control" autofocus
+                ng-model="query.value" ng-change="updateFilter()" placeholder="Search entities">
+        <span class="input-group-btn" gn-permission project="project" role="editor">
+          <a class="btn btn-default btn-success" href="#/p/{{project.slug}}/entities/new">New entity</a>
+        </span>
+      </div>
+    </form>
   </div>
-  <div class="row">
-    <div ng-class="{'col-md-12': !previewEntity, 'col-md-3': previewEntity}">
-      <table class="table table-hover table-condensed">
-          <tbody>
-              <tr ng-repeat="entity in entities.results" class="longname"
-                  ng-class="{'selected': previewEntity && previewEntity.id==entity.id}">
-                  <td ng-click="showEntityPreview(entity)">
-                    <a class="structured">{{entity.properties.name.value}}</a>
-                    <span class="light" ng-repeat="schema in entity.schemata" ng-hide="schema.hidden || previewEntity">
-                         &middot; {{schema.label}}
-                    </span>
-                  </td>
-              </tr>
-          </tbody>
-      </table>
-      <gn-pager class="pull-right" response="entities" load="loadEntities(url)"></gn-pager>
-    </div>
-    <div ng-show="previewEntity" class="col-md-9">
-      <gn-entity-preview preview="previewEntity" project="project"></gn-entity-preview>
-    </div>
+</div>
+<div class="row">
+  <div ng-class="{'col-md-12': !previewEntity, 'col-md-3': previewEntity}">
+    <table class="table table-hover table-condensed">
+        <tbody>
+            <tr ng-repeat="entity in entities.results" class="longname"
+                ng-class="{'selected': previewEntity && previewEntity.id==entity.id}">
+                <td ng-click="showEntityPreview(entity)">
+                  <a class="structured">{{entity.properties.name.value}}</a>
+                  <span class="light" ng-repeat="schema in entity.schemata" ng-hide="schema.hidden || previewEntity">
+                       &middot; {{schema.label}}
+                  </span>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <gn-pager class="pull-right" response="entities" load="loadEntities(url)"></gn-pager>
   </div>
-</gn-frame>
+  <div ng-show="previewEntity" class="col-md-9">
+    <gn-entity-preview preview="previewEntity" project="project"></gn-entity-preview>
+  </div>
+</div>

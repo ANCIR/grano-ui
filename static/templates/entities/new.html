@@ -1,18 +1,15 @@
-
-<gn-frame>
-  <div class="panel panel-default">
-    <div class="panel-heading">
-        <h3 class="panel-title">Create a new entity</h3>
-    </div>
-    <div class="panel-body"> 
-      <form role="form" name="newEntity" ng-submit="createEntity(newEntity)">
-        <div class="form-group">
-          <gn-property-multi-edit obj="entity" attributes="attributes"></gn-property-multi-edit>
-        </div>
-        <button type="submit"
-          ng-disabled="canCreate()"
-          class="btn btn-default">Create</button>
-      </form>
-    </div>
+<div class="panel panel-default">
+  <div class="panel-heading">
+      <h3 class="panel-title">Create a new entity</h3>
   </div>
-</gn-frame>
+  <div class="panel-body"> 
+    <form role="form" name="newEntity" ng-submit="createEntity(newEntity)">
+      <div class="form-group">
+        <gn-property-multi-edit obj="entity" attributes="attributes"></gn-property-multi-edit>
+      </div>
+      <button type="submit"
+        ng-disabled="canCreate()"
+        class="btn btn-default">Create</button>
+    </form>
+  </div>
+</div>
