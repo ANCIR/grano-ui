@@ -4,13 +4,15 @@ function AppCtrl($scope, $window, $routeParams, $location, $modal, $http, sessio
     
     core.setTitle('Welcome');
 
-    $scope.loadProject = function(slug) {  
-        var url = core.call('/projects/' + $routeParams.slug);
-        $scope.project = {};
-        $http.get(url).then(function(res) {
-            $scope.project = res.data;
-            core.setTitle($scope.project.label);
-        });
+    $scope.loadProject = function(slug) {
+        $scope.project = false;
+        if (slug) {
+            var url = core.call('/projects/' + $routeParams.slug);
+            $http.get(url).then(function(res) {
+                $scope.project = res.data;
+                core.setTitle($scope.project.label);
+            });    
+        }
     };
 
     session.get(function(data) {

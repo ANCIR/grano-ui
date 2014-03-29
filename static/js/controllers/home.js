@@ -1,5 +1,6 @@
 function HomeCtrl($scope, $location, $http, $modal, core) {
     $scope.projects = {};
+    $scope.loadProject(null);
 
     $scope.loadProjects = function(url) {
         $http.get(url).then(function(data) {
