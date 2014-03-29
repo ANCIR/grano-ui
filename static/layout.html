@@ -35,10 +35,8 @@
 
       <div class="collapse navbar-collapse navbar-ex1-collapse navbar-right">
         <div class="visible-xs visible-sm">
-          <ul class="nav navbar-nav">
-            <li><a href="">huhu</a></li>
-            <li><a href="">haha</a></li>
-          </ul>
+          <gn-menu project="project" nav-section="navSection"
+                ul-class="nav navbar-nav" full="false"></gn-menu>
         </div>
         <ul class="nav navbar-nav">
           <li ng-show="session.logged_in">
@@ -86,33 +84,9 @@
       <div class="row">
           <div class="col-md-10 col-md-push-2" ng-view ng-class="pageAnimationClass"></div>
           <div class="clearfix visible-xs visible-sm"><hr></div>
-          <div class="col-md-2 col-md-pull-10">
-              <ul class="nav nav-pills nav-stacked">
-                  <li ng-show="project" class="nav-section heading" ng-class="{'active': navSection=='project'}">
-                      <a href="#/p/{{project.slug}}">Overview</a>
-                  </li>
-                  <li ng-show="project" class="nav-section">&nbsp;</li>
-                  <li ng-show="project" class="nav-section heading" ng-class="{'active': navSection=='entities'}">
-                      <a ng-click="applyFacet('')">Entities</a>
-                  </li>
-                  <li ng-show="project" ng-repeat="schema in frameSchemata"
-                      class="nav-section" ng-class="{'active': navSection=='entities.' + schema.name}">
-                      <a ng-click="applyFacet(schema.name)">{{schema.label}}</a>
-                  </li>
-                  <li ng-show="project" class="nav-section">&nbsp;</li>
-                  <li gn-permission project="project" class="nav-section heading" role="admin" ng-show="project" ng-class="{'active': navSection=='settings'}">
-                      <a href="#/p/{{project.slug}}/settings">Settings</a>
-                  </li>
-                  <li gn-permission project="project" role="admin" ng-show="project" ng-class="{'active': navSection=='schemata'}">
-                      <a href="#/p/{{project.slug}}/schemata">Schemata</a>
-                  </li>
-                  <li gn-permission project="project" role="admin" ng-show="project" ng-class="{'active': navSection=='permissions'}">
-                      <a href="#/p/{{project.slug}}/permissions">Permissions</a>
-                  </li>
-                  <li ng-show="project" class="nav-section">&nbsp;</li>
-                  <li><a href="http://docs.grano.cc">Documentation</a></li>
-                  <li><a href="https://github.com/pudo/grano/issues">Report an issue</a></li>
-              </ul>
+          <div class="col-md-2 col-md-pull-10 hidden-xs hidden-sm">
+              <gn-menu project="project" nav-section="navSection"
+                ul-class="nav nav-pills nav-stacked" full="true"></gn-menu>
           </div>
       </div>
     </div>
@@ -162,6 +136,7 @@
         "ui/js/services/schemata.js",
         "ui/js/directives/permission.js",
         "ui/js/directives/pager.js",
+        "ui/js/directives/menu.js",
         "ui/js/directives/property_view.js",
         "ui/js/directives/property_edit.js",
         "ui/js/directives/property_multiedit.js",

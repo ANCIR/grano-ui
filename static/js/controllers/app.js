@@ -2,7 +2,6 @@ function AppCtrl($scope, $window, $routeParams, $location, $modal, $http,
         $route, session, schemata, core, config) {
     $scope.session = {logged_in: false};
     $scope.config = config;
-    $scope.frameSchemata = [];
     $scope.navSection = 'project';
 
     
@@ -18,14 +17,6 @@ function AppCtrl($scope, $window, $routeParams, $location, $modal, $http,
             $scope.project = res.data;
             //$rootScope.project = res.data;
             core.setTitle($scope.project.label);
-        });  
-
-        schemata.get(slug).then(function(ss) {
-            angular.forEach(ss, function(s) {
-                if (s.obj == 'entity' && !s.hidden) {
-                    $scope.frameSchemata.push(s);
-                }
-            });
         });
     };
 
@@ -42,12 +33,6 @@ function AppCtrl($scope, $window, $routeParams, $location, $modal, $http,
             templateUrl: 'account.html',
             controller: 'AccountCtrl'
         });
-    };
-
-    $scope.applyFacet = function(schema) {
-        $location.path('/p/' + $scope.project.slug + '/entities');
-        $location.search({'schema': schema});
-        $route.reload();
     };
 }
 

@@ -1,0 +1,30 @@
+<ul ng-class="ulClass">
+    <li ng-show="project" class="nav-section heading" ng-class="{'active': navSection=='project'}">
+        <a href="#/p/{{project.slug}}">Overview</a>
+    </li>
+    <li ng-show="project && full" class="nav-section">&nbsp;</li>
+    <li ng-show="project" class="nav-section heading" ng-class="{'active': navSection=='entities'}">
+        <a ng-click="applyFacet('')">Entities</a>
+    </li>
+    <li ng-show="project && full" ng-repeat="schema in schemata"
+        class="nav-section" ng-class="{'active': navSection=='entities.' + schema.name}">
+        <a ng-click="applyFacet(schema.name)">{{schema.label}}</a>
+    </li>
+    <li ng-show="project && full" class="nav-section">&nbsp;</li>
+    <li gn-permission project="project" class="nav-section heading" role="admin" ng-show="project" ng-class="{'active': navSection=='settings'}">
+        <a href="#/p/{{project.slug}}/settings">Settings</a>
+    </li>
+    <li gn-permission project="project" role="admin" ng-show="project" ng-class="{'active': navSection=='schemata'}">
+        <a href="#/p/{{project.slug}}/schemata">Schemata</a>
+    </li>
+    <li gn-permission project="project" role="admin" ng-show="project" ng-class="{'active': navSection=='permissions'}">
+        <a href="#/p/{{project.slug}}/permissions">Permissions</a>
+    </li>
+    <li ng-show="project && full" class="nav-section">&nbsp;</li>
+    <li ng-show="full">
+      <a href="http://docs.grano.cc">Documentation</a>
+    </li>
+    <li ng-show="full">
+      <a href="https://github.com/pudo/grano/issues">Report an issue</a>
+    </li>
+</ul>
