@@ -1,1 +1,6 @@
-<span class="propvalue {{attribute.datatype}}" ng-bind-html="display_value"></span>
+<span class="propvalue {{attribute.datatype}}">
+    <span ng-show="property.value==null" class="text-muted">empty</span>
+    <span ng-bind-html="display_value" ng-show="show=='short'"></span>
+    <span ng-bind-html="long_value" class="long" ng-show="show=='long'" ng-click="show='short'"></span>
+    <a ng-show="long_value && show=='short'" ng-click="show='long'">more …</a>
+</span>

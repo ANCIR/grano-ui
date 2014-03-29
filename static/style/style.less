@@ -109,6 +109,20 @@ tr.selected {
     background-color: @selectedColor;
 }
 
+
+table.table {
+    max-width: 100%;
+
+    td.icon-col {
+        width: 15%;
+        white-space: nowrap;
+    }
+
+    td.value-col {
+        width: 50%;
+    }
+}
+
 .table thead tr th {
     border-bottom-width: 1px;
 }
@@ -116,6 +130,29 @@ tr.selected {
 .bottom-padded {
     margin-bottom: 1em;
 }
+
+/* Properties */
+
+.propvalue {
+    display: inline-block;
+    overflow: hidden;
+
+    p {
+        max-width: 98%;
+    }
+
+    a.auto {
+        display: block;
+        width: 300px;
+        text-overflow: ellipsis;
+        overflow: hidden;
+    }
+
+    .long {
+        cursor: pointer;
+    }
+}
+
 
 /*
 .gn-prop-view, .propvalue {

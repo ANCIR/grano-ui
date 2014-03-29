@@ -9,7 +9,21 @@ grano.directive('gnPropertyList', ['core', '$http', '$sce', '$modal', 'schemata'
         templateUrl: 'directives/property_list.html',
         link: function (scope, element, attrs, model) {
             scope.attributes = {};
-            //scope.obj_type = null;
+            
+            scope.getProperties = function() {
+                var properties = [];
+                angular.forEach(scope.obj.properties, function(p, k) {
+                    p.name = k;
+                    properties.push(p);
+                });
+                return properties.sort(function(a, b) {
+                    if (a.name == 'name') return -1; 
+                    if (b.name == 'name') return 1;
+                    if (a.name > b.name) return 1;
+                    if (a.name < b.name) return -1;
+                    return 0;
+                });
+            }
 
             scope.editProperty = function(attribute) {
                 var d = $modal.open({
