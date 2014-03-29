@@ -4,7 +4,7 @@ function EntitiesIndexCtrl($scope, $routeParams, $location, $http, $modal, $time
         filterTimeout = null;
 
     $scope.loadProject($routeParams.slug);
-    $scope.navSection = 'entities';
+    $scope.setSection('entities');
     $scope.query = {value: $location.search().q};
     $scope.project = {};
     $scope.entities = {};
@@ -30,9 +30,9 @@ function EntitiesIndexCtrl($scope, $routeParams, $location, $http, $modal, $time
         var fparams = angular.copy(params);
         angular.extend(fparams, $location.search());
         if (fparams.schema) {
-            $scope.navSection = 'entities.' + fparams.schema;
+            $scope.setSection('entities.' + fparams.schema);
         } else {
-            $scope.navSection = 'entities';
+            $scope.setSection('entities');
         }
         $scope.loadEntities(core.call('/entities'), fparams);
     }
@@ -68,7 +68,7 @@ EntitiesIndexCtrl.$inject = ['$scope', '$routeParams', '$location', '$http', '$m
 
 
 function EntitiesViewCtrl($scope, $routeParams, $location, $http, $modal, core, session) {
-    $scope.navSection = 'entities';
+    $scope.setSection('entities');
 
     $scope.loadProject($routeParams.slug);
     $scope.entity = {};
@@ -98,7 +98,7 @@ EntitiesViewCtrl.$inject = ['$scope', '$routeParams', '$location', '$http', '$mo
 
 
 function EntitiesNewCtrl($scope, $routeParams, $location, $http, $modal, core, schemata) {
-    $scope.navSection = 'entities';
+    $scope.setSection('entities');
 
     $scope.loadProject($routeParams.slug);
     $scope.entity = {

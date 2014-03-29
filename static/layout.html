@@ -54,7 +54,62 @@
       </div>
     </nav>
 
-    <div id="airlock" class="container-fluid" ng-view ng-class="pageAnimationClass"></div>
+    <div id="airlock" class="container-fluid">
+      <div class="row breadcrumbs hidden-xs hidden-sm">
+          <div class="col-md-2">
+              <span class="back-button" ng-show="project">
+                  <i class="fa fa-chevron-circle-left"></i> <a href="#/">{{project.slug}}</a>
+              </span>
+          </div>
+          <div class="col-md-10">
+              <strong ng-hide="project">Welcome to {{config.APP_NAME}}</strong>
+              <span ng-show="project">
+                  <span class="fact-block">
+                      Project name: <strong>{{project.label}}</strong>
+                  </span>
+                  <span class="fact-block">
+                      Entities: <strong>{{project.entities_count}}</strong>
+                  </span>
+                  <span class="fact-block">
+                      Relations: <strong>{{project.relations_count}}</strong>
+                  </span>
+              </span>
+          </div>
+      </div>
+
+      <div class="row">
+          <div class="col-md-10 col-md-push-2" ng-view ng-class="pageAnimationClass"></div>
+          <div class="clearfix visible-xs visible-sm"><hr></div>
+          <div class="col-md-2 col-md-pull-10">
+              <ul class="nav nav-pills nav-stacked">
+                  <li ng-show="project" class="nav-section heading" ng-class="{'active': navSection=='project'}">
+                      <a href="#/p/{{project.slug}}">Overview</a>
+                  </li>
+                  <li ng-show="project" class="nav-section">&nbsp;</li>
+                  <li ng-show="project" class="nav-section heading" ng-class="{'active': navSection=='entities'}">
+                      <a ng-click="applyFacet('')">Entities</a>
+                  </li>
+                  <li ng-show="project" ng-repeat="schema in frameSchemata"
+                      class="nav-section" ng-class="{'active': navSection=='entities.' + schema.name}">
+                      <a ng-click="applyFacet(schema.name)">{{schema.label}}</a>
+                  </li>
+                  <li ng-show="project" class="nav-section">&nbsp;</li>
+                  <li gn-permission project="project" class="nav-section heading" role="admin" ng-show="project" ng-class="{'active': navSection=='settings'}">
+                      <a href="#/p/{{project.slug}}/settings">Settings</a>
+                  </li>
+                  <li gn-permission project="project" role="admin" ng-show="project" ng-class="{'active': navSection=='schemata'}">
+                      <a href="#/p/{{project.slug}}/schemata">Schemata</a>
+                  </li>
+                  <li gn-permission project="project" role="admin" ng-show="project" ng-class="{'active': navSection=='permissions'}">
+                      <a href="#/p/{{project.slug}}/permissions">Permissions</a>
+                  </li>
+                  <li ng-show="project" class="nav-section">&nbsp;</li>
+                  <li><a href="http://docs.grano.cc">Documentation</a></li>
+                  <li><a href="https://github.com/pudo/grano/issues">Report an issue</a></li>
+              </ul>
+          </div>
+      </div>
+    </div>
   </div>
 
   <footer>

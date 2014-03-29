@@ -6,8 +6,9 @@ grano.directive('gnFrame', ['$location', '$route', 'schemata',
         transclude: true,
         templateUrl: 'directives/frame.html',
         link: function (scope, element, attrs, model) {
+            /*
             scope.$watch('project', function(e) {
-                if (!angular.isUndefined(e) && !angular.isUndefined(e.slug)) {
+                if (!_.isUndefined(e) && _.has(e, 'slug')) {
                     schemata.get(e.slug).then(function(ss) {
                         scope.frameSchemata = [];
                         angular.forEach(ss, function(s) {
@@ -26,6 +27,7 @@ grano.directive('gnFrame', ['$location', '$route', 'schemata',
                     $route.reload();
                 }
             };
+            */
         }
     }
 }]);

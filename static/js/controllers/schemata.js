@@ -1,6 +1,6 @@
 
 function SchemataIndexCtrl($scope, $routeParams, $location, $http, $modal, $timeout, core, session) {
-    $scope.navSection = 'schemata';
+    $scope.setSection('schemata');
     $scope.loadProject($routeParams.slug);
     $scope.entity_schemata = [];
     $scope.relation_schemata = [];
@@ -23,7 +23,7 @@ SchemataIndexCtrl.$inject = ['$scope', '$routeParams', '$location', '$http', '$m
 
 
 function SchemataViewCtrl($scope, $routeParams, $location, $http, $route, $modal, $timeout, schemata, core, session) {
-    $scope.navSection = 'schemata';
+    $scope.setSection('schemata');
     $scope.loadProject($routeParams.slug);
     $scope.schema = {};
 

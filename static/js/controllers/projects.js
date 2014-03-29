@@ -1,6 +1,6 @@
 
 function ProjectsViewCtrl($scope, $routeParams, $location, $http, $modal, $timeout, core, session) {
-    $scope.navSection = 'project';
+    $scope.setSection('project');
     $scope.loadProject($routeParams.slug);
 }
 
@@ -28,7 +28,7 @@ ProjectsNewCtrl.$inject = ['$scope', '$routeParams', '$modalInstance', '$locatio
 
 
 function ProjectsEditCtrl($scope, $route, $routeParams, $location, $http, core) {
-    $scope.navSection = 'settings';
+    $scope.setSection('settings');
     $scope.loadProject($routeParams.slug);
 
     $scope.update = function(form) {
