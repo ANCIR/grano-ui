@@ -15,10 +15,9 @@
     </label>
 </div>
 
-
-<input ng-show="attribute.datatype=='datetime'" class="form-control {{fieldClass}}"
-    placeholder="2038-01-19 03:14" name="value"
-    type="text" date-time ng-model="property.value"
-    view="date" min-view="date">
-
-
+<p class="input-group" ng-show="attribute.datatype=='datetime'">
+    <input class="form-control {{fieldClass}}"
+        datepicker-popup placeholder="2038-01-19" name="value" show-weeks="false"
+        type="text" ng-model="property.value" show-button-bar="false" is-open="openDatePicker">
+    <span class="input-group-addon"><i class="fa fa-calendar"></i></span>   
+</p>

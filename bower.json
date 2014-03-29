@@ -14,7 +14,6 @@
     "angular-bootstrap": "~0.10.0",
     "angular-animate": "~1.2.15",
     "moment": "~2.5.1",
-    "angular-datepicker": "~1.0.3",
     "underscore": "~1.6.0",
     "angular-sanitize": "~1.2.15"
   }
