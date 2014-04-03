@@ -114,6 +114,7 @@
   {% endfor %}
 
   {% assets filters="uglifyjs", output="prod/ui.vendor.js",
+        "ui/vendor/ng-file-upload/angular-file-upload-shim.js",
         "ui/vendor/jquery/dist/jquery.js",
         "ui/vendor/bootstrap/js/collapse.js",
         "ui/vendor/moment/moment.js",
@@ -122,7 +123,8 @@
         "ui/vendor/angular-bootstrap/ui-bootstrap-tpls.js",
         "ui/vendor/angular-route/angular-route.js",
         "ui/vendor/angular-sanitize/angular-sanitize.js",
-        "ui/vendor/angular-animate/angular-animate.js"
+        "ui/vendor/angular-animate/angular-animate.js",
+        "ui/vendor/ng-file-upload/angular-file-upload.js"
          %}
       <script type="text/javascript" src="{{ ASSET_URL }}"></script>
   {% endassets %}
@@ -153,6 +155,7 @@
         "ui/js/controllers/permissions.js",
         "ui/js/controllers/entities.js",
         "ui/js/controllers/relations.js",
+        "ui/js/controllers/dataimport.js",
         "ui/js/controllers/properties.js"
          %}
       <script type="text/javascript" src="{{ ASSET_URL }}"></script>

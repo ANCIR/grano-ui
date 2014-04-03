@@ -1,0 +1,54 @@
+<h4>What type of data are you importing?</h4>
+
+<hr>
+
+<div class="form-group">
+    <label class="col-xs-1 control-label" for="file">
+        <input type="radio" ng-model="data.mode" value="relations">
+    </label>
+    <div class="col-xs-11">
+        <strong>A list of relations between entities</strong>
+        <p class="help-block">
+            The data contains identifiers for two entities, data regarding their 
+            relationship and, optionally, further attributes related to the 
+            entities.
+        </p>
+    </div>
+</div>
+
+<div class="form-group">
+    <label class="col-xs-1 control-label" for="file">
+        <input type="radio" ng-model="data.mode" value="entities">
+    </label>
+    <div class="col-xs-11">
+        <strong>A list with details about entities</strong>
+        <p class="help-block">
+            Each row contains identifiers for a single entity, as well as other 
+            attributes that help to describe the entity. No information about 
+            their relations to other entities will be imported.
+        </p>
+    </div>
+</div>
+
+<div class="form-group">
+    <label class="col-xs-1 control-label" for="file">
+        <input type="radio" ng-model="data.mode" value="aliases">
+    </label>
+    <div class="col-xs-11">
+        <strong>A list of alternate names for entities</strong>
+        <p class="help-block">
+            The data identifies entities and gives alternate names (aliases) for 
+            those entities to improve name-based matching of entities.
+        </p>
+    </div>
+</div>
+
+<div class="clearfix"></div>
+<hr/>
+
+<div class="btn-group">
+  <button type="button" class="btn btn-default" ng-click="uploadFile()"
+    ><i class="fa fa-chevron-circle-left"></i> Upload a different file</button>
+  <button type="button" class="btn btn-primary" ng-disabled="!data.mode" ng-click="defineMapping()">
+    Proceed <i class="fa fa-chevron-circle-right"></i></button>
+</div>

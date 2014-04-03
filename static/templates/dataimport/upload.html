@@ -1,0 +1,27 @@
+<div class="modal-header">
+  <button type="button" class="close" ng-click="cancel()" aria-hidden="true">&times;</button>
+  <h4 class="modal-title">Upload a data file</h4>
+</div>
+
+<div class="modal-body">
+    <div class="form-group">
+      <label class="col-sm-2 control-label" for="file">File</label>
+      <div class="col-sm-10">
+        <input type="file" ng-file-select="onFileSelect($files)" >
+        <p class="help-block">The selected file must be a comma-seperated values (CSV) table.</p>
+      </div>
+    </div>
+    <div class="clearfix"></div>
+    <div ng-show="uploadProgress"> 
+        <p class="help-block">Please wait, uploading...</p>
+        <div class="progress">
+            <div class="progress-bar" role="progressbar" aria-valuenow="{{uploadProgress}}" aria-valuemin="0" aria-valuemax="100" style="width: {{uploadProgress}}%;"></div>
+        </div>
+    </div>
+</div>
+
+<div class="modal-footer">
+  <button type="button" class="btn btn-default" ng-click="cancel()">Cancel</button>
+  <button type="submit" class="btn btn-primary"
+    ng-disabled="!file" ng-click="upload()">Upload</button>
+</div>

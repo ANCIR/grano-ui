@@ -1,4 +1,4 @@
-var grano = angular.module('grano', ['ngRoute', 'ngAnimate', 'ngSanitize', 'ui.bootstrap', 'grano.config']);
+var grano = angular.module('grano', ['ngRoute', 'ngAnimate', 'ngSanitize', 'angularFileUpload', 'ui.bootstrap', 'grano.config']);
 
 grano.config(['$routeProvider', '$locationProvider',
     function($routeProvider, $locationProvider) {
@@ -57,6 +57,21 @@ grano.config(['$routeProvider', '$locationProvider',
   $routeProvider.when('/p/:slug/relations/:id', {
     templateUrl: 'relations/view.html',
     controller: RelationsViewCtrl
+  });
+
+  $routeProvider.when('/p/:slug/import', {
+    templateUrl: 'dataimport/index.html',
+    controller: ImportIndexCtrl
+  });
+
+  $routeProvider.when('/p/:slug/import/modes', {
+    templateUrl: 'dataimport/modes.html',
+    controller: ImportModesCtrl
+  });
+
+  $routeProvider.when('/p/:slug/import/mapping', {
+    templateUrl: 'dataimport/mapping.html',
+    controller: ImportMappingCtrl
   });
 
   $routeProvider.otherwise({
