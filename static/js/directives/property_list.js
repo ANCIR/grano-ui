@@ -36,7 +36,7 @@ grano.directive('gnPropertyList', ['core', '$http', '$sce', '$modal', 'schemata'
                     }
                 });
                 d.result.finally(function() {
-                    scope.refresh(scope.entity.id);
+                    scope.refresh({id: scope.obj.id});
                 });
             };
 
