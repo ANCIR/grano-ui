@@ -1,0 +1,56 @@
+<h4>What is the meaning of the columns?</h4>
+<hr>
+
+<table class="table table-condensed table-bordered">
+    <thead>
+        <tr>
+            <th>Column name</th>
+            <th>Import as</th>
+            <th colspan="{{sampleData.rows.length}}" class="hidden-xs">
+                Sample data
+            </th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr ng-repeat="header in sampleData.headers" ng-hide="mode=='relations' && editMode == 'attribute' && !mapping[header].object">
+            <th>{{header}}</th>
+            <td ng-show="editMode=='object'">
+                <input type="radio" ng-model="mapping[header].object" value="source">&nbsp;Source&nbsp;
+                <input type="radio" ng-model="mapping[header].object" value="relation">&nbsp;Relation&nbsp;
+                <input type="radio" ng-model="mapping[header].object" value="target">&nbsp;Target&nbsp;
+                <!--<input type="radio" ng-model="mapping[header].object" value="">&nbsp;Ignore&nbsp;!-->
+            </td>
+            <td ng-show="editMode=='attribute'">
+                <select class="form-control input-sm"
+                    ng-options="a.name as a.label group by a.schema.label for a in attributeChoices(header)"
+                    ng-model="mapping[header].attribute"></select>
+            </td>
+            <td ng-repeat="val in sampleData.rows" class="hidden-xs">
+                <span ng-show="val[$parent.$index]"
+                    ng-bind-html="truncate(val[$parent.$index], 15)"></span>
+                <span ng-hide="val[$parent.$index]" class="text-empty">
+                    emtpy
+                </span>
+            </td>
+        </tr>
+    </tbody>
+</table>
+
+
+<div class="clearfix"></div>
+<hr/>
+
+<div class="btn-group">
+  <button type="button" class="btn btn-default" ng-show="mode!='relations' || editMode=='object'"
+    ng-click="defineMapping()"><i class="fa fa-chevron-circle-left"></i>
+    Change import mode</button>
+  <button type="button" class="btn btn-default" ng-show="mode=='relations' && editMode=='attribute'"
+    ng-click="editMode='object'"><i class="fa fa-chevron-circle-left"></i>
+    Set column objects</button>
+  <button type="button" class="btn btn-primary" ng-click="editMode='attribute'"
+    ng-show="mode=='relations' && editMode=='object'" ng-disabled="!validateObjects()">
+    Proceed <i class="fa fa-chevron-circle-right"></i></button>
+  <button type="button" class="btn btn-primary" ng-click="beginImport()"
+    ng-show="mode!='relations' || editMode=='attribute'" ng-disabled="!validateAttributes()">
+    Begin import <i class="fa fa-chevron-circle-right"></i></button>
+</div>
