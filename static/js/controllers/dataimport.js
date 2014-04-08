@@ -1,9 +1,26 @@
 
 function ImportIndexCtrl($scope, $rootScope, $routeParams, $location, $http,
-    $modal, $timeout, core, session) {
+    $modal, $interval, core, session) {
+
+    var pipelinesUrl = core.call('/pipelines'),
+        pipelinesParams = {
+            'project': $routeParams.slug,
+            'operation': 'import',
+            'limit': 10
+        };
 
     $scope.loadProject($routeParams.slug);
     $scope.setSection('import');
+    $scope.pipelines = {};
+
+
+    $scope.loadPipelines = function(url) {
+        pipelinesUrl = url;
+        $http.get(url, {params: pipelinesParams}).then(function(data) {
+            $scope.pipelines = data.data;
+        });
+    };
+    $scope.loadPipelines(pipelinesUrl);
 
     $scope.uploadFile = function() {
         var d = $modal.open({
@@ -17,7 +34,7 @@ function ImportIndexCtrl($scope, $rootScope, $routeParams, $location, $http,
 }
 
 ImportIndexCtrl.$inject = ['$scope', '$rootScope', '$routeParams', '$location', '$http',
-    '$modal', '$timeout', 'core', 'session'];
+    '$modal', '$interval', 'core', 'session'];
 
 
 function ImportUploadCtrl($scope, $rootScope, $routeParams, $location, $http,
@@ -61,6 +78,7 @@ function ImportModesCtrl($scope, $rootScope, $routeParams, $location, $http,
 
     $scope.loadProject($routeParams.slug);
     $scope.setSection('import');
+    $scope.validFile = true;
     $scope.relationSchema = null;
     $scope.relationSchemaOptions = [];
 
@@ -96,6 +114,11 @@ function ImportModesCtrl($scope, $rootScope, $routeParams, $location, $http,
         if ($location.search().schema) {
             $scope.relationSchema = $location.search().schema;
         }
+    });
+
+    var url = core.call('/files/' + $location.search().file + '/_table?limit=0');
+    var res = $http.get(url).then(function(data) {
+        $scope.validData = !data.data.status || data.data.status!='error';
     });
 }
 
@@ -133,7 +156,7 @@ function ImportMappingCtrl($scope, $rootScope, $routeParams, $location, $http,
         var request = {
             'mode': $scope.mode,
             'relation_schema': $location.search().schema,
-            'file_id': $location.search().file,
+            'file': $location.search().file,
             'mapping': {}
         };
         angular.forEach($scope.mapping, function(v, k) {
@@ -142,6 +165,10 @@ function ImportMappingCtrl($scope, $rootScope, $routeParams, $location, $http,
             }
         });
         console.log(request);
+        var res = $http.post(core.call('/projects/' + $scope.project.slug + '/_import'), request);
+        res.then(function(data) {
+            console.log(data);
+        });
     };
 
     $scope.attributeChoices = function(header) {

@@ -1,1 +1,34 @@
-<a ng-click="uploadFile()">Upload</a>
+<div class="btn-group pull-right">
+  <button type="button" class="btn btn-success" ng-click="uploadFile()">Import data</button>
+</div>
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>Import</th>
+            <th>State</th>
+            <th>Started</th>
+            <!--th>Ended</th-->
+            <th class="numeric">Progress</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr ng-repeat="pipeline in pipelines.results">
+            <td>
+                <a download href="{{config.API_ROOT}}/files/{{pipeline.config.file}}/_serve">{{pipeline.label}}</a>
+            </td>
+            <td>
+                <span class="label" ng-class="{
+                    'label-default': pipeline.status=='pending',
+                    'label-info': pipeline.status=='running',
+                    'label-success': pipeline.status=='complete',
+                    'label-danger': pipeline.status=='failed'
+                    }">{{pipeline.status}}</span>
+            </td>
+            <td>{{pipeline.started_at | datetime}}</td>
+            <!--td>{{pipeline.ended_at | datetime}}</td-->
+            <td class="numeric">{{pipeline.percent_complete}} %</td>
+        </tr>
+    </tbody>
+</table>
+<gn-pager class="pull-right" response="pipelines" load="loadPipelines(url)"></gn-pager>
