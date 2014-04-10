@@ -31,14 +31,22 @@ function PermissionsIndexCtrl($scope, $routeParams, $location, $http, $modal, $q
     };
 
     $scope.create = function() {
+        if (!$scope.canCreate()) {
+            return;
+        }
+
         var url = core.call('/projects/' + $routeParams.slug + '/permissions'),
             res = $http.post(url, $scope.newPermission);
 
+        $scope.newPermission = {'reader': true};
         res.then(function(res) {
             $scope.loadPermissions($scope.url);
-            $scope.newPermission = {'reader': true};
         });
     };
+
+    $scope.canCreate = function() {
+        return $scope.newPermission.account;
+    }
 
     $scope.loadAccounts = function(query) {
         var res = $http.get(core.call('/accounts/_suggest'), {params: {q: query}});
