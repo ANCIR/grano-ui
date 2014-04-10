@@ -134,10 +134,13 @@ function ImportMappingCtrl($scope, $rootScope, $routeParams, $location, $http,
     $scope.truncate = $filter('truncate');
 
     var relationAttributes = [],
-        entityAttributes = [];
+        entityAttributes = [],
+        selectBase = [{name: '', label: "Don't import"},
+                      {name: '_source_url', label: "Source URL (for this data)"}];
 
     $scope.mode = $location.search().mode;
     $scope.editMode = $scope.mode == 'relations' ? 'object' : 'attribute';
+    $scope.request = {source_url: null};
     $scope.mapping = {};
     
     var url = core.call('/files/' + $location.search().file + '/_table?limit=3');
@@ -153,35 +156,35 @@ function ImportMappingCtrl($scope, $rootScope, $routeParams, $location, $http,
     };
 
     $scope.beginImport = function() {
-        var request = {
-            'mode': $scope.mode,
-            'relation_schema': $location.search().schema,
-            'file': $location.search().file,
-            'mapping': {}
-        };
+        $scope.request.mode = $scope.mode;
+        $scope.request.relation_schema = $location.search().schema
+        $scope.request.file = $location.search().file
+        $scope.request.mapping = {}
         angular.forEach($scope.mapping, function(v, k) {
             if (v.attribute.length > 0) {
-                request.mapping[k] = v;
+                $scope.request.mapping[k] = v;
             }
         });
-        var res = $http.post(core.call('/projects/' + $scope.project.slug + '/_import'), request);
+        var url = core.call('/projects/' + $scope.project.slug + '/_import');
+        var res = $http.post(url, $scope.request);
         res.then(function(data) {
             $location.path('/p/' + $scope.project.slug + '/import');
+            $location.search({});
         });
     };
 
     $scope.attributeChoices = function(header) {
         if ($scope.mode=='aliases') {
-            return [
-                {name: '', label: "Don't import"},
+            var options = [
                 {name: 'alias', label: 'Alternate name'},
                 {name: 'canonical', label: 'Preferred name'}
-            ];
+            ]
+            return selectBase.concat(options);
         } else if ($scope.mode=='entities' ||
             $scope.mapping[header].object!='relation') {
-            return entityAttributes;
+            return selectBase.concat(entityAttributes);
         }
-        return relationAttributes;
+        return selectBase.concat(relationAttributes);
     };
 
     $scope.validateObjects = function() {
@@ -211,7 +214,7 @@ function ImportMappingCtrl($scope, $rootScope, $routeParams, $location, $http,
 
     var init = function() {
         schemata.attributes($routeParams.slug, 'entity').then(function(attributes) {
-            entityAttributes = [{name: '', label: "Don't import"}];
+            entityAttributes = [];
             angular.forEach(attributes, function(a) {
                 a.label = $scope.truncate(a.label, 20);
                 entityAttributes.push(a);
@@ -219,7 +222,7 @@ function ImportMappingCtrl($scope, $rootScope, $routeParams, $location, $http,
         });
 
         schemata.attributes($routeParams.slug, 'relation').then(function(attributes) {
-            relationAttributes = [{name: '', label: "Don't import"}];
+            relationAttributes = [];
             angular.forEach(attributes, function(a) {
                 if (a.schema.name==$location.search().schema) {
                     a.label = $scope.truncate(a.label, 20);

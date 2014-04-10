@@ -36,6 +36,20 @@
     </tbody>
 </table>
 
+<form class="form-horizontal">
+    <div class="form-group row">
+        <label class="col-sm-2 control-label" for="_source_url">Source URL</label>
+        <div class="col-sm-10">
+            <input type="text" ng-model="request.source_url" class="form-control"
+                placeholder="http://source.of.the/information.csv">
+            <p class="help-block">
+                This URL will be used as a source reference for all data, unless a 
+                column in the data has been given that contains a more specific 
+                source reference for each record. 
+            </p>
+        </div>
+    </div>
+</form>
 
 <div class="clearfix"></div>
 <hr/>
