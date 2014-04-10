@@ -1,6 +1,26 @@
 <h4>What is the meaning of the columns?</h4>
 <hr>
 
+<div class="alert alert-info" ng-show="mode=='aliases'">
+    You're now prompted to configure which column in the source data contains the 
+    preferred name of the entities, and which column holds an alias value.
+</div>
+
+
+<div class="alert alert-info" ng-show="mode=='entities'">
+    You're now prompted to connect the columns in your source data with the attributes 
+    defined by the schemata in {{project.label}}. To import entities, you will at least
+    need to assign one column to the <strong>Name</strong> attribute of the imported 
+    entity.
+</div>
+
+<div class="alert alert-info" ng-show="editMode == 'attribute' && mode=='relations'">
+    You're now prompted to connect the columns in your source data with the attributes 
+    defined by the schemata in {{project.label}}. To import relations, you will at least
+    need to set the <strong>Name</strong> attributes for the source and target entities
+    of the relations that you're importing.
+</div>
+
 <table class="table table-condensed table-bordered">
     <thead>
         <tr>
@@ -29,7 +49,7 @@
                 <span ng-show="val[$parent.$index]"
                     ng-bind-html="truncate(val[$parent.$index], 15)"></span>
                 <span ng-hide="val[$parent.$index]" class="text-empty">
-                    emtpy
+                    empty
                 </span>
             </td>
         </tr>

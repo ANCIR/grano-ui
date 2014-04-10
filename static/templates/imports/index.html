@@ -1,11 +1,8 @@
-<div class="btn-group pull-right">
-  <button type="button" class="btn btn-success" ng-click="uploadFile()">Import data</button>
-</div>
 
 <table class="table">
     <thead>
         <tr>
-            <th>Import</th>
+            <th width="60%">Import</th>
             <th>State</th>
             <th>Started</th>
             <!--th>Ended</th-->
@@ -31,4 +28,9 @@
         </tr>
     </tbody>
 </table>
+<div class="btn-group pull-left">
+  <button type="button" class="btn btn-sm btn-success" ng-click="uploadFile()"><i class="fa fa-cloud-upload"></i> Import data</button>
+</div>
+
+
 <gn-pager class="pull-right" response="pipelines" load="loadPipelines(url)"></gn-pager>
