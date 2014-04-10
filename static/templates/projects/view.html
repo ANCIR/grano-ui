@@ -1,10 +1,46 @@
-<h4>{{project.label}} <small>Nothing to see here.</small></h4>
+<div class="alert alert-success" ng-show="noSchemata">
+    <strong>Welcome to {{project.label}}.</strong> You've successfully created a new project. As a
+    next step, you should <a href="#/p/{{project.slug}}/schemata" class="alert-link">create schemata</a> to describe
+    the types of entities and relations that will be part of this project.
+</div>
 
-<p>On this page should be:</p>
-<ul>
-    <li>Link to the schema editor when there are no schemata</li>
-    <li>Entity statistics and search box</li>
-    <li>Links to the documentation</li>
-    <li>Google Refine link</li>
-    <li>Exports: CSV nodes and adjacencies, aliases, GEXF graph</li>
-</ul>
+<div class="row bottom-padded">
+  <div class="col-xs-12">
+    <form role="form" ng-submit="searchEntities()">
+      <div class="input-group">
+        <span class="input-group-addon"><i class="fa fa-search"></i></span>
+        <input type="text" class="search-query form-control" autofocus
+                ng-model="query.value" placeholder="Search entities">
+        <span class="input-group-btn" gn-permission project="project" role="editor">
+          <a class="btn btn-default btn-success" href="#/p/{{project.slug}}/entities/new">New entity</a>
+          <a class="btn btn-default btn-default" ng-click="uploadFile()">Import</a>
+        </span>
+      </div>
+    </form>
+  </div>
+</div>
+
+<div class="row">
+    <div class="col-md-4">
+        <h4>Next steps</h4>
+        <ul>
+            <li><a href="#">Create entities</a></li>
+            <li><a href="#">Upload raw data from a CSV file</a></li>
+            <li><a href="#">Edit project settings</a></li>
+            <li><a href="#">Download entity names and aliases</a></li>
+        </ul>
+    </div>
+    <div class="col-md-8">
+        <h4>Use OpenRefine to match data!</h4>
+        <p>
+            <a href="http://openrefine.org">OpenRefine</a> is a powerful data cleaning tool 
+            that can be connected to {{config.APP_NAME}} to integrate raw data 
+            with the entities that are part of {{project.label}}.
+        </p>
+        <p>
+            When you're using Refine's <a href="https://github.com/OpenRefine/OpenRefine/wiki/Reconciliation">Reconciliation</a> feature, add the following endpoint to match records in your 
+            data against this project:
+        </p>
+        <pre>{{config.API_ROOT}}/projects/{{project.slug}}/_reconcile</pre>
+    </div>
+</div>

@@ -7,6 +7,7 @@
                 ng-model="query.value" ng-change="updateFilter()" placeholder="Search entities">
         <span class="input-group-btn" gn-permission project="project" role="editor">
           <a class="btn btn-default btn-success" href="#/p/{{project.slug}}/entities/new">New entity</a>
+          <a class="btn btn-default btn-default" ng-click="uploadFile()">Import</a>
         </span>
       </div>
     </form>

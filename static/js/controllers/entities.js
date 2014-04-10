@@ -59,6 +59,16 @@ function EntitiesIndexCtrl($scope, $rootScope, $routeParams, $location, $http, $
         $scope.previewEntity = entity;
     };
 
+    $scope.uploadFile = function() {
+        var d = $modal.open({
+            templateUrl: 'imports/upload.html',
+            controller: 'ImportUploadCtrl',
+            resolve: {
+                project: function() { return $scope.project; }
+            }
+        });
+    };
+
     $scope.updateSearch();
 
     if ($location.search().preview) {

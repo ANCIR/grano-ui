@@ -1,10 +1,35 @@
 
-function ProjectsViewCtrl($scope, $routeParams, $location, $http, $modal, $timeout, core, session) {
+function ProjectsViewCtrl($scope, $routeParams, $location, $http, $modal,
+        $timeout, core, session, schemata) {
     $scope.setSection('project');
     $scope.loadProject($routeParams.slug);
+    $scope.query = {};
+    $scope.schemata = [];
+    $scope.noSchemata = false;
+
+    $scope.searchEntities = function() {
+        $location.path('/p/' + $routeParams.slug + '/entities');
+        $location.search({'q': $scope.query.value});
+    };
+
+    $scope.uploadFile = function() {
+        var d = $modal.open({
+            templateUrl: 'imports/upload.html',
+            controller: 'ImportUploadCtrl',
+            resolve: {
+                project: function() { return $scope.project; }
+            }
+        });
+    };
+
+    schemata.get($routeParams.slug).then(function(ss) {
+        $scope.schemata = ss;
+        $scope.noSchemata = ss.length == 1;
+    });
 }
 
-ProjectsViewCtrl.$inject = ['$scope', '$routeParams', '$location', '$http', '$modal', '$timeout', 'core', 'session'];
+ProjectsViewCtrl.$inject = ['$scope', '$routeParams', '$location', '$http', '$modal',
+    '$timeout', 'core', 'session', 'schemata'];
 
 
 function ProjectsNewCtrl($scope, $routeParams, $modalInstance, $location, $http, core, session) {
