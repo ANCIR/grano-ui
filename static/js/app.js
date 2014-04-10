@@ -60,17 +60,17 @@ grano.config(['$routeProvider', '$locationProvider',
   });
 
   $routeProvider.when('/p/:slug/import', {
-    templateUrl: 'dataimport/index.html',
+    templateUrl: 'imports/index.html',
     controller: ImportIndexCtrl
   });
 
   $routeProvider.when('/p/:slug/import/modes', {
-    templateUrl: 'dataimport/modes.html',
+    templateUrl: 'imports/modes.html',
     controller: ImportModesCtrl
   });
 
   $routeProvider.when('/p/:slug/import/mapping', {
-    templateUrl: 'dataimport/mapping.html',
+    templateUrl: 'imports/mapping.html',
     controller: ImportMappingCtrl
   });
 

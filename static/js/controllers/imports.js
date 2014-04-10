@@ -24,7 +24,7 @@ function ImportIndexCtrl($scope, $rootScope, $routeParams, $location, $http,
 
     $scope.uploadFile = function() {
         var d = $modal.open({
-            templateUrl: 'dataimport/upload.html',
+            templateUrl: 'imports/upload.html',
             controller: 'ImportUploadCtrl',
             resolve: {
                 project: function() { return $scope.project; }
@@ -86,7 +86,7 @@ function ImportModesCtrl($scope, $rootScope, $routeParams, $location, $http,
 
     $scope.uploadFile = function() {
         var d = $modal.open({
-            templateUrl: 'dataimport/upload.html',
+            templateUrl: 'imports/upload.html',
             controller: 'ImportUploadCtrl',
             resolve: {
                 project: function() { return $scope.project; }
@@ -164,10 +164,9 @@ function ImportMappingCtrl($scope, $rootScope, $routeParams, $location, $http,
                 request.mapping[k] = v;
             }
         });
-        console.log(request);
         var res = $http.post(core.call('/projects/' + $scope.project.slug + '/_import'), request);
         res.then(function(data) {
-            console.log(data);
+            $location.path('/p/' + $scope.project.slug + '/import');
         });
     };
 
