@@ -24,10 +24,18 @@
     <div class="col-md-4">
         <h4>Next steps</h4>
         <ul>
-            <li><a href="#">Create entities</a></li>
-            <li><a href="#">Upload raw data from a CSV file</a></li>
-            <li><a href="#">Edit project settings</a></li>
-            <li><a href="#">Download entity names and aliases</a></li>
+            <li gn-permission project="project" role="editor">
+                <a href="#/p/{{project.slug}}/entities/new">Create entities</a>
+            </li>
+            <li gn-permission project="project" role="editor">
+                <a ng-click="uploadFile()">Upload raw data from a CSV file</a>
+            </li>
+            <li>
+                <a href="{{config.API_ROOT}}/projects/{{project.slug}}/aliases" download>Download entity names and aliases</a>
+            </li>
+            <li gn-permission project="project" role="editor">
+                <a href="#/p/{{project.slug}}/settings">Edit project settings</a>
+            </li>
         </ul>
     </div>
     <div class="col-md-8">
