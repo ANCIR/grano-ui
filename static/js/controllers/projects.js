@@ -73,6 +73,16 @@ function ProjectsEditCtrl($scope, $route, $routeParams, $location, $http, $modal
             }
         });
     }
+
+    $scope.truncateProject = function() {
+        var d = $modal.open({
+            templateUrl: 'projects/truncate.html',
+            controller: 'ProjectsTruncateCtrl',
+            resolve: {
+                project: function () { return $scope.project; }
+            }
+        });
+    }
 }
 
 ProjectsEditCtrl.$inject = ['$scope', '$route', '$routeParams', '$location', '$http', '$modal', 'core'];
@@ -95,3 +105,21 @@ function ProjectsDeleteCtrl($scope, $routeParams, $location, $http, $route, $mod
 }
 
 ProjectsDeleteCtrl.$inject = ['$scope', '$routeParams', '$location', '$http', '$route', '$modal', '$modalInstance', 'project'];
+
+
+function ProjectsTruncateCtrl($scope, $routeParams, $location, $http, $route, $modal, $modalInstance, project) {
+    $scope.project = project;
+
+    $scope.cancel = function() {
+        $modalInstance.dismiss('cancel');
+    };
+
+    $scope.truncate = function() {
+        var res = $http.delete($scope.project.api_url + '/_truncate');
+        res.then(function(data) {
+            $modalInstance.dismiss('ok');
+        });
+    };
+}
+
+ProjectsTruncateCtrl.$inject = ['$scope', '$routeParams', '$location', '$http', '$route', '$modal', '$modalInstance', 'project'];

@@ -1,0 +1,14 @@
+<div class="modal-header">
+  <button type="button" class="close" ng-click="cancel()" aria-hidden="true">&times;</button>
+  <h4 class="modal-title">Clear: {{project.label}}</h4>
+</div>
+
+<div class="modal-body">
+  <p>This will delete all entities and relations associated with the project
+  <strong>{{project.label}}</strong>. Are you sure?</p>
+</div>
+
+<div class="modal-footer">
+  <button type="button" class="btn btn-default" ng-click="cancel()">Cancel</button>
+  <button type="submit" class="btn btn-danger" ng-click="truncate()">Continue</button>
+</div>

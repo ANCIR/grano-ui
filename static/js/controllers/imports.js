@@ -103,6 +103,9 @@ function ImportModesCtrl($scope, $rootScope, $routeParams, $location, $http,
         $location.path('/p/' + $scope.project.slug + '/import/mapping');
     };
 
+    $scope.canRelationsMode = function() {
+        return $scope.relationSchemaOptions.length > 0;
+    };
 
     schemata.get($routeParams.slug).then(function(schemata) {
         angular.forEach(schemata, function(s) {
@@ -110,7 +113,9 @@ function ImportModesCtrl($scope, $rootScope, $routeParams, $location, $http,
                 $scope.relationSchemaOptions.push(s);
             }
         });
-        $scope.relationSchema = $scope.relationSchemaOptions[0].name;
+        if ($scope.relationSchemaOptions.length > 0) {
+            $scope.relationSchema = $scope.relationSchemaOptions[0].name;    
+        }
         if ($location.search().schema) {
             $scope.relationSchema = $location.search().schema;
         }
