@@ -9,6 +9,7 @@ grano.directive('gnRelationList', ['core', '$http', '$sce', '$modal', 'schemata'
         templateUrl: 'directives/relation_list.html',
         link: function (scope, element, attrs, model) {
             scope.relations = {};
+            scope.schemata = [];
             scope.localName = scope.direction == 'inbound' ? 'target' : 'source';
             scope.oppositeName = scope.direction == 'inbound' ? 'source' : 'target';
             
@@ -17,6 +18,10 @@ grano.directive('gnRelationList', ['core', '$http', '$sce', '$modal', 'schemata'
                 $http.get(url).then(function(res) {
                     scope.relations = res.data;
                 });
+            };
+
+            scope.canAdd = function() {
+                return scope.schemata.length > 0;
             };
 
             scope.deleteRelation = function(relation) {
@@ -51,6 +56,15 @@ grano.directive('gnRelationList', ['core', '$http', '$sce', '$modal', 'schemata'
                 scope.project = e.project;
                 var url = core.call('/relations?' + scope.localName + '=' + e.id);
                 scope.load(url);
+
+                if (scope.project) {
+                    schemata.get(scope.project.slug, 'relation').then(function(ss) {
+                        scope.schemata = [];
+                        angular.forEach(ss, function(s) {
+                            if (s.obj == 'relation') scope.schemata.push(s);
+                        });
+                    });    
+                }
             });
 
         }

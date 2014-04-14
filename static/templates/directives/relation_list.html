@@ -8,6 +8,7 @@
             </th>
             <th width="1%">
                 <button type="button" gn-permission project="project" role="editor"
+                    ng-disabled="!canAdd()"
                     class="btn btn-xs btn-success pull-right"
                     ng-click="createRelation()"><i class="fa fa-plus"></i></button>
             </th>
