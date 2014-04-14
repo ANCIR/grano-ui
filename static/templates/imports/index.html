@@ -10,6 +10,13 @@
         </tr>
     </thead>
     <tbody>
+        <tr ng-show="pipelines.total == 0">
+            <td colspan="4">
+                <div class="alert alert-info">
+                    <strong>No imports.</strong> You haven't started any data imports yet. 
+                </div>
+            </td>
+        </tr>
         <tr ng-repeat="pipeline in pipelines.results">
             <td>
                 <a download href="{{config.API_ROOT}}/files/{{pipeline.config.file}}/_serve">{{pipeline.label}}</a>
@@ -31,6 +38,5 @@
 <div class="btn-group pull-left" gn-permission project="project" role="editor">
   <button type="button" class="btn btn-sm btn-success" ng-click="uploadFile()"><i class="fa fa-cloud-upload"></i> Import data</button>
 </div>
-
 
 <gn-pager class="pull-right" response="pipelines" load="loadPipelines(url)"></gn-pager>

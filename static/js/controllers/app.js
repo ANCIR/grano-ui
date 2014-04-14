@@ -6,6 +6,7 @@ function AppCtrl($scope, $window, $routeParams, $location, $modal, $http,
 
     
     core.setTitle('Welcome');
+    $scope.pageLoaded = true;
 
     $scope.loadProject = function(slug) {
         $scope.project = false;

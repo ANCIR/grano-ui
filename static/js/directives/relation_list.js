@@ -13,6 +13,7 @@ grano.directive('gnRelationList', ['core', '$http', '$sce', '$modal', 'schemata'
             scope.oppositeName = scope.direction == 'inbound' ? 'source' : 'target';
             
             scope.load = function(url) {
+                scope.relations = {};
                 $http.get(url).then(function(res) {
                     scope.relations = res.data;
                 });
