@@ -13,6 +13,7 @@
     "angular-route": "~1.2.13",
     "angular-bootstrap": "~0.10.0",
     "angular-animate": "~1.2.15",
+    "angular-datepicker": "1.0.3",
     "moment": "~2.5.1",
     "underscore": "~1.6.0",
     "angular-sanitize": "~1.2.15",
