@@ -42,6 +42,7 @@ function RelationsNewCtrl($scope, $routeParams, $modalInstance, $location, $http
         source: angular.copy(source),
         target: angular.copy(target)
     };
+    $scope.project = project;
     $scope.source = source;
     $scope.target = target;
 

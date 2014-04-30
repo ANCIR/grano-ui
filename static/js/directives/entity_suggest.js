@@ -2,15 +2,17 @@ grano.directive('gnEntitySuggest', ['core', '$http', '$sce', '$q', 'core', funct
     return {
         restrict: 'E',
         scope: {
-            'entity': '='
+            'entity': '=', 
+            'project': '='
         },
         templateUrl: 'directives/entity_suggest.html',
         link: function (scope, element, attrs, model) {
             var url = core.call('/entities/_suggest');
 
             scope.loadEntities = function(query) {
-                var dfd = $q.defer();
-                $http.get(url, {params: {q: query}}).then(function(es) {
+                var dfd = $q.defer(),
+                    params =  {q: query, project: scope.project.slug};
+                $http.get(url, {params: params}).then(function(es) {
                     dfd.resolve(es.data.results);
                 });
                 return dfd.promise;

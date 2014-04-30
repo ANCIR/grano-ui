@@ -13,7 +13,7 @@
     <div class="form-group" ng-class="{'has-error': mergeEntity.dest.$invalid}">
       <label class="col-sm-2 control-label" for="name">Destination</label>
       <div class="col-sm-10">
-        <gn-entity-suggest entity="merge.dest"></gn-entity-suggest>
+        <gn-entity-suggest entity="merge.dest" project="project"></gn-entity-suggest>
         <p class="help-block" ng-show="mergeEntity.dest.$invalid" ng-bind="mergeEntity.dest.$message"></p>
       </div>
     </div>

@@ -174,6 +174,7 @@ EntitiesDeleteCtrl.$inject = ['$scope', '$routeParams', '$location', '$http', '$
 
 function EntitiesMergeCtrl($scope, $routeParams, $location, $http, $route, $modal, $modalInstance, core, orig) {
     $scope.merge = {'orig': orig, 'dest': null};
+    $scope.project = orig.project;
 
     $scope.cancel = function() {
         $modalInstance.dismiss('cancel');
