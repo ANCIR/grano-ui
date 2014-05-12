@@ -20,9 +20,14 @@ You'll also need to install these external (non-Python dependencies):
 Configuration
 -------------
 
+To enable this plugin, add the entry ``ui`` to the ``PLUGINS`` variable in your grano settings file. If you have
+no other plugins installed, try this:
+
+```python
+PLUGINS = ['ui']
+```
+
 By default, ``grano-ui`` will deploy itself to the web root of any running instance of ``grano`` in the same virtual 
-environment. You can change that path by setting a ``UI_PREFIX`` in the grano settings file, starting with a forward
-slash. 
+environment. You can change that path by setting a ``UI_PREFIX``, starting with a forward slash. 
 
 Further, asset compilation and minification can be enabled by setting the ``ASSETS_DEBUG`` variable to ``False``.
-
