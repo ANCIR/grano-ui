@@ -8,26 +8,31 @@ and analysis for advanced users, not as a general-purpose interface.
 Installation
 ------------
 
-``grano-ui`` requires that you have installed and configured `grano <http://grano.cc/>`_. Please refer to `grano's documentation <http://docs.grano.cc/>`_ for further instructions. Afterwards, install the ``grano-ui`` package (from PyPI or source) into the same virtual environment. 
-
-You'll also need to install these external (non-Python dependencies):
+``grano-ui`` requires that you have installed and configured `grano <http://grano.cc/>`_. Please refer to `grano's documentation <http://docs.grano.cc/>`_ for further instructions. You'll also need to install these external (non-Python dependencies):
 
 * Twitter's `bower <https://github.com/bower/bower>`_ for installing JS dependencies.
 * `UglifyJS <https://github.com/mishoo/UglifyJS/>`_ for JS minification.
 * `Less <http://lesscss.org/>`_ for compiling the CSS resources.
 
+To install the package from GitHub, you need to follow these steps from within the virtual environment in which ``grano`` has been installed:
 
-Configuration
--------------
+```bash
+git clone https://github.com/granoproject/grano-ui.git
+cd grano-ui
+python setup.py develop
+bower install
+```
 
-To enable this plugin, add the entry ``ui`` to the ``PLUGINS`` variable in your grano settings file. If you have
-no other plugins installed, try this:
+After installing the package, you will still need to enable this plugin. Add the entry ``ui`` to the ``PLUGINS`` variable in your grano settings file. If you have no other plugins installed, try this:
 
 ```python
 PLUGINS = ['ui']
 ```
 
-By default, ``grano-ui`` will deploy itself to the web root of any running instance of ``grano`` in the same virtual 
-environment. You can change that path by setting a ``UI_PREFIX``, starting with a forward slash. 
+
+Configuration
+-------------
+
+By default, ``grano-ui`` will deploy itself to the web root of ``grano`` when it has been activated as a plugin. You can change that path by setting a ``UI_PREFIX``, starting with a forward slash. 
 
 Further, asset compilation and minification can be enabled by setting the ``ASSETS_DEBUG`` variable to ``False``.
