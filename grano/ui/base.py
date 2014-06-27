@@ -10,11 +10,12 @@ from grano.ui.view import blueprint, STATIC_PATH, UI_PREFIX
 
 assets = Environment(app)
 
+
 @app.before_request
 def configure_assets():
     if len(UI_PREFIX):
         assets.url = url_for('ui.static', filename='')
-    
+
 
 class Installer(Startup):
 
@@ -24,6 +25,3 @@ class Installer(Startup):
             assets.url = UI_PREFIX + '/static'
         manager.add_command("assets", ManageAssets(assets))
         app.register_blueprint(blueprint, url_prefix=UI_PREFIX)
-        
-
-
