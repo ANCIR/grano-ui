@@ -114,7 +114,7 @@
     <script id="{{path}}" type="text/ng-template">{{tmpl|safe}}</script>
   {% endfor %}
 
-  {% assets filters="uglifyjs", output="prod/ui.vendor.js",
+  {% assets filters="jsmin", output="prod/ui.vendor.js",
         "ui/vendor/ng-file-upload/angular-file-upload-shim.js",
         "ui/vendor/jquery/dist/jquery.js",
         "ui/vendor/bootstrap/js/collapse.js",
