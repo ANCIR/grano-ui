@@ -1,14 +1,11 @@
 import os
 from json import dumps
 
-from flask import Blueprint, render_template, request
-from flask import redirect, make_response, url_for
+from flask import Blueprint, render_template
+from flask import make_response, url_for
 
-from grano import __version__
 from grano.lib.serialisation import jsonify
-from grano.core import app, url_for, app_name
-from grano.views.cache import validate_cache, disable_cache
-from grano.background import ping
+from grano.core import app, app_name, app_version
 
 
 UI_PREFIX = app.config.get('UI_PREFIX', '')
@@ -42,7 +39,7 @@ def config(**kw):
         schema_objs=dumps(app.config['SCHEMA_OBJS']),
         api_root=api_root,
         app_name=app_name,
-        app_version=__version__)
+        app_version=app_version)
     res = make_response(res)
     res.headers['Content-Type'] = 'application/javascript'
     return res
