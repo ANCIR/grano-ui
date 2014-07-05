@@ -114,7 +114,7 @@
     <script id="{{path}}" type="text/ng-template">{{tmpl|safe}}</script>
   {% endfor %}
 
-  {% assets filters="jsmin", output="prod/ui.vendor.js",
+  {% assets filters="uglifyjs", output="prod/ui.vendor.js",
         "ui/vendor/ng-file-upload/angular-file-upload-shim.js",
         "ui/vendor/jquery/dist/jquery.js",
         "ui/vendor/bootstrap/js/collapse.js",
@@ -131,7 +131,7 @@
   {% endassets %}
   <!--script type="text/javascript" src="{{url_for('ui.config')}}"></script-->
   <script type="text/javascript" src="config.js"></script>
-  {% assets filters="jsmin", output="prod/ui.app.js",
+  {% assets filters="uglifyjs", output="prod/ui.app.js",
         "ui/js/app.js",
         "ui/js/validation.js",
         "ui/js/services/core.js",

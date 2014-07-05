@@ -23,7 +23,7 @@ setup(
     install_requires=[
         'grano>=0.3.1',
         'cssmin==0.1.4',
-        'Flask-Assets==0.9',
+        'Flask-Assets==0.10',
         'jsmin>=2.0.9'
     ],
     entry_points={
