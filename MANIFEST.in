@@ -1,3 +1,3 @@
-include LICENSE
+include LICENSE VERSION README.md README.rst bower.json Makefile
 recursive-include static *
 global-exclude *.pyc
