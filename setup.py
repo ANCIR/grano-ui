@@ -1,9 +1,12 @@
 import os
 from setuptools import setup, find_packages
 
+VERSION = os.path.join(os.path.dirname(__file__), 'VERSION')
+VERSION = open(VERSION, 'r').read().strip()
+
 setup(
     name='grano-ui',
-    version=os.environ.get('GRANO_RELEASE', '0.3.2'),
+    version=VERSION,
     description="An entity and social network tracking software for news applications (Admin UI)",
     long_description=open('README.md').read(),
     classifiers=[
