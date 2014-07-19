@@ -4,11 +4,14 @@ from setuptools import setup, find_packages
 VERSION = os.path.join(os.path.dirname(__file__), 'VERSION')
 VERSION = open(VERSION, 'r').read().strip()
 
+README = os.path.join(os.path.dirname(__file__), 'README.md')
+README = open(README, 'r').read().strip()
+
 setup(
     name='grano-ui',
     version=VERSION,
     description="An entity and social network tracking software for news applications (Admin UI)",
-    long_description=open('README.md').read(),
+    long_description=README,
     classifiers=[
         "Development Status :: 3 - Alpha",
         "Intended Audience :: Developers",
