@@ -30,7 +30,9 @@
           <span class="icon-bar"></span>
           <span class="icon-bar"></span>
         </button>
-        <a id="appName" class="navbar-brand" href="#/">{{config.APP_NAME}}</a>
+        <a id="appName" class="navbar-brand" href="#/">
+          <img src="static/images/logo.png">
+        </a>
       </div>
 
       <div class="collapse navbar-collapse navbar-ex1-collapse navbar-right">
@@ -59,7 +61,7 @@
     </nav>
 
     <div id="airlock" class="container-fluid">
-      <div class="row breadcrumbs hidden-xs hidden-sm">
+      <!--div class="row breadcrumbs hidden-xs hidden-sm">
           <div class="col-md-2">
               <span class="back-button" ng-show="project">
                   <i class="fa fa-chevron-circle-left"></i> <a href="#/">{{project.slug}}</a>
@@ -79,7 +81,7 @@
                   </span>
               </span>
           </div>
-      </div>
+      </div-->
 
       <div class="row">
           <div class="col-md-10 col-md-push-2" ng-view>
@@ -101,9 +103,9 @@
           &middot;
           {{config.APP_VERSION}}
           &middot;
-          <a href="https://github.com/pudo/grano">source code</a>
+          <a href="https://github.com/granoproject">source code</a>
           &middot;
-          <a href="https://docs.grano.cc">documentation</a>
+          <a href="https://granoproject.org">documentation</a>
         </div>
       </div>
     </div>
