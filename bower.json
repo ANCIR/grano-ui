@@ -1,7 +1,7 @@
 {
   "name": "grano",
   "version": "0.1.0",
-  "main": "grano/ui/style/style.less",
+  "main": "grano/ui/static/style/style.less",
   "ignore": [
     ".jshintrc",
     "**/*.txt"

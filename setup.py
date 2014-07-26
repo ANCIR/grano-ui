@@ -24,6 +24,7 @@ setup(
     url='http://granoproject.org',
     license='MIT',
     packages=find_packages(exclude=['ez_setup', 'examples', 'tests']),
+    package_data={'grano': ['ui/static/layout.html']},
     namespace_packages=[],
     include_package_data=True,
     zip_safe=False,

@@ -8,7 +8,7 @@ from grano.core import app, app_name, app_version
 
 
 UI_PREFIX = app.config.get('UI_PREFIX', '')
-STATIC_PATH = os.path.abspath(os.path.dirname(__file__))
+STATIC_PATH = os.path.abspath(os.path.join(os.path.dirname(__file__), 'static'))
 
 blueprint = Blueprint('ui', __name__, template_folder=STATIC_PATH,
                       static_folder=STATIC_PATH)
@@ -26,7 +26,7 @@ def angular_templates():
 
 @blueprint.route('/')
 def index(**kw):
-    return render_template('templates/layout.html',
+    return render_template('layout.html',
                            angular_templates=angular_templates())
 
 

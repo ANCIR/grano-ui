@@ -1,4 +1,4 @@
 {
-  "directory": "grano/ui/vendor",
+  "directory": "grano/ui/static/vendor",
   "json": "bower.json"
 }
