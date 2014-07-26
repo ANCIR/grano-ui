@@ -1,8 +1,8 @@
 *.egg-info
 *.pyc
 
-static/vendor/*
-static/.webassets-cache/*
-static/prod/*
+grano/ui/vendor/*
+grano/ui/.webassets-cache/*
+grano/ui/prod/*
 
 dist/*
