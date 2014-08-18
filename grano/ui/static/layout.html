@@ -11,6 +11,7 @@
 
   {% assets filters="less,cssmin,cssrewrite", output="prod/ui.vendor.css",
       "ui/style/vendor.less",
+      "ui/vendor/animate.css/animate.css",
       "ui/vendor/angular-datepicker/dist/index.css" %}
     <link type="text/css" href="{{ ASSET_URL }}" rel="stylesheet">
   {% endassets %}
