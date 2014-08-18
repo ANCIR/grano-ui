@@ -5,6 +5,7 @@ from flask import Blueprint, render_template
 from flask import make_response, url_for
 
 from grano.core import app, app_name, app_version
+from grano.model.schema import ENTITY_DEFAULT_SCHEMA
 
 
 UI_PREFIX = app.config.get('UI_PREFIX', '')
@@ -36,6 +37,8 @@ def config(**kw):
     res = render_template('js/config.js', ui_root=url_for('ui.index'),
                           data_types=dumps(app.config['DATA_TYPES']),
                           schema_objs=dumps(app.config['SCHEMA_OBJS']),
+                          plugins=dumps(app.config['PLUGINS']),
+                          entity_default_schema=ENTITY_DEFAULT_SCHEMA,
                           api_root=api_root,
                           app_name=app_name,
                           app_version=app_version)
