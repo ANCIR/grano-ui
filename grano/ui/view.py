@@ -8,12 +8,18 @@ from grano.core import app, app_name, app_version
 from grano.model.schema import ENTITY_DEFAULT_SCHEMA
 
 
-UI_PREFIX = app.config.get('UI_PREFIX', '')
+UI_PREFIX = app.config.get('UI_PREFIX', '/')
+if not len(UI_PREFIX):
+    UI_PREFIX = '/'
+
+STATIC_URL = '/ui/static' if UI_PREFIX == '/' else '/static'
 STATIC_PATH = os.path.abspath(os.path.join(os.path.dirname(__file__),
                               'static'))
 
-blueprint = Blueprint('ui', __name__, template_folder=STATIC_PATH,
-                      static_folder=STATIC_PATH)
+blueprint = Blueprint('ui', __name__,
+                      template_folder=STATIC_PATH,
+                      static_folder=STATIC_PATH,
+                      static_url_path=STATIC_URL)
 
 
 def angular_templates():
@@ -28,6 +34,8 @@ def angular_templates():
 
 @blueprint.route('/')
 def index(**kw):
+    for rule in app.url_map.iter_rules():
+        print rule
     return render_template('layout.html',
                            angular_templates=angular_templates())
 
