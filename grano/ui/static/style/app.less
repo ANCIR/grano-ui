@@ -1,0 +1,184 @@
+@import "variables.less";
+
+@bgColor: #f8f8f8;
+@borderColor: #e7e7e7;
+@selectedColor: #e7e7e7;
+
+/* General styles */
+
+a {
+    cursor: pointer;
+}
+
+body {
+    background-color: @bgColor;
+    //background-image: @background;
+    font-family: 'Open Sans', sans-serif;
+}
+
+
+/* Bootstrap overrides */
+body.grano .modal-content {
+    box-shadow: 0 0 0;
+    -webkit-box-shadow: 0 0 0;
+}
+
+.nav-section.heading {
+    font-weight: bolder;
+}
+
+.panel-heading.panel-heading-buttons .panel-title {
+    padding-top: 0.5em;
+}
+
+/* Base page layout */
+
+#page {
+    background-color: #fff;
+    //opacity: 0.8;
+    padding-bottom: 2em;
+    //b-order-bottom: 1px solid @borderColor;
+}
+
+#airlock {
+    p-osition: relative;
+    height: 100%;
+    width: 100%;
+    transform: translate3d(0,0,0);
+
+    min-height: 90%;
+}
+
+#viewport {
+    p-osition: absolute;
+    padding-left: 20px;
+    padding-right: 20px;
+    height: 100%;
+    width: 100%;
+    -webkit-backface-visibility: hidden;
+    perspective: 1000;
+}
+
+.navbar#menu {
+    border-bottom: 0 solid;
+    background-color: @bgColor;
+    min-height: 60px;
+
+    .navbar-brand {
+      color: #222;
+      padding-top: 4px;
+
+      img {
+        height: 52px;
+      }
+    }
+}
+
+footer {
+    padding: 2em 0 1em 0;
+
+    .inner {
+        text-align: center;
+    }
+}
+
+.breadcrumbs {
+    margin-bottom: 2em;
+}
+
+.back-button {
+    margin-left: 1em;
+}
+
+.fact-block {
+    display: inline-block;
+    margin-right: 3em;
+}
+
+/* Shared styles */
+
+.hidden {
+    display: none;
+}
+
+.strong {
+    font-weight: 600;
+}
+
+.light {
+    color: #999;
+}
+
+td.numeric, th.numeric, td.boolean, th.boolean {
+    text-align: right;
+}
+
+tr.selected {
+    background-color: @selectedColor;
+}
+
+
+table.table {
+    max-width: 100%;
+
+    td.icon-col {
+        width: 15%;
+        white-space: nowrap;
+    }
+
+    td.value-col {
+        width: 50%;
+    }
+}
+
+.table thead tr th {
+    border-bottom-width: 1px;
+}
+
+.bottom-padded {
+    margin-bottom: 1em;
+}
+
+/* Properties */
+
+.propvalue {
+    display: inline-block;
+    overflow: hidden;
+
+    p {
+        max-width: 98%;
+    }
+
+    a.auto {
+        display: block;
+        width: 300px;
+        text-overflow: ellipsis;
+        overflow: hidden;
+    }
+
+    .long {
+        cursor: pointer;
+    }
+}
+
+.table .text-empty {
+    color: #ddd;
+    f-ont-style: italic;
+}
+
+
+/*
+.gn-prop-view, .propvalue {
+    width: 100%;
+}
+
+.propvalue.integer, .propvalue.float {
+    display: inline-block;
+    text-align: right;
+}
+*/
+
+
+
+
+/* Transitions */
