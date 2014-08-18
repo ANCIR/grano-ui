@@ -9,7 +9,8 @@ from grano.model.schema import ENTITY_DEFAULT_SCHEMA
 
 
 UI_PREFIX = app.config.get('UI_PREFIX', '')
-STATIC_PATH = os.path.abspath(os.path.join(os.path.dirname(__file__), 'static'))
+STATIC_PATH = os.path.abspath(os.path.join(os.path.dirname(__file__),
+                              'static'))
 
 blueprint = Blueprint('ui', __name__, template_folder=STATIC_PATH,
                       static_folder=STATIC_PATH)
@@ -33,7 +34,7 @@ def index(**kw):
 
 @blueprint.route('/config.js')
 def config(**kw):
-    api_root = app.config.get('API_ROOT') or url_for('base_api.status')
+    api_root = url_for('base_api.status', _external=True)
     res = render_template('js/config.js', ui_root=url_for('ui.index'),
                           data_types=dumps(app.config['DATA_TYPES']),
                           schema_objs=dumps(app.config['SCHEMA_OBJS']),
