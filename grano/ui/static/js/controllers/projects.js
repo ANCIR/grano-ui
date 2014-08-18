@@ -4,8 +4,6 @@ function ProjectsViewCtrl($scope, $routeParams, $location, $http, $modal,
     $scope.setSection('project');
     $scope.loadProject($routeParams.slug);
     $scope.query = {};
-    $scope.schemata = [];
-    $scope.noSchemata = false;
 
     $scope.searchEntities = function() {
         $location.path('/p/' + $routeParams.slug + '/entities');
@@ -21,11 +19,6 @@ function ProjectsViewCtrl($scope, $routeParams, $location, $http, $modal,
             }
         });
     };
-
-    schemata.get($routeParams.slug).then(function(ss) {
-        $scope.schemata = ss;
-        $scope.noSchemata = ss.length == 1;
-    });
 }
 
 ProjectsViewCtrl.$inject = ['$scope', '$routeParams', '$location', '$http', '$modal',

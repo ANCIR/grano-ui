@@ -74,6 +74,20 @@ body.grano .modal-content {
     }
 }
 
+.view-area {
+  &.ng-enter {
+    -webkit-animation: fadeIn 200ms;
+    -moz-animation: fadeIn 200ms;
+    -ms-animation: fadeIn 200ms;
+    animation: fadeIn 200ms;
+  }
+
+  &.ng-leave {
+    opacity: 0;
+    display: none;
+  }
+}
+
 footer {
     padding: 2em 0 1em 0;
 

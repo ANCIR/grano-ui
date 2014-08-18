@@ -22,7 +22,7 @@
   <link href="//netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.css" rel="stylesheet">
   <link rel="shortcut icon" href="http://assets.pudo.org/img/favicon.ico" type="image/x-icon" />
 </head>
-<body ng-controller="AppCtrl" class="grano" ng-show="pageLoaded">
+<body ng-controller="AppCtrl" class="grano" ng-cloak>
   {% raw %}
   <div id="page">
     <nav class="navbar navbar-default" role="navigation" id="menu">
@@ -34,7 +34,9 @@
           <span class="icon-bar"></span>
         </button>
         <a id="appName" class="navbar-brand" href="#/">
-          <img src="static/images/logo.png">
+          {% endraw %}
+          <img src="{{url_for('ui.static', filename='images/logo.png')}}">
+          {% raw %}
         </a>
       </div>
 
@@ -65,7 +67,7 @@
 
     <div id="airlock" class="container-fluid">
       <div class="row">
-          <div class="col-md-10 col-md-push-2" ng-view>
+          <div class="col-md-10 col-md-push-2 view-area" ng-view>
           </div>
           <div class="clearfix visible-xs visible-sm"><hr></div>
           <div class="col-md-2 col-md-pull-10 hidden-xs hidden-sm">
