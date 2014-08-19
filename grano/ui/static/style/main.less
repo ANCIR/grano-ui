@@ -1,0 +1,277 @@
+// Core variables and mixins
+@import "../vendor/bootstrap/less/variables.less";
+@import "../vendor/bootstrap/less/mixins.less";
+
+@import "variables.less";
+
+// Reset
+@import "../vendor/bootstrap/less/normalize.less";
+@import "../vendor/bootstrap/less/print.less";
+
+// Core CSS
+@import "../vendor/bootstrap/less/scaffolding.less";
+@import "../vendor/bootstrap/less/type.less";
+@import "../vendor/bootstrap/less/code.less";
+@import "../vendor/bootstrap/less/grid.less";
+@import "../vendor/bootstrap/less/tables.less";
+@import "../vendor/bootstrap/less/forms.less";
+@import "../vendor/bootstrap/less/buttons.less";
+
+// Components
+@import "../vendor/bootstrap/less/component-animations.less";
+@import "../vendor/bootstrap/less/glyphicons.less";
+@import "../vendor/bootstrap/less/dropdowns.less";
+@import "../vendor/bootstrap/less/button-groups.less";
+@import "../vendor/bootstrap/less/input-groups.less";
+@import "../vendor/bootstrap/less/navs.less";
+@import "../vendor/bootstrap/less/navbar.less";
+@import "../vendor/bootstrap/less/breadcrumbs.less";
+@import "../vendor/bootstrap/less/pagination.less";
+@import "../vendor/bootstrap/less/pager.less";
+@import "../vendor/bootstrap/less/labels.less";
+@import "../vendor/bootstrap/less/badges.less";
+@import "../vendor/bootstrap/less/jumbotron.less";
+@import "../vendor/bootstrap/less/thumbnails.less";
+@import "../vendor/bootstrap/less/alerts.less";
+@import "../vendor/bootstrap/less/progress-bars.less";
+@import "../vendor/bootstrap/less/media.less";
+@import "../vendor/bootstrap/less/list-group.less";
+@import "../vendor/bootstrap/less/panels.less";
+@import "../vendor/bootstrap/less/wells.less";
+@import "../vendor/bootstrap/less/close.less";
+
+// Components w/ JavaScript
+@import "../vendor/bootstrap/less/modals.less";
+@import "../vendor/bootstrap/less/tooltip.less";
+@import "../vendor/bootstrap/less/popovers.less";
+@import "../vendor/bootstrap/less/carousel.less";
+
+// Utility classes
+@import "../vendor/bootstrap/less/utilities.less";
+@import "../vendor/bootstrap/less/responsive-utilities.less";
+
+
+/* General styles */
+
+a {
+  cursor: pointer;
+}
+
+body {
+  background-color: @bg-color;
+  font-family: 'Open Sans', sans-serif;
+}
+
+/* Bootstrap overrides */
+
+body.grano .modal-content {
+  box-shadow: 0 0 0;
+  -webkit-box-shadow: 0 0 0;
+}
+
+.nav-section.heading {
+  font-weight: bolder;
+}
+
+.panel-heading.panel-heading-buttons .panel-title {
+    padding-top: 0.5em;
+}
+
+/* Base page layout */
+
+#page {
+  padding-bottom: 2em;
+}
+
+.container-fluid {
+  margin: 0 5% 0 5%;
+}
+
+#airlock {
+  background-color: @light-bg-color;
+  border: 1px solid @box-border-color;
+  padding: 1em;
+}
+
+#viewport {
+  padding-left: 20px;
+  padding-right: 20px;
+  height: 100%;
+  width: 100%;
+  -webkit-backface-visibility: hidden;
+  perspective: 1000;
+}
+
+.navbar#menu {
+  border-bottom: 1px solid @box-border-color;
+  text-transform: uppercase;
+  background-color: @light-bg-color;
+
+  .container-fluid {
+    padding-top: 0.5em;
+    padding-bottom: 0.5em;
+  }
+
+  .navbar-brand {
+    padding-top: 2px;
+
+    img {
+      height: 45px;
+    }
+  }
+
+  @media (max-width: @screen-md-min) {
+    form {
+      display: none;
+    }
+  }
+
+  @media (min-width: @screen-md-min) {
+    .navbar-searchbox {
+      max-width: 350px;
+    }
+  }
+
+  @media (min-width: @screen-lg-min) {
+    .navbar-searchbox {
+      max-width: 500px;
+    }
+  }
+
+  //.form-control {
+  //  width: auto;
+  //}
+
+  .navbar-toggle {
+    border: 0px;
+  }
+}
+
+.view-area {
+  &.ng-enter {
+    -webkit-animation: fadeIn 400ms;
+    -moz-animation: fadeIn 400ms;
+    -ms-animation: fadeIn 400ms;
+    animation: fadeIn 400ms;
+  }
+
+  &.ng-leave {
+    opacity: 0;
+    display: none;
+  }
+}
+
+h1, h2, h3, h4, h5 {
+  text-transform: uppercase;
+}
+
+footer {
+  padding: 0em 0 1em 0;
+
+  &, a, a:hover {
+    color: darken(@bg-color, 30%);
+  }
+
+  a, a:hover {
+    text-decoration: underline;
+  }
+
+  .inner {
+      text-align: center;
+  }
+}
+
+/* Modals */
+
+.modal-content {
+  .modal-footer {
+    background-color: @bg-color;
+  }
+}
+
+.breadcrumbs {
+  margin-bottom: 2em;
+}
+
+.back-button {
+  margin-left: 1em;
+}
+
+.fact-block {
+  display: inline-block;
+  margin-right: 3em;
+}
+
+/* Shared styles */
+
+.hidden {
+  display: none;
+}
+
+.strong {
+  font-weight: 600;
+}
+
+.light {
+  color: #999;
+}
+
+td.numeric, th.numeric, td.boolean, th.boolean {
+  text-align: right;
+}
+
+tr.selected {
+  background-color: @selected-color;
+}
+
+
+table.table {
+    max-width: 100%;
+
+    td.icon-col {
+        width: 15%;
+        white-space: nowrap;
+    }
+
+    td.value-col {
+        width: 50%;
+    }
+}
+
+.table thead tr th {
+    border-bottom-width: 1px;
+}
+
+.bottom-padded {
+    margin-bottom: 1em;
+}
+
+/* Properties */
+
+.propvalue {
+  display: inline-block;
+  overflow: hidden;
+
+  p {
+    max-width: 98%;
+  }
+
+  a.auto {
+    display: block;
+    width: 300px;
+    text-overflow: ellipsis;
+    overflow: hidden;
+  }
+
+  .long {
+    cursor: pointer;
+  }
+}
+
+.table .text-empty {
+  color: #ddd;
+  f-ont-style: italic;
+}
+
+
+
