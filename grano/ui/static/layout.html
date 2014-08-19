@@ -20,7 +20,7 @@
     <link type="text/css" href="{{ ASSET_URL }}" rel="stylesheet">
   {% endassets %}
 
-  <link href="//netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.css" rel="stylesheet">
+  <link href="//netdna.bootstrapcdn.com/font-awesome/4.1.0/css/font-awesome.min.css" rel="stylesheet">
   <link rel="shortcut icon" href="http://assets.pudo.org/img/favicon.ico" type="image/x-icon" />
 </head>
 <body ng-controller="AppCtrl" class="grano" ng-cloak>
@@ -83,13 +83,17 @@
     <div class="container">
       <div class="row">
         <div class="span-12 inner">
-          <strong>grano</strong>: facebook, for non-traditional militant actors
-          &middot;
-          {{config.APP_VERSION}}
-          &middot;
-          <a href="https://github.com/granoproject">source code</a>
-          &middot;
-          <a href="https://granoproject.org">documentation</a>
+          <p>
+            <strong>grano</strong>:
+            facebook, for non-traditional militant actors
+            &middot;
+            {{config.APP_VERSION}}
+          </p>
+          <p>
+            <a href="https://github.com/granoproject">source code</a>
+            &middot;
+            <a href="https://granoproject.org">documentation</a>
+          </p>
         </div>
       </div>
     </div>
