@@ -9,7 +9,7 @@
   <meta name="description" content="A web-based framework for the storage, analysis and presentation of social network information.">
   <link href='http://fonts.googleapis.com/css?family=Open+Sans:400,300,600,700' rel='stylesheet' type='text/css'>
 
-  {% assets filters="less,cssmin,cssrewrite", output="prod/style.css",
+  {% assets filters="less,cssmin,cssrewrite", output="prod/ui.style.css",
       "ui/style/main.less",
       "ui/vendor/animate.css/animate.css",
       "ui/vendor/angular-datepicker/dist/index.css" %}
@@ -39,16 +39,16 @@
         </div>
 
         <div class="collapse navbar-collapse" id="navitems">
-          <form class="navbar-form navbar-left" role="search">
+          <form ng-show="project.slug" class="navbar-form navbar-left"
+            role="search" ng-submit="searchEntities()">
             <div class="form-group">
               <div class="input-group navbar-searchbox">
                 <span class="input-group-addon"><i class="fa fa-search"></i></span>
                 <input type="text" class="search-query form-control" autofocus
-                        ng-model="query.value" ng-change="updateFilter()" placeholder="Search entities">
-                <!--span class="input-group-btn" gn-permission project="project" role="editor">
-                  <a class="btn btn-default btn-success" href="#/p/{{project.slug}}/entities/new">New entity</a>
-                  <a class="btn btn-default btn-default" ng-click="uploadFile()">Import</a>
-                </span-->
+                        ng-model="navQuery" placeholder="Search entities">
+                <span class="input-group-btn" gn-permission project="project" role="editor">
+                  <a class="btn btn-default btn-success" href="#/p/{{project.slug}}/entities/new">New</a>
+                </span>
               </div>
             </div>
           </form>
@@ -77,16 +77,7 @@
       </div>
     </nav>
 
-    <div id="airlock" class="container-fluid">
-      <div class="row">
-          <div class="col-md-10 col-md-push-2 view-area" ng-view>
-          </div>
-          <div class="clearfix visible-xs visible-sm"><hr></div>
-          <div class="col-md-2 col-md-pull-10 hidden-xs hidden-sm">
-              <gn-menu project="project" nav-section="navSection"
-                ul-class="nav nav-pills nav-stacked" full="true"></gn-menu>
-          </div>
-      </div>
+    <div id="airlock" class="container-fluid view-area" ng-view>
     </div>
   </div>
 

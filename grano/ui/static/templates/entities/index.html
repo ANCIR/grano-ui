@@ -1,18 +1,3 @@
-<div class="row bottom-padded">
-  <div class="col-xs-12">
-    <form role="form">
-      <div class="input-group">
-        <span class="input-group-addon"><i class="fa fa-search"></i></span>
-        <input type="text" class="search-query form-control" autofocus
-                ng-model="query.value" ng-change="updateFilter()" placeholder="Search entities">
-        <span class="input-group-btn" gn-permission project="project" role="editor">
-          <a class="btn btn-default btn-success" href="#/p/{{project.slug}}/entities/new">New entity</a>
-          <a class="btn btn-default btn-default" ng-click="uploadFile()">Import</a>
-        </span>
-      </div>
-    </form>
-  </div>
-</div>
 <div class="row">
   <div ng-class="{'col-md-12': !previewEntity, 'col-md-3': previewEntity}">
     <table class="table table-hover table-condensed">

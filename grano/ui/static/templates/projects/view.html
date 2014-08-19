@@ -4,22 +4,6 @@
     the types of entities and relations that will be part of this project.
 </div>
 
-<div class="row bottom-padded">
-  <div class="col-xs-12">
-    <form role="form" ng-submit="searchEntities()">
-      <div class="input-group">
-        <span class="input-group-addon"><i class="fa fa-search"></i></span>
-        <input type="text" class="search-query form-control" autofocus
-                ng-model="query.value" placeholder="Search entities">
-        <span class="input-group-btn" gn-permission project="project" role="editor">
-          <a class="btn btn-default btn-success" href="#/p/{{project.slug}}/entities/new">New entity</a>
-          <a class="btn btn-default btn-default" ng-click="uploadFile()">Import</a>
-        </span>
-      </div>
-    </form>
-  </div>
-</div>
-
 <div class="row">
     <div class="col-md-4">
         <h4>Next steps</h4>

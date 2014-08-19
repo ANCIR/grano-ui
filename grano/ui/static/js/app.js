@@ -41,7 +41,6 @@ grano.config(['$routeProvider', '$locationProvider',
   $routeProvider.when('/p/:slug/entities', {
     templateUrl: 'entities/index.html',
     controller: EntitiesIndexCtrl,
-    reloadOnSearch: false
   });
 
   $routeProvider.when('/p/:slug/entities/new', {
