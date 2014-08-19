@@ -9,7 +9,7 @@ function RelationsViewCtrl($scope, $routeParams, $location, $http, $modal, core,
         $http.get(core.call('/relations/' + id)).then(function(res) {
             $scope.relation = res.data;
             core.setTitle(res.data.schema.label);
-        });    
+        });
     };
 
     $scope.deleteRelation = function() {
@@ -29,7 +29,6 @@ function RelationsViewCtrl($scope, $routeParams, $location, $http, $modal, core,
     };
 
     $scope.reloadRelation($routeParams.id);
-    
 }
 
 RelationsViewCtrl.$inject = ['$scope', '$routeParams', '$location', '$http', '$modal', 'core', 'session'];

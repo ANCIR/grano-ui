@@ -21,10 +21,6 @@ function AppCtrl($scope, $window, $routeParams, $location, $modal, $http,
         }
     };
 
-    $scope.setSection = function(section) {
-        $scope.navSection = section;
-    }
-
     session.get(function(data) {
         $scope.session = data;
     });

@@ -1,6 +1,5 @@
 
 function SchemataIndexCtrl($scope, $routeParams, $location, $http, $modal, $timeout, core, session) {
-    $scope.setSection('schemata');
     $scope.loadProject($routeParams.slug);
     $scope.entity_schemata = [];
     $scope.relation_schemata = [];
@@ -23,13 +22,12 @@ SchemataIndexCtrl.$inject = ['$scope', '$routeParams', '$location', '$http', '$m
 
 
 function SchemataViewCtrl($scope, $routeParams, $location, $http, $route, $modal, $timeout, schemata, core, session) {
-    $scope.setSection('schemata');
     $scope.loadProject($routeParams.slug);
     $scope.schema = {};
 
     $scope.newAttributeBase = {fresh: true, datatype: 'string'};
     $scope.newAttribute = angular.copy($scope.newAttributeBase);
-    
+
     if ($routeParams.name) {
         $http.get(core.call('/projects/' + $routeParams.slug + '/schemata/' + $routeParams.name)).then(function(res) {
             $scope.schema = res.data;
@@ -44,7 +42,6 @@ function SchemataViewCtrl($scope, $routeParams, $location, $http, $route, $modal
         };
         core.setTitle("New Schema");
     }
-    
 
     $scope.addAttribute = function() {
         $scope.schema.attributes.push($scope.newAttribute);
@@ -92,7 +89,7 @@ SchemataViewCtrl.$inject = ['$scope', '$routeParams', '$location', '$http', '$ro
 
 function SchemataDeleteCtrl($scope, $location, $modalInstance, $http, session, schema) {
     $scope.schema = schema;
-    
+
     $scope.cancel = function() {
         $modalInstance.dismiss('cancel');
     };
@@ -104,7 +101,6 @@ function SchemataDeleteCtrl($scope, $location, $modalInstance, $http, session, s
             $location.path('/p/' + $scope.schema.project.slug + '/schemata');
         });
     };
-    
 }
 
 SchemataDeleteCtrl.$inject = ['$scope', '$location', '$modalInstance', '$http', 'session', 'schema'];

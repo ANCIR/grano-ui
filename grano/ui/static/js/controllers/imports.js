@@ -10,7 +10,6 @@ function ImportIndexCtrl($scope, $rootScope, $routeParams, $location, $http,
         };
 
     $scope.loadProject($routeParams.slug);
-    $scope.setSection('import');
     $scope.pipelines = {};
 
 
@@ -41,7 +40,7 @@ function ImportUploadCtrl($scope, $rootScope, $routeParams, $location, $http,
     $modalInstance, $timeout, $upload, core, project) {
     $scope.file = null;
     $scope.uploadProgress = null;
-    
+
     $scope.cancel = function() {
         $modalInstance.dismiss('cancel');
     };
@@ -77,7 +76,6 @@ function ImportModesCtrl($scope, $rootScope, $routeParams, $location, $http,
     $modal, $timeout, core, schemata) {
 
     $scope.loadProject($routeParams.slug);
-    $scope.setSection('import');
     $scope.validFile = true;
     $scope.relationSchema = null;
     $scope.relationSchemaOptions = [];
@@ -134,7 +132,6 @@ ImportModesCtrl.$inject = ['$scope', '$rootScope', '$routeParams', '$location', 
 function ImportMappingCtrl($scope, $rootScope, $routeParams, $location, $http,
     $modal, $timeout, $filter, $q, core, schemata) {
     $scope.loadProject($routeParams.slug);
-    $scope.setSection('import');
 
     $scope.truncate = $filter('truncate');
 
@@ -147,7 +144,7 @@ function ImportMappingCtrl($scope, $rootScope, $routeParams, $location, $http,
     $scope.editMode = $scope.mode == 'relations' ? 'object' : 'attribute';
     $scope.request = {source_url: null};
     $scope.mapping = {};
-    
+
     var url = core.call('/files/' + $location.search().file + '/_table?limit=3');
     var res = $http.get(url).then(function(data) {
         $scope.sampleData = data.data;

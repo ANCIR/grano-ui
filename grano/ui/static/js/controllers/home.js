@@ -7,7 +7,7 @@ function HomeCtrl($scope, $location, $http, $modal, core) {
             $scope.projects = data.data;
         });
     };
-    
+
     $scope.loadProjects(core.call('/projects'));
 
     $scope.newProject = function(){

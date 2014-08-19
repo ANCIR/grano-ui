@@ -1,13 +1,12 @@
 
 function ProjectsViewCtrl($scope, $routeParams, $location, $http, $modal,
         $timeout, core, session, schemata) {
-    $scope.setSection('project');
     $scope.loadProject($routeParams.slug);
     $scope.query = {};
 
     $scope.searchEntities = function() {
         $location.path('/p/' + $routeParams.slug + '/entities');
-        $location.search({'q': $scope.query.value});
+        $location.search('q', $scope.query.value);
     };
 
     $scope.uploadFile = function() {
@@ -46,7 +45,6 @@ ProjectsNewCtrl.$inject = ['$scope', '$routeParams', '$modalInstance', '$locatio
 
 
 function ProjectsEditCtrl($scope, $route, $routeParams, $location, $http, $modal, core) {
-    $scope.setSection('settings');
     $scope.loadProject($routeParams.slug);
 
     $scope.update = function(form) {
