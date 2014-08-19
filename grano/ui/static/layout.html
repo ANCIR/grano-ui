@@ -27,42 +27,44 @@
   {% raw %}
   <div id="page">
     <nav class="navbar navbar-default" role="navigation" id="menu">
-      <div class="navbar-header">
-        <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-ex1-collapse">
-          <span class="sr-only">Toggle navigation</span>
-          <span class="icon-bar"></span>
-          <span class="icon-bar"></span>
-          <span class="icon-bar"></span>
-        </button>
-        <a id="appName" class="navbar-brand" href="#/">
-          {% endraw %}
-          <img src="{{url_for('ui.static', filename='images/logo.png')}}">
-          {% raw %}
-        </a>
-      </div>
-
-      <div class="collapse navbar-collapse navbar-ex1-collapse navbar-right">
-        <div class="visible-xs visible-sm">
-          <gn-menu project="project" nav-section="navSection"
-                ul-class="nav navbar-nav" full="false"></gn-menu>
+      <div class="container-fluid">
+        <div class="navbar-header">
+          <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-ex1-collapse">
+            <span class="sr-only">Toggle navigation</span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+          </button>
+          <a id="appName" class="navbar-brand" href="#/">
+            {% endraw %}
+            <img src="{{url_for('ui.static', filename='images/logo.png')}}">
+            {% raw %}
+          </a>
         </div>
-        <ul class="nav navbar-nav">
-          <li ng-show="session.logged_in">
-            <a ng-click="showAccount()"><i class="fa fa-cogs"></i> Profile</a>
-          </li>
-          <li ng-show="session.oauth.github && !session.logged_in" ng-hide="session.logged_in">
-            <a href="{{session.oauth.github}}?next_url={{config.UI_ROOT}}"><i class="fa fa-github"></i> Sign in via GitHub</a>
-          </li>
-          <li ng-show="session.oauth.twitter && !session.logged_in">
-            <a href="{{session.oauth.twitter}}?next_url={{config.UI_ROOT}}"><i class="fa fa-twitter"></i> Sign in via Twitter</a>
-          </li>
-          <li ng-show="session.oauth.facebook && !session.logged_in">
-            <a href="{{session.oauth.facebook}}?next_url={{config.UI_ROOT}}"><i class="fa fa-facebook"></i> Sign in via Facebook</a>
-          </li>
-          <li ng-show="session.logged_in">
-            <a href="{{config.API_ROOT}}/sessions/logout?next_url={{config.UI_ROOT}}"><i class="fa fa-sign-out"></i> Sign Out</a>
-          </li>
-        </ul>
+
+        <div class="collapse navbar-collapse navbar-ex1-collapse navbar-right">
+          <div class="visible-xs visible-sm">
+            <gn-menu project="project" nav-section="navSection"
+                  ul-class="nav navbar-nav" full="false"></gn-menu>
+          </div>
+          <ul class="nav navbar-nav">
+            <li ng-show="session.logged_in">
+              <a ng-click="showAccount()"><i class="fa fa-cogs"></i> Profile</a>
+            </li>
+            <li ng-show="session.oauth.github && !session.logged_in" ng-hide="session.logged_in">
+              <a href="{{session.oauth.github}}?next_url={{config.UI_ROOT}}"><i class="fa fa-github"></i> Sign in via GitHub</a>
+            </li>
+            <li ng-show="session.oauth.twitter && !session.logged_in">
+              <a href="{{session.oauth.twitter}}?next_url={{config.UI_ROOT}}"><i class="fa fa-twitter"></i> Sign in via Twitter</a>
+            </li>
+            <li ng-show="session.oauth.facebook && !session.logged_in">
+              <a href="{{session.oauth.facebook}}?next_url={{config.UI_ROOT}}"><i class="fa fa-facebook"></i> Sign in via Facebook</a>
+            </li>
+            <li ng-show="session.logged_in">
+              <a href="{{config.API_ROOT}}/sessions/logout?next_url={{config.UI_ROOT}}"><i class="fa fa-sign-out"></i> Sign Out</a>
+            </li>
+          </ul>
+        </div>
       </div>
     </nav>
 

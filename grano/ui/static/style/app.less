@@ -32,17 +32,17 @@ body.grano .modal-content {
     padding-bottom: 2em;
 }
 
-#airlock {
-    p-osition: relative;
-    height: 100%;
-    width: 100%;
-    transform: translate3d(0,0,0);
+.container-fluid {
+  margin: 0 5% 0 5%;
+}
 
-    min-height: 90%;
+#airlock {
+  background-color: @light-bg-color;
+  border: 1px solid @box-border-color;
+  padding: 1em;
 }
 
 #viewport {
-    p-osition: absolute;
     padding-left: 20px;
     padding-right: 20px;
     height: 100%;
@@ -52,10 +52,14 @@ body.grano .modal-content {
 }
 
 .navbar#menu {
-  border-bottom: 0 solid;
+  border-bottom: 1px solid @box-border-color;
   text-transform: uppercase;
   background-color: @light-bg-color;
-  m-in-height: 60px;
+
+  .container-fluid {
+    padding-top: 0.5em;
+    padding-bottom: 0.5em;
+  }
 
   .navbar-brand {
     padding-top: 2px;
@@ -98,10 +102,18 @@ footer {
     text-decoration: underline;
   }
 
-  padding: 2em 0 1em 0;
+  padding: 0em 0 1em 0;
 
   .inner {
       text-align: center;
+  }
+}
+
+/* Modals */
+
+.modal-content {
+  .modal-footer {
+    background-color: @bg-color;
   }
 }
 
