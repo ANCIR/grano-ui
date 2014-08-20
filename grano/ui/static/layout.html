@@ -54,8 +54,8 @@
           </form>
 
           <ul class="nav navbar-nav navbar-right">
-            <li ng-show="project.slug">
-              <a><i class="fa fa-cog"></i> Settings</a>
+            <li ng-show="project.slug" gn-permission project="project" role="editor">
+              <a href="#/p/{{project.slug}}/settings"><i class="fa fa-cog"></i> Settings</a>
             </li>
             <li ng-show="session.logged_in">
               <a ng-click="showAccount()"><i class="fa fa-user"></i> Profile</a>
