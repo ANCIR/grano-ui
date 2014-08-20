@@ -60,7 +60,7 @@
             <li ng-show="session.logged_in">
               <a ng-click="showAccount()"><i class="fa fa-user"></i> Profile</a>
             </li>
-            <li ng-show="session.oauth.github && !session.logged_in" ng-hide="session.logged_in">
+            <li ng-show="session.oauth.github && !session.logged_in">
               <a href="{{session.oauth.github}}?next_url={{config.UI_ROOT}}"><i class="fa fa-github"></i> Sign in via GitHub</a>
             </li>
             <li ng-show="session.oauth.twitter && !session.logged_in">
@@ -82,20 +82,25 @@
   </div>
 
   <footer>
-    <div class="container">
+    <div class="container-fluid">
       <div class="row">
-        <div class="span-12 inner">
-          <p>
-            <strong>grano</strong>:
-            facebook, for non-traditional militant actors
-            &middot;
-            {{config.APP_VERSION}}
-          </p>
-          <p>
-            <a href="https://github.com/granoproject">source code</a>
-            &middot;
-            <a href="https://granoproject.org">documentation</a>
-          </p>
+        <div class="col-md-3 inner">
+            <strong>grano</strong> {{config.APP_VERSION}}<br/>
+            like facebook, but for non-traditional militant actors
+        </div>
+        <div class="col-md-3 inner">
+          <ul>
+            <li><a href="https://granoproject.org">documentation</a></li>
+            <li><a href="http://granoproject.org/api/">api</a></li>
+            <li><a href="https://github.com/granoproject">source code</a></li>
+          </ul>
+        </div>
+        <div class="col-md-6 right">
+          {% endraw %}
+            <a href="http://www.codeforafrica.org/">
+              <img src="{{url_for('ui.static', filename='images/c4a.png')}}">
+            </a>
+          {% raw %}
         </div>
       </div>
     </div>

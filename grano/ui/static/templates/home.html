@@ -4,38 +4,44 @@
   </div>
 </div>
 
-<div class="row box">
+<div class="row">
   <div class="col-md-6">
-    <h2>Welcome to grano</h2>
-    <p>
-      This is where the very intelligent copy goes. 
+    <p class="maincopy">
+      Grano is an open source tool for journalists, activists and researchers who want
+      to track and analyse networks of social, political or economic interest.
+    </p>
+    <p class="maincopy">
+      It helps
+      you to understand the most relevant relationships in your investigations, and
+      to connect data from different sources.
     </p>
   </div>
   <div class="col-md-6">
-    <table class="table table-hover">
-        <thead>
-            <tr>
-                <th>Title</th>
-                <th class="numeric">Entities</th>
-                <th class="numeric">Relations</th>
-            </tr>
-        </thead>
-        <tbody>
-            <tr ng-repeat="project in projects.results">
-                <td>
-                    <a class="strong" href="#/p/{{project.slug}}">{{project.label}}</a> <span class="light">{{project.slug}}</span>
-                </td>
-                <td class="numeric" width="10%">
-                    {{project.entities_count}}
-                </td>
-                <td class="numeric" width="10%">
-                    {{project.relations_count}}
-                </td>
-            </tr>
-        </tbody>
-    </table>
-
-    <a ng-show="session.logged_in" class="btn btn-success"
-        ng-click='newProject()'><i class="fa fa-plus"></i> New project</a>
+    <div class="box">
+      <table class="table table-hover">
+          <thead>
+              <tr>
+                  <th>Title</th>
+                  <th class="numeric">Entities</th>
+                  <th class="numeric">Relations</th>
+              </tr>
+          </thead>
+          <tbody>
+              <tr ng-repeat="project in projects.results">
+                  <td>
+                      <a class="strong" href="#/p/{{project.slug}}">{{project.label}}</a> <span class="light">{{project.slug}}</span>
+                  </td>
+                  <td class="numeric" width="10%">
+                      {{project.entities_count}}
+                  </td>
+                  <td class="numeric" width="10%">
+                      {{project.relations_count}}
+                  </td>
+              </tr>
+          </tbody>
+      </table>
+      <a ng-show="session.logged_in" class="btn btn-success"
+          ng-click='newProject()'><i class="fa fa-plus"></i> New project</a>
+    </div>
   </div>
 </div>
