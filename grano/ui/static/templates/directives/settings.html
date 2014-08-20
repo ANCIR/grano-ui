@@ -1,0 +1,18 @@
+<div class="row">
+  <div class="col-md-9">
+    <div class="box" ng-transclude></div>
+  </div>
+  <div class="col-md-3">
+    <ul class="nav nav-pills nav-stacked nav-styled">
+      <li ng-class="{active: 'project' === section}">
+        <a href="#/p/{{project.slug}}/settings">Basic settings</a>
+      </li>
+      <li ng-class="{active: 'schemata' === section}">
+        <a href="#/p/{{project.slug}}/schemata">Schema model</a>
+      </li>
+      <li ng-class="{active: 'permissions' === section}">
+        <a href="#/p/{{project.slug}}/permissions">Permissions</a>
+      </li>
+    </ul>
+  </div>
+</div>

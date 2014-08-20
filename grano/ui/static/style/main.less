@@ -100,6 +100,10 @@ body.grano .modal-content {
   padding: 1em;
 }
 
+.unboxed {
+  color: @unboxed-text-color;
+}
+
 #airlock {
 }
 
@@ -144,6 +148,11 @@ body.grano .modal-content {
   }
 }
 
+.nav-styled {
+  text-transform: uppercase;
+  padding-top: 1em;
+}
+
 .view-area {
   &.ng-enter {
     -webkit-animation: fadeIn 400ms;
@@ -160,6 +169,11 @@ body.grano .modal-content {
 
 h1, h2, h3, h4, h5 {
   text-transform: uppercase;
+}
+
+h1 {
+  font-size: 2em;
+  font-weight: bold;
 }
 
 footer {
@@ -323,6 +337,6 @@ table.table {
 .maincopy {
   font-size: 1.4em;
   line-height: 1.6em;
-  color: darken(@bg-color, 60%);
+  color: @unboxed-text-color;
 }
 

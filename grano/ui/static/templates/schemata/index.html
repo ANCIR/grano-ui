@@ -1,52 +1,56 @@
-<div class="alert alert-info">
-      <strong>Schemata</strong> are models of the objects managed by {{config.APP_NAME}}. They 
-      can be used to define both different kinds of entities (such as people, companies or public
-      bodies) and relations (such as employment, friendships, tenders). Entities can be associated
-      to multiple schemata, while relations have only one schema.
+<h1 class="unboxed">Schema model: {{project.label}}</h1>
+
+<gn-settings section="schemata" project="project">
+  <div class="alert alert-info">
+        <strong>Schemata</strong> are models of the objects managed by {{config.APP_NAME}}. They 
+        can be used to define both different kinds of entities (such as people, companies or public
+        bodies) and relations (such as employment, friendships, tenders). Entities can be associated
+        to multiple schemata, while relations have only one schema.
+    </div>
+  <div class="row">
+    <div class="col-sm-6">
+      <table class="table table-hover table-condensed">
+          <thead>
+              <tr>
+                  <th>
+                    Entity schema
+                  </th>
+              </tr>
+          </thead>
+          <tbody>
+              <tr ng-repeat="schema in entity_schemata">
+                  <td>
+                      <a href="#/p/{{project.slug}}/schemata/{{schema.name}}" class="structured">{{schema.label}}</a>
+                      <span class="light">{{schema.name}}</span>
+                  </td>
+              </tr>
+          </tbody>
+      </table>
+      <a href="#/p/{{project.slug}}/schemata/new/entity"
+        gn-permission project="project" role="admin"
+        class="btn btn-success">Add entity schema</a>
+    </div>
+    <div class="col-sm-6">
+      <table class="table table-hover table-condensed">
+          <thead>
+              <tr>
+                  <th>
+                    Relation schema
+                  </th>
+              </tr>
+          </thead>
+          <tbody>
+              <tr ng-repeat="schema in relation_schemata">
+                  <td>
+                      <a href="#/p/{{project.slug}}/schemata/{{schema.name}}" class="structured">{{schema.label}}</a>
+                      <span class="light">{{schema.name}}</span>
+                  </td>
+              </tr>
+          </tbody>
+      </table>
+      <a href="#/p/{{project.slug}}/schemata/new/relation"
+        gn-permission project="project" role="admin"
+        class="btn btn-success">Add relation schema</a>
+    </div>
   </div>
-<div class="row">
-  <div class="col-sm-6">
-    <table class="table table-hover table-condensed">
-        <thead>
-            <tr>
-                <th>
-                  Entity schema
-                </th>
-            </tr>
-        </thead>
-        <tbody>
-            <tr ng-repeat="schema in entity_schemata">
-                <td>
-                    <a href="#/p/{{project.slug}}/schemata/{{schema.name}}" class="structured">{{schema.label}}</a>
-                    <span class="light">{{schema.name}}</span>
-                </td>
-            </tr>
-        </tbody>
-    </table>
-    <a href="#/p/{{project.slug}}/schemata/new/entity"
-      gn-permission project="project" role="admin"
-      class="btn btn-success">Add entity schema</a>
-  </div>
-  <div class="col-sm-6">
-    <table class="table table-hover table-condensed">
-        <thead>
-            <tr>
-                <th>
-                  Relation schema
-                </th>
-            </tr>
-        </thead>
-        <tbody>
-            <tr ng-repeat="schema in relation_schemata">
-                <td>
-                    <a href="#/p/{{project.slug}}/schemata/{{schema.name}}" class="structured">{{schema.label}}</a>
-                    <span class="light">{{schema.name}}</span>
-                </td>
-            </tr>
-        </tbody>
-    </table>
-    <a href="#/p/{{project.slug}}/schemata/new/relation"
-      gn-permission project="project" role="admin"
-      class="btn btn-success">Add relation schema</a>
-  </div>
-</div>
+</gn-settings>

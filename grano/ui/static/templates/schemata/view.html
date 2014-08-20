@@ -1,153 +1,148 @@
-<gn-permission project="project" role="admin" inverted="true">
-    <h4>
-        <span ng-show="schema.obj=='entity'">Entity schema:</span>
-        <span ng-show="schema.obj=='relation'">Relation schema:</span>
-        {{schema.label}} <small>{{schema.name}}</small>
-    </h4>
+<h1 class="unboxed">Schema: {{schema.label}}</h1>
 
-    <div class="alert alert-info" ng-show="schema.obj=='entity' && schema.hidden">
-        <strong>Hidden schema.</strong> This schema is not shown in listings, as it does 
-        not describe a central characteristic of an entity, but auxilliary information.
-    </div>
+<gn-settings section="schemata" project="project">
+  <gn-permission project="project" role="admin" inverted="true">
+      <h4>
+          <span ng-show="schema.obj=='entity'">Entity schema:</span>
+          <span ng-show="schema.obj=='relation'">Relation schema:</span>
+          {{schema.label}} <small>{{schema.name}}</small>
+      </h4>
 
-    <table class="table">
-        <thead>
-            <tr>
-                <th>Attribute</th>
-                <th>Field</th>
-                <th>Data type</th>
-                <th width="5%" class="boolean">Hidden</th>
-            </tr>
-        </thead>
-        <tbody>
-            <tr ng-repeat="attribute in schema.attributes">
-                <td>{{attribute.label}}</td>
-                <td class="light">{{attribute.name}}</td>
-                <td>{{attribute.datatype}}</td>
-                <td class="boolean">
-                    <i class="fa fa-check-square-o" ng-show="attribute.hidden"></i>
-                    <i class="fa fa-square-o" ng-hide="attribute.hidden"></i>
-                </td>
-            </tr>
-        </tbody>
-    </table>
-</gn-permission>
-
-<gn-permission project="project" role="admin">
-  <form class="form-horizontal" role="form" name="editSchema" ng-submit="update(editSchema)">
-    <div class="form-group" ng-class="{'has-error': editSchema.label.$invalid}">
-      <label class="col-sm-2 control-label" for="label">Schema label</label>
-      <div class="col-sm-10">
-        <input type="text" class="form-control" id="label" name="label" ng-model="schema.label"
-          placeholder="My Schema">
-        <p class="help-block" ng-show="editSchema.label.$invalid" ng-bind="editSchema.label.$message"></p>
-        <span class="help-block">Will be visible on entity or relation pages.</span>
-      </div>
-    </div>
-
-    <div class="form-group" ng-class="{'has-error': editSchema.name.$invalid}">
-      <label class="col-sm-2 control-label" for="name">Identifier</label>
-      <div class="col-sm-10">
-        <input type="text" class="form-control" id="name" name="name" ng-model="schema.name"
-          ng-disabled="!schema.fresh" placeholder="my_schema">
-        <p class="help-block" ng-show="editSchema.name.$invalid" ng-bind="editSchema.name.$message"></p>
-        <span class="help-block" ng-show="schema.fresh">
-          The identifier cannot be changed once the schema has been created.
-        </span>
+      <div class="alert alert-info" ng-show="schema.obj=='entity' && schema.hidden">
+          <strong>Hidden schema.</strong> This schema is not shown in listings, as it does 
+          not describe a central characteristic of an entity, but auxilliary information.
       </div>
 
-      <!--label class="col-sm-2 control-label" for="obj">Applies&nbsp;to</label>
-      <div class="col-sm-2">
-        <select class="form-control" id="obj" name="obj"
-          ng-model="schema.obj" ng-options="key as value for (key, value) in config.SCHEMA_OBJS" disabled>
-        </select>
-        <p class="help-block" ng-show="editSchema.obj.$invalid" ng-bind="editSchema.obj.$message"></p>
-      </div-->
-    </div>
-
-    <div class="form-group">
-      <div class="col-sm-offset-2 col-sm-10">
-        <div class="checkbox">
-          <label>
-            <input type="checkbox" ng-model="schema.hidden"> Hide this schema in listings.
-          </label>
-        </div>
-      </div>
-    </div>
-  </form>
-
-      <div class="form-group" ng-class="{'has-error': editSchema.label.$invalid}">
-        <label class="col-sm-2 control-label">Attributes</label>
-        <div class="col-sm-10">
-          <div class="alert alert-info" ng-show="schema.fresh">
-            Attributes define the set of properties that can be set for entities or relations which are
-            part of this schema. Note that neither the field name nor the data type can be changed once
-            an attribute has been created.
-          </div>
-          <table class="table">
-            <thead>
-                <tr>
-                    <th>Label</th>
-                    <th>Field</th>
-                    <th>Data type</th>
-                    <th width="5%" class="boolean">Hidden</th>
-                    <th width="1%">&nbsp;</th>
-                </tr>
-            </thead>
-            <tbody>
-                <tr ng-repeat="attribute in schema.attributes">
-                  <td>
-                      <input type="text" class="form-control input-sm" name="label"
-                        ng-model="attribute.label">
-                  </td>
-                  <td>
-                    <input type="text" class="form-control input-sm" name="name" ng-disabled="!attribute.fresh"
-                      ng-model="attribute.name">
-                  </td>
-                  <td>
-                    <select class="form-control input-sm" name="datatype" ng-disabled="!attribute.fresh"
-                      ng-model="attribute.datatype" ng-options="key as value for (key, value) in config.DATA_TYPES">
-                  </td>
+      <table class="table">
+          <thead>
+              <tr>
+                  <th>Attribute</th>
+                  <th>Field</th>
+                  <th>Data type</th>
+                  <th width="5%" class="boolean">Hidden</th>
+              </tr>
+          </thead>
+          <tbody>
+              <tr ng-repeat="attribute in schema.attributes">
+                  <td>{{attribute.label}}</td>
+                  <td class="light">{{attribute.name}}</td>
+                  <td>{{attribute.datatype}}</td>
                   <td class="boolean">
-                    <input type="checkbox" ng-model="attribute.hidden">
-                  </td>
-                  <td>
-                    <button class="btn btn-danger btn-sm"
-                      ng-click="removeAttribute(attribute)"><i class="fa fa-minus"></i></button>
-                  </td>
-                </tr>
-                <tr>
-                  <td>
-                    <input type="text" class="form-control input-sm" name="label"
-                      placeholder="Attribute label" ng-model="newAttribute.label">
-                  </td>
-                  <td>
-                    <input type="text" class="form-control input-sm" name="name"
-                      placeholder="field_name" ng-model="newAttribute.name">
-                  </td>
-                  <td>
-                    <select class="form-control input-sm" name="datatype"
-                      ng-model="newAttribute.datatype" ng-options="key as value for (key, value) in config.DATA_TYPES">
-                  </td>
-                  <td class="boolean">
-                      <input type="checkbox" ng-model="newAttribute.hidden">
-                  </td>
-                  <td>
-                    <button class="btn btn-success btn-sm"
-                      ng-click="addAttribute()"><i class="fa fa-plus"></i></button>
+                      <i class="fa fa-check-square-o" ng-show="attribute.hidden"></i>
+                      <i class="fa fa-square-o" ng-hide="attribute.hidden"></i>
                   </td>
               </tr>
-            </tbody>
-          </table>
+          </tbody>
+      </table>
+  </gn-permission>
+
+  <gn-permission project="project" role="admin">
+    <form class="form-horizontal" role="form" name="editSchema" ng-submit="update(editSchema)">
+      <div class="form-group" ng-class="{'has-error': editSchema.label.$invalid}">
+        <label class="col-sm-2 control-label" for="label">Schema label</label>
+        <div class="col-sm-10">
+          <input type="text" class="form-control" id="label" name="label" ng-model="schema.label"
+            placeholder="My Schema">
+          <p class="help-block" ng-show="editSchema.label.$invalid" ng-bind="editSchema.label.$message"></p>
+          <span class="help-block">Will be visible on entity or relation pages.</span>
         </div>
       </div>
-    </div>
-    <div class="form-group">
-      <div class="col-sm-offset-2 col-sm-10">
-        <button type="submit" class="btn btn-primary" ng-click="update(editSchema)">Save</button>
-        <button type="submit" class="btn btn-default" ng-show="!schema.fresh"  ng-click="reset()">Reset</button>
-        <button type="submit" class="btn btn-default" ng-show="!schema.fresh" ng-click="deleteSchema()">Delete</button>
-      </div>
-    </div>
-</gn-permission>
 
+      <div class="form-group" ng-class="{'has-error': editSchema.name.$invalid}">
+        <label class="col-sm-2 control-label" for="name">Identifier</label>
+        <div class="col-sm-10">
+          <input type="text" class="form-control" id="name" name="name" ng-model="schema.name"
+            ng-disabled="!schema.fresh" placeholder="my_schema">
+          <p class="help-block" ng-show="editSchema.name.$invalid" ng-bind="editSchema.name.$message"></p>
+          <span class="help-block" ng-show="schema.fresh">
+            The identifier cannot be changed once the schema has been created.
+          </span>
+        </div>
+      </div>
+
+      <div class="form-group">
+        <div class="col-sm-offset-2 col-sm-10">
+          <div class="checkbox">
+            <label>
+              <input type="checkbox" ng-model="schema.hidden"> Hide this schema in listings.
+            </label>
+          </div>
+        </div>
+      </div>
+
+        <div class="form-group" ng-class="{'has-error': editSchema.label.$invalid}">
+          <label class="col-sm-2 control-label">Attributes</label>
+          <div class="col-sm-10">
+            <div class="alert alert-info" ng-show="schema.fresh">
+              Attributes define the set of properties that can be set for entities or relations which are
+              part of this schema. Note that neither the field name nor the data type can be changed once
+              an attribute has been created.
+            </div>
+            <table class="table">
+              <thead>
+                  <tr>
+                      <th>Label</th>
+                      <th>Field</th>
+                      <th>Data type</th>
+                      <th width="5%" class="boolean">Hidden</th>
+                      <th width="1%">&nbsp;</th>
+                  </tr>
+              </thead>
+              <tbody>
+                  <tr ng-repeat="attribute in schema.attributes">
+                    <td>
+                        <input type="text" class="form-control input-sm" name="label"
+                          ng-model="attribute.label">
+                    </td>
+                    <td>
+                      <input type="text" class="form-control input-sm" name="name" ng-disabled="!attribute.fresh"
+                        ng-model="attribute.name">
+                    </td>
+                    <td>
+                      <select class="form-control input-sm" name="datatype" ng-disabled="!attribute.fresh"
+                        ng-model="attribute.datatype" ng-options="key as value for (key, value) in config.DATA_TYPES">
+                    </td>
+                    <td class="boolean">
+                      <input type="checkbox" ng-model="attribute.hidden">
+                    </td>
+                    <td>
+                      <button class="btn btn-danger btn-sm"
+                        ng-click="removeAttribute(attribute)"><i class="fa fa-minus"></i></button>
+                    </td>
+                  </tr>
+                  <tr>
+                    <td>
+                      <input type="text" class="form-control input-sm" name="label"
+                        placeholder="Attribute label" ng-model="newAttribute.label">
+                    </td>
+                    <td>
+                      <input type="text" class="form-control input-sm" name="name"
+                        placeholder="field_name" ng-model="newAttribute.name">
+                    </td>
+                    <td>
+                      <select class="form-control input-sm" name="datatype"
+                        ng-model="newAttribute.datatype" ng-options="key as value for (key, value) in config.DATA_TYPES">
+                    </td>
+                    <td class="boolean">
+                        <input type="checkbox" ng-model="newAttribute.hidden">
+                    </td>
+                    <td>
+                      <button class="btn btn-success btn-sm"
+                        ng-click="addAttribute()"><i class="fa fa-plus"></i></button>
+                    </td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+      <div class="form-group">
+        <div class="col-sm-offset-2 col-sm-10">
+          <button type="submit" class="btn btn-primary" ng-click="update(editSchema)">Save</button>
+          <button type="submit" class="btn btn-default" ng-show="!schema.fresh"  ng-click="reset()">Reset</button>
+          <button type="submit" class="btn btn-default" ng-show="!schema.fresh" ng-click="deleteSchema()">Delete</button>
+        </div>
+      </div>
+    </form>
+  </gn-permission>
+</gn-settings>
