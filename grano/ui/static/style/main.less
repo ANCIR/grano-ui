@@ -87,19 +87,13 @@ body.grano .modal-content {
   margin: 0 5% 0 5%;
 }
 
-#airlock {
+.box {
   background-color: @light-bg-color;
   border: 1px solid @box-border-color;
   padding: 1em;
 }
 
-#viewport {
-  padding-left: 20px;
-  padding-right: 20px;
-  height: 100%;
-  width: 100%;
-  -webkit-backface-visibility: hidden;
-  perspective: 1000;
+#airlock {
 }
 
 .navbar#menu {
@@ -137,10 +131,6 @@ body.grano .modal-content {
       max-width: 500px;
     }
   }
-
-  //.form-control {
-  //  width: auto;
-  //}
 
   .navbar-toggle {
     border: 0px;
@@ -274,4 +264,45 @@ table.table {
 }
 
 
+/* Home page bling */
+
+.cover-background {
+  -webkit-background-size: cover;
+  -moz-background-size: cover;
+  -o-background-size: cover;
+  background-size: cover;
+}
+
+.opener {
+  .cover-background;
+  background-image: url(../images/home.png);
+  min-height: 25em;
+  position: relative;
+  margin-right: -15%;
+  margin-left: -15%;
+  margin-top: -2em;
+  margin-bottom: 2em;
+
+  .tagline {
+    font-size: 2em;
+    position: absolute;
+    bottom: 1em;
+    right: 12%;
+    max-width: 60%;
+    font-weight: bold;
+    text-transform: uppercase;
+    display: inline-block;
+    background-color: @brand-primary;
+    color: #fff;
+    padding: 0.2em 0.4em 0.2em 0.4em;
+  }
+
+  @media (max-width: @screen-sm-min) {
+    .tagline {
+      right: 7%;
+      left: 7%;
+      max-width: 84%;
+    }
+  }
+}
 
