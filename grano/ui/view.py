@@ -28,14 +28,12 @@ def angular_templates():
         for file_name in files:
             file_path = os.path.join(root, file_name)
             with open(file_path, 'rb') as fh:
-                file_name = file_path[len(partials_dir)+1:]
+                file_name = file_path[len(partials_dir) + 1:]
                 yield (file_name, fh.read().decode('utf-8'))
 
 
 @blueprint.route('/')
 def index(**kw):
-    for rule in app.url_map.iter_rules():
-        print rule
     return render_template('layout.html',
                            angular_templates=angular_templates())
 
