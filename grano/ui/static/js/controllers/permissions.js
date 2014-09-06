@@ -48,7 +48,11 @@ function PermissionsIndexCtrl($scope, $routeParams, $location, $http, $modal, $q
     }
 
     $scope.loadAccounts = function(query) {
-        var res = $http.get(core.call('/accounts/_suggest'), {params: {q: query}});
+        var params = {params: {q: query, exclude: []}};
+        angular.forEach($scope.permissions.results, function(perm) {
+            params.params.exclude.push(perm.account.id);
+        });
+        var res = $http.get(core.call('/accounts/_suggest'), params);
         return res.then(function(res) {
             return res.data.results;
         });
