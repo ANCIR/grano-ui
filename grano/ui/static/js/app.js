@@ -13,6 +13,11 @@ grano.config(['$routeProvider', '$locationProvider',
     controller: ProjectsViewCtrl
   });
 
+  $routeProvider.when('/p/:slug/graph', {
+    templateUrl: 'graph.html',
+    controller: GraphBrowserCtrl
+  });
+
   $routeProvider.when('/p/:slug/settings', {
     templateUrl: 'projects/edit.html',
     controller: ProjectsEditCtrl
