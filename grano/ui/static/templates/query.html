@@ -23,7 +23,7 @@
       <tr ng-repeat="row in rows">
         <td ng-repeat="cell in row">
           <a ng-show="cell.name=='name'" href="#/p/{{project.slug}}/entities/{{cell.id}}">{{cell.value}}</a>
-          <span ng-hide="cell.name=='name'">{{cell.value || 'empty'}}</span>
+          <span ng-hide="cell.name=='name'">{{cell.value}}</span>
         </td>
       </tr>
     </table>
@@ -46,7 +46,7 @@
           <ul class="dropdown-menu">
             <li ng-repeat="schema in visibleSchemata">
               <a href dropdown-toggle ng-click="setSchema(schema)">
-                {{schema.meta.plural_upper || schema.label}}
+                {{schema.meta.plural || schema.label}}
               </a>
             </li>
           </ul>
