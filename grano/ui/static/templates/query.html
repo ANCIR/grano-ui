@@ -23,7 +23,7 @@
       <tr ng-repeat="row in rows">
         <td ng-repeat="cell in row">
           <a ng-show="cell.name=='name'" href="#/p/{{project.slug}}/entities/{{cell.id}}">{{cell.value}}</a>
-          <span ng-hide="cell.name=='name'">{{cell.value}}</span>
+          <span ng-hide="cell.name=='name'">{{cell.value || 'empty'}}</span>
         </td>
       </tr>
     </table>
