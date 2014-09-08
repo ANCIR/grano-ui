@@ -35,7 +35,7 @@ RelationsViewCtrl.$inject = ['$scope', '$routeParams', '$location', '$http', '$m
 
 
 function RelationsNewCtrl($scope, $routeParams, $modalInstance, $location, $http, core,
-        schemata, project, source, target) {
+        metadata, project, source, target) {
     $scope.relation = {
         project: project,
         source: angular.copy(source),
@@ -60,7 +60,7 @@ function RelationsNewCtrl($scope, $routeParams, $modalInstance, $location, $http
         res.error(grano.handleFormError(form));
     };
 
-    schemata.get(project.slug).then(function(ss) {
+    metadata.getSchemata().then(function(ss) {
         $scope.schemata = [];
         angular.forEach(ss, function(s) {
             if (s.obj == 'relation') {
@@ -71,7 +71,7 @@ function RelationsNewCtrl($scope, $routeParams, $modalInstance, $location, $http
 }
 
 RelationsNewCtrl.$inject = ['$scope', '$routeParams', '$modalInstance', '$location', '$http', 'core',
-    'schemata', 'project', 'source', 'target'];
+    'metadata', 'project', 'source', 'target'];
 
 
 function RelationsDeleteCtrl($scope, $routeParams, $location, $http, $route, $modal, $modalInstance, session, relation) {

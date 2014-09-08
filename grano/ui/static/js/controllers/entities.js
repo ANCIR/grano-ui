@@ -101,7 +101,7 @@ function EntitiesViewCtrl($scope, $routeParams, $location, $http, $modal, core, 
 EntitiesViewCtrl.$inject = ['$scope', '$routeParams', '$location', '$http', '$modal', 'core', 'session'];
 
 
-function EntitiesNewCtrl($scope, $routeParams, $location, $http, $modal, core, schemata) {
+function EntitiesNewCtrl($scope, $routeParams, $location, $http, $modal, core, metadata) {
     $scope.loadProject($routeParams.slug);
     $scope.entity = {
         project: $routeParams.slug,
@@ -133,13 +133,13 @@ function EntitiesNewCtrl($scope, $routeParams, $location, $http, $modal, core, s
         return !$scope.entity.properties.name.value;
     };
 
-    schemata.attributes($routeParams.slug, 'entity').then(function(attributes) {
+    metadata.getAttributes('entity').then(function(attributes) {
         $scope.attributes = attributes;
         $scope.entity.properties.name.attribute = attributes.name;
     });
 }
 
-EntitiesNewCtrl.$inject = ['$scope', '$routeParams', '$location', '$http', '$modal', 'core', 'schemata'];
+EntitiesNewCtrl.$inject = ['$scope', '$routeParams', '$location', '$http', '$modal', 'core', 'metadata'];
 
 
 function EntitiesDeleteCtrl($scope, $routeParams, $location, $http, $route, $modal, $modalInstance, session, entity) {

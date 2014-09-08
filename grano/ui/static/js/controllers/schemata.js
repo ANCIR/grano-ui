@@ -1,27 +1,27 @@
 
-function SchemataIndexCtrl($scope, $routeParams, $location, $http, $modal, $timeout, core, session) {
+function SchemataIndexCtrl($scope, $routeParams, $location, $http, $modal, $timeout, core, session, metadata) {
     $scope.loadProject($routeParams.slug);
     $scope.entity_schemata = [];
     $scope.relation_schemata = [];
 
-    $http.get(core.call('/projects/' + $routeParams.slug + '/schemata'), {params: {limit: 1000}}).then(function(res) {
-        angular.forEach(res.data.results, function(e) {
+    metadata.getSchemata().then(function(schemata) {
+        var rs = [], es = [];
+        angular.forEach(schemata, function(e) {
             if (e.obj == 'entity') {
-                if (e.name != 'base') {
-                    $scope.entity_schemata.push(e);    
-                }
+                es.push(e);    
             } else {
-                $scope.relation_schemata.push(e);
+                rs.push(e);
             }
         });
+        $scope.entity_schemata = es;
+        $scope.relation_schemata = rs;
     });
-
 }
 
-SchemataIndexCtrl.$inject = ['$scope', '$routeParams', '$location', '$http', '$modal', '$timeout', 'core', 'session'];
+SchemataIndexCtrl.$inject = ['$scope', '$routeParams', '$location', '$http', '$modal', '$timeout', 'core', 'session', 'metadata'];
 
 
-function SchemataViewCtrl($scope, $routeParams, $location, $http, $route, $modal, $timeout, schemata, core, session) {
+function SchemataViewCtrl($scope, $routeParams, $location, $http, $route, $modal, $timeout, metadata, core, session) {
     $scope.loadProject($routeParams.slug);
     $scope.schema = {};
 
@@ -58,7 +58,7 @@ function SchemataViewCtrl($scope, $routeParams, $location, $http, $route, $modal
     $scope.update = function(form) {
         var res = $http.post($scope.schema.api_url, $scope.schema);
         res.success(function(res) {
-            schemata.reset();
+            metadata.reset();
             if ($scope.schema.fresh) {
                 $location.path('/p/' + $routeParams.slug + '/schemata/' + res.name);
             } else {
@@ -84,7 +84,7 @@ function SchemataViewCtrl($scope, $routeParams, $location, $http, $route, $modal
 
 }
 
-SchemataViewCtrl.$inject = ['$scope', '$routeParams', '$location', '$http', '$route', '$modal', '$timeout', 'schemata', 'core', 'session'];
+SchemataViewCtrl.$inject = ['$scope', '$routeParams', '$location', '$http', '$route', '$modal', '$timeout', 'metadata', 'core', 'session'];
 
 
 function SchemataDeleteCtrl($scope, $location, $modalInstance, $http, session, schema) {

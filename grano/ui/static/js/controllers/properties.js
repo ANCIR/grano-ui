@@ -1,5 +1,5 @@
 
-function PropertiesEditCtrl($scope, $location, $modalInstance, $http, $route, schemata, obj, attribute) {
+function PropertiesEditCtrl($scope, $location, $modalInstance, $http, $route, metadata, obj, attribute) {
     $scope.obj = obj;
     $scope.property = {fresh: true, attribute: attribute};
     $scope.attributeChoices = [];
@@ -31,7 +31,7 @@ function PropertiesEditCtrl($scope, $location, $modalInstance, $http, $route, sc
     } else {
         var obj_type = $scope.obj.schema ? 'relation' : 'entity';
         // TODO: for relations, we need to fix the schema here.
-        schemata.attributes(obj.project.slug, obj_type).then(function(as) {
+        metadata.getAttributes(obj_type).then(function(as) {
             angular.forEach(as, function(k, v) {
                 if (angular.isUndefined($scope.obj.properties[v])) {
                     $scope.attributeChoices.push(k);
@@ -41,4 +41,4 @@ function PropertiesEditCtrl($scope, $location, $modalInstance, $http, $route, sc
     }
 }
 
-PropertiesEditCtrl.$inject = ['$scope', '$location', '$modalInstance', '$http', '$route', 'schemata', 'obj', 'attribute'];
+PropertiesEditCtrl.$inject = ['$scope', '$location', '$modalInstance', '$http', '$route', 'metadata', 'obj', 'attribute'];

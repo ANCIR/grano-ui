@@ -1,6 +1,6 @@
 
 function ProjectsViewCtrl($scope, $routeParams, $location, $http, $modal,
-        $timeout, core, session, schemata) {
+        $timeout, core, session) {
     $scope.loadProject($routeParams.slug);
     $scope.query = {};
 
@@ -21,7 +21,7 @@ function ProjectsViewCtrl($scope, $routeParams, $location, $http, $modal,
 }
 
 ProjectsViewCtrl.$inject = ['$scope', '$routeParams', '$location', '$http', '$modal',
-    '$timeout', 'core', 'session', 'schemata'];
+    '$timeout', 'core', 'session'];
 
 
 function ProjectsNewCtrl($scope, $routeParams, $modalInstance, $location, $http, core, session) {
@@ -44,12 +44,13 @@ function ProjectsNewCtrl($scope, $routeParams, $modalInstance, $location, $http,
 ProjectsNewCtrl.$inject = ['$scope', '$routeParams', '$modalInstance', '$location', '$http', 'core', 'session'];
 
 
-function ProjectsEditCtrl($scope, $route, $routeParams, $location, $http, $modal, core) {
+function ProjectsEditCtrl($scope, $route, $routeParams, $location, $http, $modal, metadata, core) {
     $scope.loadProject($routeParams.slug);
 
     $scope.update = function(form) {
         var res = $http.post(core.call('/projects/' + $scope.project.slug), $scope.project);
         res.success(function(data) {
+            metadata.reset();
             $route.reload();
         });
         res.error(grano.handleFormError(form));
@@ -76,7 +77,7 @@ function ProjectsEditCtrl($scope, $route, $routeParams, $location, $http, $modal
     }
 }
 
-ProjectsEditCtrl.$inject = ['$scope', '$route', '$routeParams', '$location', '$http', '$modal', 'core'];
+ProjectsEditCtrl.$inject = ['$scope', '$route', '$routeParams', '$location', '$http', '$modal', 'metadata', 'core'];
 
 
 function ProjectsDeleteCtrl($scope, $routeParams, $location, $http, $route, $modal, $modalInstance, project) {
@@ -98,7 +99,7 @@ function ProjectsDeleteCtrl($scope, $routeParams, $location, $http, $route, $mod
 ProjectsDeleteCtrl.$inject = ['$scope', '$routeParams', '$location', '$http', '$route', '$modal', '$modalInstance', 'project'];
 
 
-function ProjectsTruncateCtrl($scope, $routeParams, $location, $http, $route, $modal, $modalInstance, project) {
+function ProjectsTruncateCtrl($scope, $routeParams, $location, $http, $route, $modal, $modalInstance, metadata, project) {
     $scope.project = project;
 
     $scope.cancel = function() {
@@ -108,9 +109,11 @@ function ProjectsTruncateCtrl($scope, $routeParams, $location, $http, $route, $m
     $scope.truncate = function() {
         var res = $http.delete($scope.project.api_url + '/_truncate');
         res.then(function(data) {
+            metadata.reset();
+            $location.path('/#/' + project.slug);
             $modalInstance.dismiss('ok');
         });
     };
 }
 
-ProjectsTruncateCtrl.$inject = ['$scope', '$routeParams', '$location', '$http', '$route', '$modal', '$modalInstance', 'project'];
+ProjectsTruncateCtrl.$inject = ['$scope', '$routeParams', '$location', '$http', '$route', '$modal', '$modalInstance', 'metadata', 'project'];

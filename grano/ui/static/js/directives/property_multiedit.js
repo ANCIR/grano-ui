@@ -1,4 +1,4 @@
-grano.directive('gnPropertyMultiEdit', ['core', '$http', '$sce', 'schemata', function (core, $http, $sce, schemata) {
+grano.directive('gnPropertyMultiEdit', ['core', '$http', '$sce', function (core, $http, $sce) {
     return {
         restrict: 'E',
         scope: {

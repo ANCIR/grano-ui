@@ -73,7 +73,7 @@ ImportUploadCtrl.$inject = ['$scope', '$rootScope', '$routeParams', '$location',
 
 
 function ImportModesCtrl($scope, $rootScope, $routeParams, $location, $http,
-    $modal, $timeout, core, schemata) {
+    $modal, $timeout, core, metadata) {
 
     $scope.loadProject($routeParams.slug);
     $scope.validFile = true;
@@ -105,7 +105,7 @@ function ImportModesCtrl($scope, $rootScope, $routeParams, $location, $http,
         return $scope.relationSchemaOptions.length > 0;
     };
 
-    schemata.get($routeParams.slug).then(function(schemata) {
+    metadata.getSchemata().then(function(schemata) {
         angular.forEach(schemata, function(s) {
             if (s.obj=='relation') {
                 $scope.relationSchemaOptions.push(s);
@@ -126,11 +126,11 @@ function ImportModesCtrl($scope, $rootScope, $routeParams, $location, $http,
 }
 
 ImportModesCtrl.$inject = ['$scope', '$rootScope', '$routeParams', '$location', '$http',
-    '$modal', '$timeout', 'core', 'schemata'];
+    '$modal', '$timeout', 'core', 'metadata'];
 
 
 function ImportMappingCtrl($scope, $rootScope, $routeParams, $location, $http,
-    $modal, $timeout, $filter, $q, core, schemata) {
+    $modal, $timeout, $filter, $q, core, metadata) {
     $scope.loadProject($routeParams.slug);
 
     $scope.truncate = $filter('truncate');
@@ -215,7 +215,7 @@ function ImportMappingCtrl($scope, $rootScope, $routeParams, $location, $http,
     };
 
     var init = function() {
-        schemata.attributes($routeParams.slug, 'entity').then(function(attributes) {
+        metadata.getAttributes('entity').then(function(attributes) {
             entityAttributes = [];
             angular.forEach(attributes, function(a) {
                 a.label = $scope.truncate(a.label, 20);
@@ -223,7 +223,7 @@ function ImportMappingCtrl($scope, $rootScope, $routeParams, $location, $http,
             });
         });
 
-        schemata.attributes($routeParams.slug, 'relation').then(function(attributes) {
+        metadata.getAttributes('relation').then(function(attributes) {
             relationAttributes = [];
             angular.forEach(attributes, function(a) {
                 if (a.schema.name==$location.search().schema) {
@@ -238,4 +238,4 @@ function ImportMappingCtrl($scope, $rootScope, $routeParams, $location, $http,
 }
 
 ImportMappingCtrl.$inject = ['$scope', '$rootScope', '$routeParams', '$location', '$http',
-    '$modal', '$timeout', '$filter', '$q', 'core', 'schemata'];
+    '$modal', '$timeout', '$filter', '$q', 'core', 'metadata'];

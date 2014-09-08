@@ -215,7 +215,7 @@ grano.directive('gnGraph', [function() {
 
 
 function GraphBrowserCtrl($scope, $routeParams, $location, $http, $modal,
-        $timeout, core, session, schemata) {
+        $timeout, core, session, metadata) {
     $scope.loadProject($routeParams.slug);
 
 
@@ -242,4 +242,4 @@ function GraphBrowserCtrl($scope, $routeParams, $location, $http, $modal,
 }
 
 GraphBrowserCtrl.$inject = ['$scope', '$routeParams', '$location', '$http', '$modal',
-    '$timeout', 'core', 'session', 'schemata'];
+    '$timeout', 'core', 'session', 'metadata'];

@@ -1,5 +1,5 @@
-grano.directive('gnEntityHeader', ['core', '$http', '$route', '$location', '$modal', 'core', 'config', 'schemata',
-    function (core, $http, $route, $location, $modal, core, config, schemata) {
+grano.directive('gnEntityHeader', ['core', '$http', '$route', '$location', '$modal', 'core', 'config',
+    function (core, $http, $route, $location, $modal, core, config) {
     return {
         restrict: 'AE',
         scope: {

@@ -26,7 +26,7 @@ angular.module("template/datepicker/datepicker.html", []).run(["$templateCache",
 }]);
 
 
-grano.directive('gnPropertyEdit', ['core', '$http', '$sce', 'schemata', function (core, $http, $sce, schemata) {
+grano.directive('gnPropertyEdit', ['core', '$http', '$sce', function (core, $http, $sce) {
     return {
         restrict: 'E',
         scope: {

@@ -1,5 +1,5 @@
-grano.directive('gnPropertyList', ['core', '$http', '$sce', '$modal', 'schemata',
-    function (core, $http, $sce, $modal, schemata) {
+grano.directive('gnPropertyList', ['core', '$http', '$sce', '$modal', 'metadata',
+    function (core, $http, $sce, $modal, metadata) {
     return {
         restrict: 'E',
         scope: {
@@ -65,12 +65,12 @@ grano.directive('gnPropertyList', ['core', '$http', '$sce', '$modal', 'schemata'
 
                 if (o.schemata) {
                     //scope.obj_type = 'entity';
-                    schemata.attributes(o.project.slug, 'entity').then(function(attributes) {
+                    metadata.getAttributes('entity').then(function(attributes) {
                         scope.attributes = attributes;
                     });
                 } else if (o.schema) {
                     //scope.obj_type = 'relation';
-                    schemata.byName(o.project.slug, o.schema.name).then(function(schema) {
+                    metdata.getSchema(o.schema.name).then(function(schema) {
                         scope.attributes = {};
                         angular.forEach(schema.attributes, function(attr) {
                             attr.schema = schema;

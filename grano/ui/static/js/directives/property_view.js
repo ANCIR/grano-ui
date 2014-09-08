@@ -1,5 +1,5 @@
-grano.directive('gnPropertyView', ['core', '$http', '$sce', '$sanitize', 'schemata',
-    function (core, $http, $sce, $sanitize, schemata) {
+grano.directive('gnPropertyView', ['core', '$http', '$sce', '$sanitize',
+    function (core, $http, $sce, $sanitize) {
     return {
         restrict: 'E',
         scope: {

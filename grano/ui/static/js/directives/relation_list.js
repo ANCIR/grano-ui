@@ -1,5 +1,5 @@
-grano.directive('gnRelationList', ['core', '$http', '$sce', '$modal', 'schemata',
-    function (core, $http, $sce, $modal, schemata) {
+grano.directive('gnRelationList', ['core', '$http', '$sce', '$modal', 'metadata',
+    function (core, $http, $sce, $modal, metadata) {
     return {
         restrict: 'E',
         scope: {
@@ -57,14 +57,15 @@ grano.directive('gnRelationList', ['core', '$http', '$sce', '$modal', 'schemata'
                 var url = core.call('/relations?' + scope.localName + '=' + e.id);
                 scope.load(url);
 
-                if (scope.project) {
-                    schemata.get(scope.project.slug, 'relation').then(function(ss) {
-                        scope.schemata = [];
-                        angular.forEach(ss, function(s) {
-                            if (s.obj == 'relation') scope.schemata.push(s);
-                        });
-                    });    
-                }
+                metadata.getSchemata().then(function(ss) {
+                    var schemata = [];
+                    angular.forEach(ss, function(s) {
+                        if (s.obj == 'relation') {
+                            schemata.push(s);    
+                        }
+                    });
+                    scope.schemata = schemata;
+                });
             });
 
         }
