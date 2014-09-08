@@ -105,8 +105,11 @@ grano.factory('queryState', function($http, $rootScope, $location, core, metadat
       angular.forEach(objects, function(o) {
         if (o.id == obj.parent) parent = o;
       });
+      //console.log(parent, data);
       var parent_data = makeGetter(parent)(data),
           parent_key = parent.type == 'entity' ? 'relations' : 'other';
+      if (!parent_data) return data;
+      //console.log(parent_data);
       data = parent_data[parent_key];
       // TODO: handle multi-row results
       if (angular.isArray(data)) data = data[0];
