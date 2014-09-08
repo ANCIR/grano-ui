@@ -1,5 +1,5 @@
-grano.directive('gnQueryTable', ['core', '$http', '$sce', 'queryState', 'metadata',
-    function (core, $http, $sce, queryState, metadata) {
+grano.directive('gnQueryTable', ['core', '$http', '$sce', 'metadata',
+    function (core, $http, $sce, metadata) {
     return {
       restrict: 'E',
       scope: {
