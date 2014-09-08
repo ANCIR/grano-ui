@@ -1,5 +1,5 @@
-grano.directive('gnEntityPreview', ['core', '$http', '$route', '$location', '$modal', 'core', 'config',
-    function (core, $http, $route, $location, $modal, core, config) {
+grano.directive('gnEntityPreview', ['core', '$http', '$route', '$location', '$modal', 'core', 'config', 'metadata',
+    function (core, $http, $route, $location, $modal, core, config, metadata) {
     return {
         restrict: 'E',
         scope: {
@@ -40,7 +40,7 @@ grano.directive('gnEntityPreview', ['core', '$http', '$route', '$location', '$mo
 
             scope.$watch('project', function(p) {
                 if (!p || !p.slug) return;
-                metadata.getAttributes(p.slug, 'entity').then(function(attributes) {
+                metadata.getAttributes('entity').then(function(attributes) {
                     scope.attributes = attributes;
                 });
             });

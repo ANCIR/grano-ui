@@ -70,7 +70,7 @@ grano.directive('gnPropertyList', ['core', '$http', '$sce', '$modal', 'metadata'
                     });
                 } else if (o.schema) {
                     //scope.obj_type = 'relation';
-                    metdata.getSchema(o.schema.name).then(function(schema) {
+                    metadata.getSchema(o.schema.name).then(function(schema) {
                         scope.attributes = {};
                         angular.forEach(schema.attributes, function(attr) {
                             attr.schema = schema;

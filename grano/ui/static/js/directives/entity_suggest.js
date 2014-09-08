@@ -3,7 +3,8 @@ grano.directive('gnEntitySuggest', ['core', '$http', '$sce', '$q', 'core', funct
         restrict: 'E',
         scope: {
             'entity': '=', 
-            'project': '='
+            'project': '=',
+            'exclude': '='
         },
         templateUrl: 'directives/entity_suggest.html',
         link: function (scope, element, attrs, model) {
@@ -11,7 +12,13 @@ grano.directive('gnEntitySuggest', ['core', '$http', '$sce', '$q', 'core', funct
 
             scope.loadEntities = function(query) {
                 var dfd = $q.defer(),
-                    params =  {q: query, project: scope.project.slug};
+                    params =  {
+                        q: query,
+                        project: scope.project.slug
+                    };
+                if (scope.exclude) {
+                    params.exclude = scope.exclude.id;
+                }
                 $http.get(url, {params: params}).then(function(es) {
                     dfd.resolve(es.data.results);
                 });
