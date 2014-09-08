@@ -1,22 +1,25 @@
 <div class="table-wrapper">
-  <table class="table table-condensed table-bordered">
+  <table class="table table-condensed">
     <tr>
-      <th ng-repeat="field in fields">
+      <th ng-repeat="column in columns">
         <span class="dropdown">
           <a href dropdown-toggle>
             <i class="fa fa-ellipsis-v"></i>
-            {{getFieldAttribute(field).label}}
+            {{headers[column].label}}
           </a>
           <ul class="dropdown-menu">
-            <li><a href dropdown-toggle ng-click="removeColumn(field)">Remove this column</a></li>
+            <!--li><a href dropdown-toggle ng-click="removeColumn(field)">Remove this column</a></li-->
           </ul>
         </span>
       </th>
     </tr>
     <tr ng-repeat="row in rows">
-      <td ng-repeat="cell in row">
-        <a ng-show="cell.name=='name'" href="#/p/{{project.slug}}/entities/{{cell.id}}">{{cell.value}}</a>
-        <span ng-hide="cell.name=='name'">{{cell.value}}</span>
+      <td ng-repeat="column in columns">
+        <a ng-show="headers[column].name=='name'" href="#/p/{{project.slug}}/entities/{{row[column].id}}">
+          {{row[column].value.value}}
+        </a>
+        <span ng-hide="headers[column].name=='name'">{{row[column].value.value}}</span>
+        
       </td>
     </tr>
   </table>
