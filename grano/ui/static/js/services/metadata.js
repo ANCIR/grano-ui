@@ -82,6 +82,7 @@ grano.factory('metadata', ['$http', '$rootScope', '$location', '$q', 'core',
         getSchemata: getSchemata,
         getAttributes: getAttributes,
         getSchema: getSchema,
+        getProject: function() { return project; },
         reset: reset
     };
 }]);

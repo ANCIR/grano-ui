@@ -129,11 +129,13 @@
   {% endassets %}
   <script type="text/javascript" src="config.js"></script>
   {% assets filters="uglifyjs", output="prod/ui.app.js",
+        "ui/js/util.js",
         "ui/js/app.js",
         "ui/js/validation.js",
         "ui/js/services/core.js",
         "ui/js/services/session.js",
         "ui/js/services/metadata.js",
+        "ui/js/services/query_state.js",
         "ui/js/filters/truncate.js",
         "ui/js/filters/datetime.js",
         "ui/js/directives/permission.js",
@@ -152,6 +154,7 @@
         "ui/js/controllers/accounts.js",
         "ui/js/controllers/projects.js",
         "ui/js/controllers/graph.js",
+        "ui/js/controllers/query.js",
         "ui/js/controllers/schemata.js",
         "ui/js/controllers/permissions.js",
         "ui/js/controllers/entities.js",

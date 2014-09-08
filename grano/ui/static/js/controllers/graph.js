@@ -218,7 +218,6 @@ function GraphBrowserCtrl($scope, $routeParams, $location, $http, $modal,
         $timeout, core, session, metadata) {
     $scope.loadProject($routeParams.slug);
 
-
     var query = [{
                     'properties': {'name': null},
                     'schemata': [{'name': null}],
