@@ -7,7 +7,7 @@
 
   <title>grano</title>
   <meta name="description" content="A web-based framework for the storage, analysis and presentation of social network information.">
-  <link href='http://fonts.googleapis.com/css?family=Open+Sans:400,300,600,700' rel='stylesheet' type='text/css'>
+  <!--link href='http://fonts.googleapis.com/css?family=Open+Sans:400,300,600,700' rel='stylesheet' type='text/css'-->
 
   {% assets filters="less,cssmin,cssrewrite", output="prod/ui.style.css",
       "ui/style/main.less",
@@ -16,7 +16,7 @@
     <link type="text/css" href="{{ ASSET_URL }}" rel="stylesheet">
   {% endassets %}
 
-  <link href="//netdna.bootstrapcdn.com/font-awesome/4.1.0/css/font-awesome.min.css" rel="stylesheet">
+  <!--link href="//netdna.bootstrapcdn.com/font-awesome/4.1.0/css/font-awesome.min.css" rel="stylesheet"-->
   <link rel="shortcut icon" href="http://assets.pudo.org/img/favicon.ico" type="image/x-icon" />
 </head>
 <body ng-controller="AppCtrl" class="grano" ng-cloak>
@@ -151,6 +151,7 @@
         "ui/js/directives/entity_header.js",
         "ui/js/directives/query_graph.js",
         "ui/js/directives/query_table.js",
+        "ui/js/directives/query_panel.js",
         "ui/js/controllers/app.js",
         "ui/js/controllers/home.js",
         "ui/js/controllers/accounts.js",
