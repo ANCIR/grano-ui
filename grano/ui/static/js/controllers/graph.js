@@ -21,7 +21,7 @@ function GraphBrowserCtrl($scope, $routeParams, $location, $http, $modal,
     var res = $http.get(core.call('/projects/' + $routeParams.slug + '/query'), {'params': query});
     res.then(function(r) {
         //console.log(r.data);
-        $scope.results = r.data;
+        $scope.$broadcast('queryUpdate', r.data);
     });
 }
 
