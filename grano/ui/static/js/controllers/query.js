@@ -1,5 +1,5 @@
 
-function QueryCtrl($scope, $routeParams, $http, $q, core, metadata) {
+function QueryCtrl($scope, $timeout, $routeParams, $http, $q, core, metadata) {
   $scope.loadProject($routeParams.slug);
   $scope.loading = false;
 
@@ -9,12 +9,14 @@ function QueryCtrl($scope, $routeParams, $http, $q, core, metadata) {
     if (!angular.equals(query, queries[name])) {
       queries[name] = query;
       var params = {'query': angular.toJson(query)};
-      $scope.$broadcast('querySend', name, query);
+      $timeout(function() {
+        $scope.$broadcast('queryUpdate', name, query);  
+      });
       $scope.loading = true;
       var res = $http.get(core.call('/projects/' + $routeParams.slug + '/query'), {'params': params});
       res.then(function(rd) {
+        $scope.$broadcast('queryResult', name, rd.data);
         $scope.loading = false;
-        $scope.$broadcast('queryUpdate', name, rd.data);
       });
     }
   });
@@ -27,4 +29,4 @@ function QueryCtrl($scope, $routeParams, $http, $q, core, metadata) {
 
 };
 
-QueryCtrl.$inject = ['$scope', '$routeParams', '$http', '$q', 'core', 'metadata'];
+QueryCtrl.$inject = ['$scope', '$timeout', '$routeParams', '$http', '$q', 'core', 'metadata'];
