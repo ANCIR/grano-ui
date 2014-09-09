@@ -1,5 +1,5 @@
-grano.directive('gnQueryTable', ['core', '$http', '$sce', 'metadata',
-    function (core, $http, $sce, metadata) {
+grano.directive('gnQueryTable', ['core', '$http', 'queryUtils', 'metadata',
+    function (core, $http, queryUtils, metadata) {
     return {
       restrict: 'E',
       scope: {
@@ -44,17 +44,6 @@ grano.directive('gnQueryTable', ['core', '$http', '$sce', 'metadata',
           }
         };
 
-        var nextLevel = function(obj) {
-          var keys = ['relations', 'other'];
-          for (var i in keys) {
-
-            if (!angular.isUndefined(obj[keys[i]])) {
-              return keys[i];
-            }
-          }
-          return null;
-        };
-
         scope.$on('queryUpdate', function(event, data) {
           metadata.getSchemata().then(function(schemata) {
             angular.forEach(schemata, function(schema) {
@@ -85,7 +74,7 @@ grano.directive('gnQueryTable', ['core', '$http', '$sce', 'metadata',
                   currentRow[key] = {'id': o.id, 'value': v};
                 });
 
-                var next = nextLevel(o);
+                var next = queryUtils.nextLevel(o);
                 if (next !== null) {
                   traverse(o[next], level+1);
                 } else {
