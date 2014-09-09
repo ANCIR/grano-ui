@@ -34,7 +34,7 @@ grano.factory('queryState', function($http, $rootScope, $location, core, metadat
     var params = {'query': angular.toJson([q])};
     var res = $http.get(core.call('/projects/' + project.slug + '/query'), {'params': params});
     res.then(function(rd) {
-      $rootScope.$broadcast('queryUpdate', rd.data.results);
+      $rootScope.$broadcast('queryUpdate', rd.data);
     });
   };
 

@@ -6,7 +6,7 @@ grano.directive('gnQueryGraph', [function() {
     return {
       restrict: 'EA',
       scope: {
-        'results': '='
+        'project': '='
       },
       link: function(scope, element, attrs) {
         // TODO: work d3 into angular properly?
@@ -131,11 +131,7 @@ grano.directive('gnQueryGraph', [function() {
         });
 
 
-        scope.$watch('results', function(r) {
-            if (angular.isUndefined(r)) {
-                return;
-            }
-
+        scope.$on('queryUpdate', function(event, data) {
             var nodes = {}, links = {};
 
             var getNodes = function(obj) {
@@ -182,7 +178,7 @@ grano.directive('gnQueryGraph', [function() {
                                 };
             };
             
-            getNodes(r.results);
+            getNodes(data.results);
 
             for (var nodeId in nodes) {
                 nodeList.push(nodes[nodeId]);
@@ -211,7 +207,6 @@ grano.directive('gnQueryGraph', [function() {
             }
 
             update();
-            
         });
 
     }};

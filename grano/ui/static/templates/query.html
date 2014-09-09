@@ -5,6 +5,16 @@
     ng-show="loading">
     <strong>Loading data from the server...</strong>
   </div>
+
+  <style>
+    #graph svg {
+        height: 40em;
+        width: 100%;
+    }
+  </style>
+
+  <div gn-query-graph id="graph" project="project"></div>
+
   <gn-query-table project="project"></gn-query-table>
 </div>
 <div class="col-md-4" style="overflow-z: scroll">

@@ -94,7 +94,7 @@ grano.directive('gnQueryTable', ['core', '$http', '$sce', 'metadata',
               });
             };
 
-            traverse(data, 0);
+            traverse(data.results, 0);
 
             scope.columns = columns;
             scope.headers = headers;
