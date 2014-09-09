@@ -1,7 +1,7 @@
 <div class="panel panel-default">
   <div class="panel-heading">
     <div class="pull-right" ng-show="!layer.root">
-      <a href ng-click="removeLayer()"><i class="fa fa-times"></i></a>
+      <a href ng-click="remove({'layer': layer})"><i class="fa fa-times"></i> remove</a>
     </div>
 
     <span class="dropdown">
@@ -18,18 +18,18 @@
       </ul>
     </span>
   </div>
-  <!--div class="panel-body">
-    <div class="row" ng-repeat="prop in object.filters.properties">
+  <div class="panel-body">
+    <!--div class="row" ng-repeat="prop in object.filters.properties">
       <div class="col-sm-4"><strong>{{prop.name}}</strong></div>
       <div class="col-sm-8"><input type="text" ng-model="prop.value"></div>
-    </div>
+    </div -->
 
     <div class="dropdown">
       <p>
         Showing
-        <span ng-show="object.fields.properties.length==0">no details, </span>
-        <span ng-repeat="field in object.fields.properties">
-          <strong>{{field}}</strong>, 
+        <span ng-show="layer.fields.properties.length==0">no details, </span>
+        <span ng-repeat="(name, n) in layer.fields.properties">
+          <strong>{{name}}</strong>, 
         </span>
         <a href dropdown-toggle>
           add columns.
@@ -42,7 +42,7 @@
       </p>
     </div>
 
-    <div class="btn-group">
+    <!--div class="btn-group">
       <div class="btn-group dropdown">
         <button type="button" class="btn btn-default" dropdown-toggle>
           <i class="fa fa-filter"></i> Apply filter
@@ -53,6 +53,6 @@
           </li>
         </ul>
       </div>
-    </div>
-  </div-->
+    </div-->
+  </div>
 </div>

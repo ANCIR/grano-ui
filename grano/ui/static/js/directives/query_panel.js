@@ -6,7 +6,7 @@ grano.directive('gnQueryPanel', ['queryUtils', function(queryUtils) {
     },
     templateUrl: 'directives/query_panel.html',
     link: function(scope, element, attrs) {
-      //scope.layers = [];
+      scope.layers = [];
 
       var pack = function(layers) {
         var layer = layers[0],
@@ -92,7 +92,6 @@ grano.directive('gnQueryPanel', ['queryUtils', function(queryUtils) {
       };
 
       scope.$on('queryUpdate', function(e, name, query) {
-        console.log(query);
         if (name == 'root') {
           scope.layers = unpack(query, 0);
         }
@@ -102,13 +101,24 @@ grano.directive('gnQueryPanel', ['queryUtils', function(queryUtils) {
         var lastObject = scope.layers[scope.layers.length-1];
         if (lastObject.obj == 'entity') {
           scope.layers.push({'obj': 'relation',
-                  'fields': {'properties': {}},
+                  'fields': {'schema': null, 'properties': {}},
                   'filters': {'properties': {}}});
         }
         scope.layers.push({'obj': 'entity',
-                'fields': {'properties': {'name': 'name'}},
+                'fields': {'schemata': null, 'properties': {'name': null}},
                 'filters': {'properties': {}}});
+        scope.update();
       };
+
+      scope.removeLayer = function(layer) {
+        scope.layers = scope.layers.slice(0, scope.layers.indexOf(layer));
+        scope.update();
+      };
+
+      scope.update = function() {
+        var query = pack(scope.layers);
+        scope.$emit('querySet', 'root', query);
+      }
     }
   };
 }]);

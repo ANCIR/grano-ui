@@ -2,27 +2,31 @@ grano.directive('gnQueryPanelLayer', ['metadata', function(metadata) {
   return {
     restrict: 'EA',
     scope: {
-    'project': '=',
-    'layer': '='
+      'project': '=',
+      'layer': '=',
+      'update': '&',
+      'remove': '&'
     },
     templateUrl: 'directives/query_panel_layer.html',
     link: function(scope, element, attrs) {
-      scope.schemata = [];
-      scope.attributes = [];
+      var schemata = [],
+          attributes = [];
+
       scope.visibleSchemata = [];
 
       scope.setSchema = function(e) {
-        scope.layer.filters.schema = e.name;
-      };
-
-      scope.removeLayer = function() {
-        alert("TODO");
+        if (scope.layer.obj == 'relation') {
+          scope.layer.filters.schema = e.name;  
+        } else {
+          scope.layer.filters.schemata = e.name;
+        }
       };
 
       scope.getSchemaLabel = function() {
         var label = scope.anyLabel();
-        angular.forEach(scope.schemata, function(s) {
-          if (scope.object.filters['schema'] == s.name) {
+        angular.forEach(schemata, function(s) {
+          name = scope.layer.filters.schema || scope.layer.filters.schemata;
+          if (name == s.name) {
             label = s.meta.plural_upper || s.label;
           }
         });
@@ -41,29 +45,28 @@ grano.directive('gnQueryPanelLayer', ['metadata', function(metadata) {
       };
 
       scope.availableFields = function () {
-        var attributes = [];
-        angular.forEach(scope.attributes, function(a) {
-          if (a.hidden) return;
+        var attrs = [];
+        angular.forEach(attributes, function(a) {
           var taken = false;
-          angular.forEach(scope.object.fields.properties, function(p) {
-            if (p.name == a.name && p.schema == a.schema.name) taken = true;
+          angular.forEach(scope.layer.fields.properties, function(v, k) {
+            if (k == a.name) taken = true;
           });
-          if (!taken) attributes.push(a);
+          if (!taken) attrs.push(a);
         });
-        return attributes;
+        return attrs;
       };
 
       scope.availableFilters = function () {
-        var attributes = [];
-        angular.forEach(scope.attributes, function(a) {
-          if (a.hidden) return;
+        var attrs = [];
+        angular.forEach(attributes, function(a) {
+          console.log(a);
           var taken = false;
           angular.forEach(scope.layer.filters.properties, function(p) {
             if (p.name == a.name && p.schema == a.schema.name) taken = true;
           });
-          if (!taken) attributes.push(a);
+          if (!taken) attrs.push(a);
         });
-        return attributes;
+        return attrs;
       };
 
       scope.addField = function(attr) {
@@ -78,9 +81,8 @@ grano.directive('gnQueryPanelLayer', ['metadata', function(metadata) {
         if (!layer) return;
 
         metadata.getSchemata().then(function(s) {
-
-          var visible = [{'name': null, 'label': scope.anyLabel()}],
-              attributes = [];
+          var visible = [{'name': null, 'label': scope.anyLabel()}];
+          attributes = [];
 
           angular.forEach(s, function(sc) {
             if (sc.obj != layer.obj) {
@@ -92,17 +94,21 @@ grano.directive('gnQueryPanelLayer', ['metadata', function(metadata) {
               angular.forEach(sc.attributes, function(a) {
                 var at = angular.copy(a);
                 at['schema'] = sc;
-                attributes.push(at);
+                if (!at.hidden) {
+                  attributes.push(at);
+                }
               });
             }
           });
 
+          schemata = s;
           scope.visibleSchemata = visible;
-          scope.schemata = s;
-          scope.attributes = attributes;
         });
-
       });
+
+      scope.$watch('layer', function(o) {
+        scope.update();
+      }, true);
     }
   };
 }]);
