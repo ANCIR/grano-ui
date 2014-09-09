@@ -131,7 +131,7 @@ grano.directive('gnQueryGraph', [function() {
         });
 
 
-        scope.$on('queryUpdate', function(event, data) {
+        scope.$on('queryUpdate', function(event, queryName, data) {
             var nodes = {}, links = {};
 
             var getNodes = function(obj) {

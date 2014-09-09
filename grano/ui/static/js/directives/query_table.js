@@ -44,7 +44,9 @@ grano.directive('gnQueryTable', ['core', '$http', 'queryUtils', 'metadata',
           }
         };
 
-        scope.$on('queryUpdate', function(event, data) {
+        scope.$on('queryUpdate', function(event, name, data) {
+          if (name != 'root') return;
+          
           metadata.getSchemata().then(function(schemata) {
             angular.forEach(schemata, function(schema) {
               var attrs = {};

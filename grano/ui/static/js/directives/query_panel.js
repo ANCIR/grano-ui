@@ -91,7 +91,7 @@ grano.directive('gnQueryPanel', ['queryUtils', function(queryUtils) {
       return next == null ? [layer] : [layer].concat(unpack(query[next], depth+1));
     };
 
-    scope.$on('query', function(e, name, query) {
+    scope.$on('querySend', function(e, name, query) {
       if (name == 'root') {
         scope.layers = unpack(query, 0);
       }
