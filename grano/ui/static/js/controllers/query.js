@@ -1,13 +1,19 @@
 
-function QueryCtrl($scope, $timeout, $routeParams, $http, $q, core, metadata) {
+function QueryCtrl($scope, $timeout, $routeParams, $location, $http, core, metadata) {
   $scope.loadProject($routeParams.slug);
   $scope.loading = false;
 
-  var queries = {};
+  var queries = {},
+      defaultQuery = [{
+        'id': null,
+        'schemata': null,
+        'properties': {'name': null}
+      }];
 
   $scope.$on('querySet', function(event, name, query) {
     if (!angular.equals(query, queries[name])) {
       queries[name] = query;
+      $location.search('queries', angular.toJson(queries));
       var params = {'query': angular.toJson(query)};
       $timeout(function() {
         $scope.$broadcast('queryUpdate', name, query);  
@@ -21,12 +27,16 @@ function QueryCtrl($scope, $timeout, $routeParams, $http, $q, core, metadata) {
     }
   });
   
-  $scope.$broadcast('querySet', 'root', [{
-    'id': null,
-    'schemata': null,
-    'properties': {'name': null}
-  }]);
-
+  var search = $location.search();
+  console.log(search);
+  if (!search.queries) {
+    $scope.$broadcast('querySet', 'root', defaultQuery);
+  } else {
+    var qs = angular.fromJson(search.queries);
+    angular.forEach(qs, function(v, k) {
+      $scope.$broadcast('querySet', k, v);
+    });
+  }
 };
 
-QueryCtrl.$inject = ['$scope', '$timeout', '$routeParams', '$http', '$q', 'core', 'metadata'];
+QueryCtrl.$inject = ['$scope', '$timeout', '$routeParams', '$location', '$http', 'core', 'metadata'];

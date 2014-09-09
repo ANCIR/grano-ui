@@ -13,14 +13,10 @@ grano.config(['$routeProvider', '$locationProvider',
     controller: ProjectsViewCtrl
   });
 
-  $routeProvider.when('/p/:slug/graph', {
-    templateUrl: 'graph.html',
-    controller: GraphBrowserCtrl
-  });
-
   $routeProvider.when('/p/:slug/query', {
     templateUrl: 'query.html',
-    controller: QueryCtrl
+    controller: QueryCtrl,
+    reloadOnSearch: false
   });
 
   $routeProvider.when('/p/:slug/settings', {
