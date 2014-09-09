@@ -26,6 +26,7 @@ grano.directive('gnQueryTable', ['core', '$http', '$sce', 'metadata',
         */
 
         var getAttribute = function(obj, name) {
+          //console.log(obj, name);
           var schemata = obj.schemata || obj.schema;
           if (!angular.isArray(schemata)) {
             schemata = [schemata];
