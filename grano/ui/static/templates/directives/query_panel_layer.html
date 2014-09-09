@@ -29,7 +29,7 @@
         Showing
         <span ng-show="object.fields.properties.length==0">no details, </span>
         <span ng-repeat="field in object.fields.properties">
-          <strong>{{getFieldAttribute(field, object.type).label}}</strong>, 
+          <strong>{{field}}</strong>, 
         </span>
         <a href dropdown-toggle>
           add columns.
