@@ -4,9 +4,11 @@ grano.factory('queryUtils', [function() {
       var keys = ['relations', 'other'];
       if (obj != null) {
         for (var i in keys) {
-
-          if (!angular.isUndefined(obj[keys[i]])) {
-            return keys[i];
+          var v = obj[keys[i]]
+          if (!angular.isUndefined(v)) {
+            if (!angular.isArray(v) || v.length > 0) {
+              return keys[i];  
+            }
           }
         }  
       }

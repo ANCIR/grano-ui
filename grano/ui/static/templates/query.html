@@ -1,6 +1,6 @@
 <h1 class="unboxed">Motherfucking Query Tool</h1>
 
-<div class="col-md-8 box">
+<div class="col-md-8">
   <div class="alert alert-warning" role="alert"
     ng-show="loading">
     <strong>Loading data from the server...</strong>
@@ -14,8 +14,9 @@
   </style>
 
   <div gn-query-graph id="graph" project="project"></div>
-
-  <gn-query-table project="project"></gn-query-table>
+  <div class="box">
+    <gn-query-table project="project"></gn-query-table>
+  </div>
 </div>
 <div class="col-md-4" style="overflow-z: scroll">
   <gn-query-panel project="project"></gn-query-panel>
