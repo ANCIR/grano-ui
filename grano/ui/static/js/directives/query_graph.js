@@ -1,5 +1,8 @@
 /* 
 Source: https://github.com/pudo/kompromatron/blob/master/kompromatron/static/js/granoexplorer.js
+
+Steal here: http://bl.ocks.org/d3noob/5141278
+
 */
 
 grano.directive('gnQueryGraph', [function() {
@@ -12,14 +15,28 @@ grano.directive('gnQueryGraph', [function() {
         // TODO: work d3 into angular properly?
         var nodeList = [], linkList = [];
         var color = d3.scale.category20b();
-        var vis = d3.select(element[0]).append("svg");
+        var vis = d3.select(element[0]).append("svg"),
+            path_group = vis.append("svg:g"),
+            path = null;
         var w = $(element[0]).width(), h = $(element[0]).height(), r = 10;
 
         var force = d3.layout.force()
-            .charge(-10)
             .linkDistance(30)
+            .charge(-30)
             .size([w, h]);
 
+        vis.append("svg:defs").selectAll("marker")
+                .data(["end"])
+            .enter().append("svg:marker")
+                .attr("id", String)
+                .attr("viewBox", "0 -5 10 10")
+                .attr("refX", 15)
+                .attr("refY", -1.5)
+                .attr("markerWidth", 6)
+                .attr("markerHeight", 6)
+                .attr("orient", "auto")
+            .append("svg:path")
+                .attr("d", "M0,-5L10,0L0,5");
 
         function update() {
             var max_r = 20;
@@ -39,97 +56,61 @@ grano.directive('gnQueryGraph', [function() {
                 .links(linkList)
                 .start();
 
-            /*
-            nodeList = nodeList.filter(node_filter).map(function(d){
-              var r = getRadius(d);
-              if (r === max_r) {
-                d.fixed = true;
-                var pos = goodPos.pop();
-                if (pos) {
-                  d.x = d.px = pos[0];
-                  d.y = d.py = pos[1];
-                }
-              }
-              return d;
-            });
-            */
-
-            // Update the links…
-            link = vis.selectAll('line.link')
-                .data(linkList
-                   //.filter(link_filter_normal)
-                );
-
-            // Enter any new links.
-            link.enter().insert('svg:line', '.node')
-                .attr('class', 'link')
-                //.attr('title', function(d){ return d.source + ' - ' + d.target; })
-                .style('stroke', function(d) { return color(d.schema); });
+            path = path_group.selectAll("path")
+                    .data(force.links());
 
 
-            // Exit any old links.
-            link.exit().remove();
+            path.enter().append("svg:path")
+                    .attr("class", "link")
+                    .attr("marker-end", "url(#end)");
+
+            path.exit().remove();
 
             // Update the nodes…
             node = vis.selectAll('circle.node').data(nodeList);
 
-            var drag = force.drag();
-              //.on('dragstart', dragstart);
+            // define the nodes
+            node = vis.selectAll(".node")
+                    .data(force.nodes())
+                .enter().append("g")
+                    .attr("class", "node")
+                    .call(force.drag);
 
-            node.
-              enter().append('svg:circle')
-                .classed('node', true)
-                //.classed('root', function(d){ return !!d.isRoot; })
-                //.classed('related', function(d){ return !d.isRoot; })
-                // .classed('entity', function(d){ return !!d.isEntity; })
-                // .attr('cx', function(d) { return d.x; })
-                // .attr('cy', function(d) { return d.y; })
+            node.append('svg:circle')
                 .attr('r', getRadius)
-                .attr('title', function(d){ return d.name; })
-                // .style('fill', function(d){ return color(d.schema); })
-                //.on('click', click)
-                .on('mouseover', function(d){
-                  var sel = d3.select(this);
-                  //sel.moveToFront();
-                  //var offset = $(selector).offset();
-                  //var x = d.x + offset.left + 20;
-                  //var y = d.y + offset.top  - 10;
 
-                  //$(options.titleSelector)
-                  //  .text(d.name)
-                  //  .show()
-                  //  .css({'left': x + 'px', 'top': y + 'px'});
-                })
-                .on('mouseout', function(){
-                  //$(options.titleSelector).hide();
-                })
-                .attr('cx', function(d) { return d.x; })
-                .attr('cy', function(d) { return d.y; })
-                //.on('dblclick', dblclick)
-                .call(drag);
-
+            // add the text 
+            node.append("text")
+                .attr("x", 12)
+                .attr("dy", ".35em")
+                .text(function(d) { return d.name; });
 
             // Exit any old nodes.
-            node.exit().remove();
+            //node.exit().remove();
         }
 
 
         force.on('tick', function() {
-            link.attr('x1', function(d) { return d.source.x; })
-                .attr('y1', function(d) { return d.source.y; })
-                .attr('x2', function(d) { return d.target.x; })
-                .attr('y2', function(d) { return d.target.y; });
 
-            node.attr('cx', function(d) {
-              d.x = Math.max(r, Math.min(w - r, d.x));
-              return d.x;
-            })
-            .attr('cy', function(d) {
-              d.y = Math.max(r, Math.min(h - r, d.y));
-              return d.y;
+            path.attr("d", function(d) {
+                var dx = d.target.x - d.source.x,
+                    dy = d.target.y - d.source.y,
+                    dr = Math.sqrt(dx * dx + dy * dy);
+                return "M" + 
+                    d.source.x + "," + 
+                    d.source.y + "A" + 
+                    dr + "," + dr + " 0 0,1 " + 
+                    d.target.x + "," + 
+                    d.target.y;
             });
-        });
 
+            node
+                .attr("transform", function(d) {
+                    d.x = Math.max(r, Math.min(w - r, d.x));
+                    d.y = Math.max(r, Math.min(h - r, d.y));
+                    return "translate(" + d.x + "," + d.y + ")";
+                });
+        });
 
         scope.$on('queryResult', function(event, queryName, data) {
             var nodes = {}, links = {};
