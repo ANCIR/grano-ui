@@ -108,6 +108,7 @@ grano.directive('gnQueryGraph', [function() {
                     .data(force.nodes())
                 .enter().append("g")
                     .attr("class", "node")
+                    .on('mousedown', expandNode)
                     .call(force.drag);
 
             node.append('svg:circle')
@@ -120,6 +121,25 @@ grano.directive('gnQueryGraph', [function() {
                 .text(function(d) { return d.name; });
 
 
+        }
+
+        var expandNode = function(d) {
+            var q_name = 'expand_' + d.id,
+                q = {
+                    'id': d.id,
+                    'schemata': null,
+                    'properties': {'name': null},
+                    'relations': [{
+                        'schema': null,
+                        'reverse': null,
+                        'other': {
+                            'id': null,
+                            'schemata': null,
+                            'properties': {'name': null}
+                        }
+                    }]
+                };
+            scope.$emit('querySet', q_name, q);
         }
 
         force.on('tick', function() {
