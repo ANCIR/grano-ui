@@ -23,6 +23,8 @@ grano.directive('gnQueryGraph', [function() {
 
         var force = d3.layout.force()
             .linkDistance(80)
+            .chargeDistance(160)
+            .gravity(0.7)
             .charge(-20)
             .size([w, h]);
 

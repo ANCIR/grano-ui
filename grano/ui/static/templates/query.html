@@ -1,36 +1,47 @@
+<style>
+  .loading-bay {
+    position: relative;
+  }
+
+  .loading-bay .alert {
+    position: absolute;
+  }
+
+  #graph svg {
+      height: 20em;
+      width: 100%;
+  }
+
+  #graph path.link {
+    fill: none;
+    stroke: #666;
+    stroke-width: 1.5px;
+  }
+
+  #graph circle {
+    fill: #ccc;
+    stroke: #f8f8f8;
+    stroke-width: 1.5px;
+  }
+
+  #graph text {
+    fill: #000;
+    font: 10px sans-serif;
+    pointer-events: none;
+  }
+
+</style>
+
 <h1 class="unboxed">Motherfucking Query Tool</h1>
 
 <div class="col-md-8">
-  <div class="alert alert-warning" role="alert"
-    ng-show="loading">
-    <strong>Loading data from the server...</strong>
+  <div class="loading-bay">
+    <div class="alert alert-warning" role="alert"
+      ng-show="loading">
+      <strong>Loading data from the server...</strong>
+    </div>
   </div>
 
-  <style>
-    #graph svg {
-        height: 20em;
-        width: 100%;
-    }
-
-    #graph path.link {
-      fill: none;
-      stroke: #666;
-      stroke-width: 1.5px;
-    }
-
-    #graph circle {
-      fill: #ccc;
-      stroke: #999;
-      stroke-width: 1.5px;
-    }
-
-    #graph text {
-      fill: #000;
-      font: 10px sans-serif;
-      pointer-events: none;
-    }
-
-  </style>
 
   <div gn-query-graph id="graph" project="project"></div>
   <div class="box">
