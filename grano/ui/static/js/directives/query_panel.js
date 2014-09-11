@@ -78,6 +78,7 @@ grano.directive('gnQueryPanel', ['queryUtils', function(queryUtils) {
         }
 
         get('id', query.id)
+        get('reverse', query.reverse)
         if (layer.obj == 'entity') {
           get('schemata', query.schemata, 'name');
         } else {
@@ -101,7 +102,7 @@ grano.directive('gnQueryPanel', ['queryUtils', function(queryUtils) {
         var lastObject = scope.layers[scope.layers.length-1];
         if (lastObject.obj == 'entity') {
           scope.layers.push({'obj': 'relation',
-                  'fields': {'schema': null, 'properties': {}},
+                  'fields': {'schema': null, 'reverse': null, 'properties': {}},
                   'filters': {'properties': {}}});
         }
         scope.layers.push({'obj': 'entity',

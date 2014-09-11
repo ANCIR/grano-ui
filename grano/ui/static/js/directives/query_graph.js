@@ -13,16 +13,17 @@ grano.directive('gnQueryGraph', [function() {
       },
       link: function(scope, element, attrs) {
         // TODO: work d3 into angular properly?
-        var nodeList = [], linkList = [];
+        var nodes = {}, links = {};
         var color = d3.scale.category20b();
         var vis = d3.select(element[0]).append("svg"),
             path_group = vis.append("svg:g"),
-            path = null;
+            path = null,
+            node = null;
         var w = $(element[0]).width(), h = $(element[0]).height(), r = 10;
 
         var force = d3.layout.force()
-            .linkDistance(30)
-            .charge(-30)
+            .linkDistance(80)
+            .charge(-20)
             .size([w, h]);
 
         vis.append("svg:defs").selectAll("marker")
@@ -38,8 +39,35 @@ grano.directive('gnQueryGraph', [function() {
             .append("svg:path")
                 .attr("d", "M0,-5L10,0L0,5");
 
+
+        function updateGraph() {
+            var nodeList = [];
+            var linkList = [];
+
+            for (var nodeId in nodes) {
+                nodeList.push(nodes[nodeId]);
+                nodes[nodeId].index = nodeList.length - 1;
+            }
+
+            for (var linkId in links) {
+                link = links[linkId];
+                linkList.push({
+                    source: nodes[link.source].index,
+                    target: nodes[link.target].index,
+                    schema: link.schema,
+                    id: link.id
+                });
+            }
+
+            return {
+                'nodes': nodeList,
+                'links': linkList
+            }
+        }
+
         function update() {
-            var max_r = 20;
+            var max_r = 20,
+                graph = updateGraph();
             //var getRadius = function(d) {
             //  return d.isRoot ? 15 : Math.max(5, Math.min(max_r, Math.sqrt(d.weight * 4)));
             //};
@@ -52,12 +80,12 @@ grano.directive('gnQueryGraph', [function() {
 
             force
                 .gravity(0)
-                .nodes(nodeList)
-                .links(linkList)
+                .nodes(graph.nodes)
+                .links(graph.links)
                 .start();
 
             path = path_group.selectAll("path")
-                    .data(force.links());
+                .data(force.links());
 
 
             path.enter().append("svg:path")
@@ -66,9 +94,7 @@ grano.directive('gnQueryGraph', [function() {
 
             path.exit().remove();
 
-            // Update the nodes…
-            node = vis.selectAll('circle.node').data(nodeList);
-
+            vis.selectAll(".node").remove();
             // define the nodes
             node = vis.selectAll(".node")
                     .data(force.nodes())
@@ -85,13 +111,10 @@ grano.directive('gnQueryGraph', [function() {
                 .attr("dy", ".35em")
                 .text(function(d) { return d.name; });
 
-            // Exit any old nodes.
-            //node.exit().remove();
+
         }
 
-
         force.on('tick', function() {
-
             path.attr("d", function(d) {
                 var dx = d.target.x - d.source.x,
                     dy = d.target.y - d.source.y,
@@ -113,8 +136,6 @@ grano.directive('gnQueryGraph', [function() {
         });
 
         scope.$on('queryResult', function(event, queryName, data) {
-            var nodes = {}, links = {};
-
             var getNodes = function(obj) {
                 if (obj === null || angular.isUndefined(obj)) {
                     return;
@@ -143,6 +164,8 @@ grano.directive('gnQueryGraph', [function() {
                     return angular.forEach(obj, function(o) { getLinks(o, parent); });
                 }
 
+                console.log(obj);
+
                 var child_id = null;
                 angular.forEach(['source', 'target', 'other'], function(key) {
                     getNodes(obj[key]);
@@ -160,32 +183,6 @@ grano.directive('gnQueryGraph', [function() {
             };
             
             getNodes(data.results);
-
-            for (var nodeId in nodes) {
-                nodeList.push(nodes[nodeId]);
-                nodes[nodeId].index = nodeList.length - 1;
-            }
-            
-            var addLink = function(nodeid) {
-                return function(l){
-                    linkList.push({
-                        source: nodes[nodeid].index,
-                        target: nodes[l.target].index,
-                        schema: l.schema,
-                        isRelated: l.isRelated
-                    });
-                };
-            };
-
-            for (var linkId in links) {
-                link = links[linkId];
-                linkList.push({
-                    source: nodes[link.source].index,
-                    target: nodes[link.target].index,
-                    schema: link.schema,
-                    id: link.id
-                });
-            }
 
             update();
         });
