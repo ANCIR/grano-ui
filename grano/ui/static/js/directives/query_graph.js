@@ -41,23 +41,31 @@ grano.directive('gnQueryGraph', [function() {
 
 
         function updateGraph() {
-            var nodeList = [];
-            var linkList = [];
+            var nodeList = [],
+                linkList = [],
+                nodeIndexes = {};
 
-            for (var nodeId in nodes) {
-                nodeList.push(nodes[nodeId]);
-                nodes[nodeId].index = nodeList.length - 1;
+            for (var query in nodes) {
+                for (var nodeId in nodes[query]) {
+                    if (angular.isUndefined(nodeIndexes[nodeId])) {
+                        nodeList.push(nodes[query][nodeId]);
+                        nodeIndexes[nodeId] = nodeList.length - 1;    
+                    }
+                }    
             }
-
-            for (var linkId in links) {
-                link = links[linkId];
-                linkList.push({
-                    source: nodes[link.source].index,
-                    target: nodes[link.target].index,
-                    schema: link.schema,
-                    id: link.id
-                });
+            
+            for (var query in links) {
+                for (var linkId in links[query]) {
+                    link = links[query][linkId];
+                    linkList.push({
+                        source: nodeIndexes[link.source],
+                        target: nodeIndexes[link.target],
+                        schema: link.schema,
+                        id: link.id
+                    });
+                }    
             }
+            
 
             return {
                 'nodes': nodeList,
@@ -136,6 +144,9 @@ grano.directive('gnQueryGraph', [function() {
         });
 
         scope.$on('queryResult', function(event, queryName, data) {
+            var queryNodes = {},
+                queryLinks = {};
+
             var getNodes = function(obj) {
                 if (obj === null || angular.isUndefined(obj)) {
                     return;
@@ -150,10 +161,12 @@ grano.directive('gnQueryGraph', [function() {
 
                 var schemata = [];
                 angular.forEach(obj.schemata, function(s) { schemata.push(s.name); });
-                nodes[obj.id] = {'id': obj.id,
-                                 'isRoot': false,
-                                 'schemata': schemata,
-                                 'name': obj.properties.name.value};
+                queryNodes[obj.id] = {
+                    'id': obj.id,
+                    'isRoot': false,
+                    'schemata': schemata,
+                    'name': obj.properties.name.value
+                };
             };
 
             var getLinks = function(obj, parent) {
@@ -164,8 +177,6 @@ grano.directive('gnQueryGraph', [function() {
                     return angular.forEach(obj, function(o) { getLinks(o, parent); });
                 }
 
-                console.log(obj);
-
                 var child_id = null;
                 angular.forEach(['source', 'target', 'other'], function(key) {
                     getNodes(obj[key]);
@@ -174,15 +185,17 @@ grano.directive('gnQueryGraph', [function() {
                     }
                 });
 
-                links[obj.id] = {
-                                'id': obj.id,
-                                'schema': obj.schema.name,
-                                'source': obj.reverse ? child_id : parent,
-                                'target': obj.reverse ? parent : child_id
-                                };
+                queryLinks[obj.id] = {
+                    'id': obj.id,
+                    'schema': obj.schema.name,
+                    'source': obj.reverse ? child_id : parent,
+                    'target': obj.reverse ? parent : child_id
+                };
             };
             
             getNodes(data.results);
+            nodes[queryName] = queryNodes;
+            links[queryName] = queryLinks;
 
             update();
         });
