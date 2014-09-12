@@ -5,6 +5,13 @@ Steal here: http://bl.ocks.org/d3noob/5141278
 
 */
 
+grano.colors = [
+    "#F68B1F", "#CF3D1E", "#F15623", "#FFC60B", "#DFCE21",
+    "#BCD631", "#95C93D", "#48B85C", "#00833D", "#00B48D", 
+    "#60C4B1", "#27C4F4", "#478DCB", "#3E67B1", "#4251A3", "#59449B", 
+    "#6E3F7C", "#6A246D", "#8A4873", "#EB0080", "#EF58A0", "#C05A89"
+    ];
+
 grano.directive('gnQueryGraph', ['$window', function($window) {
     return {
       restrict: 'EA',
@@ -14,7 +21,7 @@ grano.directive('gnQueryGraph', ['$window', function($window) {
       link: function(scope, element, attrs) {
         // TODO: work d3 into angular properly?
         var nodes = {}, links = {};
-        var color = d3.scale.category20b();
+        var color = d3.scale.ordinal().range(grano.colors);
         var vis = d3.select(element[0]).append("svg"),
             path_group = vis.append("svg:g"),
             path = null,
@@ -119,6 +126,16 @@ grano.directive('gnQueryGraph', ['$window', function($window) {
               return d.radius;
             };
 
+            var getColor = function(d) {
+                var schemata = [];
+                for (var i in d.schemata) {
+                    schemata.push(d.schemata[i].name);
+                }
+                var key = schemata.sort().join('|');
+                //console.log(key);
+                return color(key);
+            };
+
             //var goodPos = [[w / 4, h / 3], [w * 3 / 4, h / 3]];
 
             force
@@ -147,6 +164,7 @@ grano.directive('gnQueryGraph', ['$window', function($window) {
                     .call(force.drag);
 
             node.append('svg:circle')
+                .style('fill', getColor)
                 .attr('r', getRadius)
 
             // add the text 
@@ -160,7 +178,7 @@ grano.directive('gnQueryGraph', ['$window', function($window) {
             var q_name = 'expand_' + d.id,
                 q = {
                     'id': d.id,
-                    'schemata': null,
+                    'schemata': [],
                     'degree': null,
                     'properties': {'name': null},
                     'relations': [{
@@ -169,7 +187,7 @@ grano.directive('gnQueryGraph', ['$window', function($window) {
                         'other': {
                             'id': null,
                             'degree': null,
-                            'schemata': null,
+                            'schemata': [],
                             'properties': {'name': null}
                         }
                     }]
@@ -214,12 +232,10 @@ grano.directive('gnQueryGraph', ['$window', function($window) {
                     getLinks(obj[key], obj.id);
                 });
 
-                var schemata = [];
-                angular.forEach(obj.schemata, function(s) { schemata.push(s.name); });
                 queryNodes[obj.id] = {
                     'id': obj.id,
                     'isRoot': false,
-                    'schemata': schemata,
+                    'schemata': obj.schemata,
                     'degree': obj.degree,
                     'name': obj.properties.name.value
                 };

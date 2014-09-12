@@ -18,6 +18,9 @@ grano.directive('gnQueryPanel', ['queryUtils', function(queryUtils) {
             if (k == 'properties') {
               v = angular.extend(query.properties || {}, v);
             }
+            if (k == 'schemata') {
+              v = [v];
+            }
             query[k] = v;
           });
         });
@@ -107,7 +110,7 @@ grano.directive('gnQueryPanel', ['queryUtils', function(queryUtils) {
                   'filters': {'properties': {}}});
         }
         scope.layers.push({'obj': 'entity',
-                'fields': {'schemata': null, 'degree': null, 'properties': {'name': null}},
+                'fields': {'schemata': [], 'degree': null, 'properties': {'name': null}},
                 'filters': {'properties': {}}});
         scope.update();
       };
