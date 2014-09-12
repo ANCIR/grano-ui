@@ -35,15 +35,26 @@
     pointer-events: none;
   }
 
+  .graph-area {
+    position: relative;
+  }
+
+  .floating {
+    right: 0em;
+    position: absolute;
+  }
+
 </style>
 
 <div class="">
   <div class="pull-right">
+    <button type="button" class="btn btn-default"
+        ng-class="{'active': showPanel}" ng-click="showPanel = !showPanel"><i class="fa fa-filter"></i> Show filters</button>
     <div class="btn-group">
       <button type="button" class="btn btn-default"
-        ng-class="{'active': mode == 'graph'}" ng-click="setMode('graph')">Network diagram</button>
+        ng-class="{'active': mode == 'graph'}" ng-click="setMode('graph')"><i class="fa fa-sitemap"></i> Network diagram</button>
       <button type="button" class="btn btn-default"
-        ng-class="{'active': mode == 'table'}" ng-click="setMode('table')">Table</button>
+        ng-class="{'active': mode == 'table'}" ng-click="setMode('table')"><i class="fa fa-th"></i> Table</button>
     </div>
   </div>
   <h1 class="unboxed">Motherfucking Query Tool</h1>
@@ -57,18 +68,21 @@
 </div>
 
 <div class="row" ng-show="mode == 'graph'">
-  <div class="col-sm-12">
+  <div class="col-sm-12 graph-area">
+    <div class="floating col-md-4" ng-show="showPanel">
+      <gn-query-panel project="project"></gn-query-panel>
+    </div>
     <div gn-query-graph id="graph" project="project"></div>
   </div>
 </div>
 
 <div class="row" ng-show="mode == 'table'">
-  <div class="col-md-8">
+  <div ng-class="{'col-md-8': showPanel, 'col-md-12': !showPanel}">
     <div class="box">
       <gn-query-table project="project"></gn-query-table>
     </div>
   </div>
-  <div class="col-md-4" style="overflow-z: scroll">
+  <div ng-show="showPanel" class="col-md-4" style="overflow-z: scroll">
     <gn-query-panel project="project"></gn-query-panel>
   </div>
 </div>
