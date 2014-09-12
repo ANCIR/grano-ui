@@ -12,7 +12,7 @@ grano.colors = [
     "#6E3F7C", "#6A246D", "#8A4873", "#EB0080", "#EF58A0", "#C05A89"
     ];
 
-grano.directive('gnQueryGraph', ['$window', function($window) {
+grano.directive('gnQueryGraph', ['$window', '$compile', function($window, $compile) {
     return {
       restrict: 'EA',
       scope: {
@@ -30,12 +30,13 @@ grano.directive('gnQueryGraph', ['$window', function($window) {
 
         var force = d3.layout.force();
 
+        /*
         vis.append("svg:defs").selectAll("marker")
                 .data(["end"])
             .enter().append("svg:marker")
                 .attr("id", String)
                 .attr("viewBox", "0 -5 10 10")
-                .attr("refX", 20)
+                .attr("refX", 15)
                 //.attr("refY", -1.5)
                 .attr("refY", -1.5)
                 .attr("markerWidth", 5)
@@ -44,6 +45,7 @@ grano.directive('gnQueryGraph', ['$window', function($window) {
                 .attr("orient", "auto")
             .append("svg:path")
                 .attr("d", "M0,-5L10,0L0,5");
+        */
 
         angular.element($window).bind('resize', function() {
             update();
@@ -109,7 +111,6 @@ grano.directive('gnQueryGraph', ['$window', function($window) {
                     min_deg = d;
                 }
             }
-            //console.log(min_deg, max_deg);
             return d3.scale.linear()
                 .domain([min_deg, max_deg])
                 .rangeRound([min_r, max_r]);
@@ -136,8 +137,6 @@ grano.directive('gnQueryGraph', ['$window', function($window) {
                 return color(key);
             };
 
-            //var goodPos = [[w / 4, h / 3], [w * 3 / 4, h / 3]];
-
             force
                 //.gravity(0)
                 .nodes(graph.nodes)
@@ -149,8 +148,8 @@ grano.directive('gnQueryGraph', ['$window', function($window) {
 
 
             path.enter().append("svg:path")
-                    .attr("class", "link")
-                    .attr("marker-end", "url(#end)");
+                    .attr("class", "link");
+                    //.attr("marker-end", "url(#end)");
 
             path.exit().remove();
 
@@ -161,18 +160,51 @@ grano.directive('gnQueryGraph', ['$window', function($window) {
                 .enter().append("g")
                     .attr("class", "node")
                     .on('dblclick', expandNode)
+                    .on('mouseenter', mouseEnter)
+                    .on('mouseleave', mouseLeave)
                     .call(force.drag);
 
             node.append('svg:circle')
                 .style('fill', getColor)
+                .attr('tooltip-append-to-body', true)
+                .attr('tooltip-placement', 'top')
+                .attr('tooltip', function(d) { return d.name; })
                 .attr('r', getRadius)
 
             // add the text 
-            node.append("text")
-                .attr("x", 12)
-                .attr("dy", ".35em")
-                .text(function(d) { return d.name; });
+            var cutoff = (max_r - min_r) * 0.5;
+            node.filter(function(d) { return d.radius > cutoff; })
+                .append("text")
+                .attr("x", -12)
+                .attr("dy", ".4em")
+                .text(function(d) { return d.name.length > 50 ? d.name.slice(0, 50) + '...' : d.name; });
+
+            /* https://stackoverflow.com/questions/24759368/angular-bootstrap-repeatedly-calling-compile-with-bootstrap-tooltip-causes-sl */
+            var destroyer = function(scopeElem) {
+              if(scopeElem.$$nextSibling) {
+                destroyer(scopeElem.$$nextSibling);
+              }
+              scopeElem.$destroy();
+            };
+
+            if(scope.$$childHead) {
+              destroyer(scope.$$childHead);
+            }
+
+            $compile(vis[0])(scope);
         }
+
+        var mouseEnter = function(d) {
+            path.filter(function(p) {
+                return p.source.id == d.id || p.target.id == d.id;
+            }).style('stroke', '#666');
+        };
+
+        var mouseLeave = function(d) {
+            path.filter(function(p) {
+                return p.source.id == d.id || p.target.id == d.id;
+            }).style('stroke', '#ccc');
+        };
 
         var expandNode = function(d) {
             var q_name = 'expand_' + d.id,
