@@ -1,25 +1,20 @@
 <div class="table-wrapper">
   <table class="table table-condensed">
     <tr>
-      <th ng-repeat="column in columns">
-        <span class="dropdown">
-          <a href dropdown-toggle>
-            <i class="fa fa-ellipsis-v"></i>
-            {{headers[column].label}}
-          </a>
-          <ul class="dropdown-menu">
-            <!--li><a href dropdown-toggle ng-click="removeColumn(field)">Remove this column</a></li-->
-          </ul>
-        </span>
+      <th ng-repeat="column in columns" class="obj-{{headers[column].obj}}">
+        <div class="pull-right" ng-show="headers[column].attr.name!='name'">
+          <a href ng-click="removeColumn(headers[column].level, headers[column].attr.name)"><i class="fa fa-times"></i></a>
+        </div>
+        <i class="fa fa-link" ng-show="headers[column].obj != 'entity'"></i>
+        {{headers[column].attr.label}}
       </th>
     </tr>
     <tr ng-repeat="row in rows">
-      <td ng-repeat="column in columns">
-        <a ng-show="headers[column].name=='name'" href="#/p/{{project.slug}}/entities/{{row[column].id}}">
+      <td ng-repeat="column in columns" class="obj-{{headers[column].obj}}">
+        <a ng-show="headers[column].attr.name=='name'" href="#/p/{{project.slug}}/entities/{{row[column].id}}">
           {{row[column].value.value}}
         </a>
-        <span ng-hide="headers[column].name=='name'">{{row[column].value.value}}</span>
-        
+        <span ng-hide="headers[column].attr.name=='name'">{{row[column].value.value}}</span>
       </td>
     </tr>
   </table>

@@ -8,22 +8,27 @@ grano.directive('gnQueryTable', ['core', '$http', 'queryUtils', 'metadata',
       templateUrl: 'directives/query_table.html',
       link: function (scope, element, attrs, model) {
 
-        var attributes = {};
+        var attributes = {},
+            queries = {};
 
         scope.rows = [];
         scope.columns = [];
         scope.headers = {};
 
-        /*
-        scope.removeColumn = function(field) {
-          var obj = queryState.by_id(field.id);
-          angular.forEach(obj.fields.properties, function(p, i) {
-            if (p.name == field.name)
-              obj.fields.properties.splice(i, 1);
-          });
-          queryState.sync();
+        scope.removeColumn = function(level, name) {
+          var layers = queries['root'];
+          delete layers[level].fields.properties[name];
+          scope.$emit('querySet', 'root', queryUtils.pack(layers));
         };
-        */
+
+        var sortColumns = function(a, b) {
+          a = a.split('.', 2);
+          b = b.split('.', 2);
+          if (a[0] != b[0]) return a[0] > b[0] ? 1 : -1;
+          if (a[1] == 'name') return -1;
+          if (b[1] == 'name') return 1;
+          return a[1] > b[1] ? 1 : -1;
+        };
 
         var getAttribute = function(obj, name) {
           //console.log(obj, name);
@@ -43,6 +48,10 @@ grano.directive('gnQueryTable', ['core', '$http', 'queryUtils', 'metadata',
             }
           }
         };
+
+        scope.$on('queryUpdate', function(event, name, query) {
+          queries[name] = queryUtils.unpack(query, 0);
+        });
         
         scope.$on('queryResult', function(event, name, data) {
           if (name != 'root') return;
@@ -60,6 +69,7 @@ grano.directive('gnQueryTable', ['core', '$http', 'queryUtils', 'metadata',
                 headers = {},
                 currentRow = {},
                 rows = [];
+                //layers = queries[name];
 
             var traverse = function(obj, level) {
               if (!angular.isArray(obj)) {
@@ -71,7 +81,11 @@ grano.directive('gnQueryTable', ['core', '$http', 'queryUtils', 'metadata',
                   var key = level + '.' + k;
                   if (columns.indexOf(key) == -1) {
                     columns.push(key);
-                    headers[key] = getAttribute(o, k);
+                    headers[key] = {
+                      'attr': getAttribute(o, k),
+                      'obj': o.obj,
+                      'level': level
+                    };
                   }
                   currentRow[key] = {'id': o.id, 'value': v};
                 });
@@ -88,7 +102,7 @@ grano.directive('gnQueryTable', ['core', '$http', 'queryUtils', 'metadata',
 
             traverse(data.results, 0);
 
-            scope.columns = columns;
+            scope.columns = columns.sort(sortColumns);
             scope.headers = headers;
             scope.rows = rows;
           });

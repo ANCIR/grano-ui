@@ -25,7 +25,7 @@ grano.factory('queryUtils', [function() {
           if (k == 'properties') {
             v = angular.extend(query.properties || {}, v);
           }
-          if (k == 'schemata') {
+          if (k == 'schemata' && !angular.isArray(v)) {
             v = [v];
           }
           query[k] = v;
@@ -92,6 +92,9 @@ grano.factory('queryUtils', [function() {
       get('degree', query.degree);
       if (layer.obj == 'entity') {
         get('schemata', query.schemata, 'name');
+        if (layer.fields.schemata == null) {
+          layer.fields.schemata = [];
+        }
       } else {
         get('schema', query.schema, 'name');
       }
