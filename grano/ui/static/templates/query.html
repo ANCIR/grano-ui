@@ -16,14 +16,15 @@
 
   #graph path.link {
     fill: none;
-    stroke: #666;
-    stroke-width: 1.5px;
+    stroke: #ccc;
+    stroke-width: 3px;
   }
 
   #graph circle {
     fill: #ccc;
-    stroke: #f8f8f8;
-    stroke-width: 1.5px;
+    stroke: #f3f3f3;
+    cursor: pointer;
+    stroke-width: 1px;
   }
 
   #graph text {
@@ -54,7 +55,7 @@
 </div>
 
 <div class="row" ng-show="mode == 'graph'">
-  <div gn-query-graph id="graph" project="project"></div>
+  <div class="col-sm-12" gn-query-graph id="graph" project="project"></div>
 </div>
 
 <div class="row" ng-show="mode == 'table'">

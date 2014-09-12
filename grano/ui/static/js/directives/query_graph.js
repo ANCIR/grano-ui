@@ -5,7 +5,7 @@ Steal here: http://bl.ocks.org/d3noob/5141278
 
 */
 
-grano.directive('gnQueryGraph', [function() {
+grano.directive('gnQueryGraph', ['$window', function($window) {
     return {
       restrict: 'EA',
       scope: {
@@ -19,28 +19,45 @@ grano.directive('gnQueryGraph', [function() {
             path_group = vis.append("svg:g"),
             path = null,
             node = null;
-        var w = $(element[0]).width(), h = $(element[0]).height(), r = 10;
+        var w = null, h = null, min_r = null, max_r = null;
 
-        var force = d3.layout.force()
-            .linkDistance(80)
-            .chargeDistance(160)
-            .gravity(0.7)
-            .charge(-20)
-            .size([w, h]);
+        var force = d3.layout.force();
 
         vis.append("svg:defs").selectAll("marker")
                 .data(["end"])
             .enter().append("svg:marker")
                 .attr("id", String)
                 .attr("viewBox", "0 -5 10 10")
-                .attr("refX", 15)
+                .attr("refX", 20)
+                //.attr("refY", -1.5)
                 .attr("refY", -1.5)
-                .attr("markerWidth", 6)
-                .attr("markerHeight", 6)
+                .attr("markerWidth", 5)
+                .attr("markerHeight", 5)
+                .attr("fill", "#ccc")
                 .attr("orient", "auto")
             .append("svg:path")
                 .attr("d", "M0,-5L10,0L0,5");
 
+        angular.element($window).bind('resize', function() {
+            update();
+        });
+
+        function scaleGraph() {
+            w = $(element[0]).width();
+            h = w * 0.6;
+            $(element[0]).find('svg').height(h);
+            max_r = w * (1/30);
+            min_r = 0.3 * max_r;
+
+            var dist = max_r * 4;
+
+            force.stop()
+                .linkDistance(dist)
+                .chargeDistance(dist * 2)
+                .gravity(0.01)
+                .charge(-100)
+                .size([w, h])
+        }
 
         function updateGraph() {
             var nodeList = [],
@@ -88,26 +105,24 @@ grano.directive('gnQueryGraph', [function() {
             //console.log(min_deg, max_deg);
             return d3.scale.linear()
                 .domain([min_deg, max_deg])
-                .rangeRound([7, 30]);
+                .rangeRound([min_r, max_r]);
         }
 
         function update() {
-            var max_r = 20,
-                graph = updateGraph(),
+            scaleGraph();
+
+            var graph = updateGraph(),
                 scale = radiusScale(graph.nodes);
 
             var getRadius = function(d) {
-              return scale(d.degree || 0);
+              d.radius = scale(d.degree || 0);
+              return d.radius;
             };
 
-            //var getRadius = function(d) {
-            //    return 5;
-            //}
-
-            var goodPos = [[w / 4, h / 3], [w * 3 / 4, h / 3]];
+            //var goodPos = [[w / 4, h / 3], [w * 3 / 4, h / 3]];
 
             force
-                .gravity(0)
+                //.gravity(0)
                 .nodes(graph.nodes)
                 .links(graph.links)
                 .start();
@@ -177,8 +192,8 @@ grano.directive('gnQueryGraph', [function() {
 
             node
                 .attr("transform", function(d) {
-                    d.x = Math.max(r, Math.min(w - r, d.x));
-                    d.y = Math.max(r, Math.min(h - r, d.y));
+                    d.x = Math.max(d.radius, Math.min(w - d.radius, d.x));
+                    d.y = Math.max(d.radius, Math.min(h - d.radius, d.y));
                     return "translate(" + d.x + "," + d.y + ")";
                 });
         });
