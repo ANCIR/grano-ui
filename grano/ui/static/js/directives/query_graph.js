@@ -67,7 +67,6 @@ grano.directive('gnQueryGraph', [function() {
                     });
                 }    
             }
-            
 
             return {
                 'nodes': nodeList,
@@ -75,16 +74,35 @@ grano.directive('gnQueryGraph', [function() {
             }
         }
 
+        function radiusScale(nodes) {
+            var min_deg = 10000, max_deg = 0;
+            for (var i in nodes) {
+                var d = nodes[i].degree;
+                if (d > max_deg) {
+                    max_deg = d;
+                }
+                if (d < min_deg) {
+                    min_deg = d;
+                }
+            }
+            //console.log(min_deg, max_deg);
+            return d3.scale.linear()
+                .domain([min_deg, max_deg])
+                .rangeRound([7, 30]);
+        }
+
         function update() {
             var max_r = 20,
-                graph = updateGraph();
-            //var getRadius = function(d) {
-            //  return d.isRoot ? 15 : Math.max(5, Math.min(max_r, Math.sqrt(d.weight * 4)));
-            //};
+                graph = updateGraph(),
+                scale = radiusScale(graph.nodes);
 
             var getRadius = function(d) {
-                return 5;
-            }
+              return scale(d.degree || 0);
+            };
+
+            //var getRadius = function(d) {
+            //    return 5;
+            //}
 
             var goodPos = [[w / 4, h / 3], [w * 3 / 4, h / 3]];
 
@@ -121,8 +139,6 @@ grano.directive('gnQueryGraph', [function() {
                 .attr("x", 12)
                 .attr("dy", ".35em")
                 .text(function(d) { return d.name; });
-
-
         }
 
         var expandNode = function(d) {
@@ -130,12 +146,14 @@ grano.directive('gnQueryGraph', [function() {
                 q = {
                     'id': d.id,
                     'schemata': null,
+                    'degree': null,
                     'properties': {'name': null},
                     'relations': [{
                         'schema': null,
                         'reverse': null,
                         'other': {
                             'id': null,
+                            'degree': null,
                             'schemata': null,
                             'properties': {'name': null}
                         }
@@ -187,6 +205,7 @@ grano.directive('gnQueryGraph', [function() {
                     'id': obj.id,
                     'isRoot': false,
                     'schemata': schemata,
+                    'degree': obj.degree,
                     'name': obj.properties.name.value
                 };
             };

@@ -77,8 +77,9 @@ grano.directive('gnQueryPanel', ['queryUtils', function(queryUtils) {
           }
         }
 
-        get('id', query.id)
-        get('reverse', query.reverse)
+        get('id', query.id);
+        get('reverse', query.reverse);
+        get('degree', query.degree);
         if (layer.obj == 'entity') {
           get('schemata', query.schemata, 'name');
         } else {
