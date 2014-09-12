@@ -27,16 +27,27 @@ function QueryCtrl($scope, $timeout, $routeParams, $location, $http, core, metad
       });
     }
   });
-  
-  var search = $location.search();
-  if (!search.queries) {
-    $scope.$broadcast('querySet', 'root', defaultQuery);
-  } else {
-    var qs = angular.fromJson(search.queries);
-    angular.forEach(qs, function(v, k) {
-      $scope.$broadcast('querySet', k, v);
-    });
+
+  $scope.setMode = function(modeName) {
+    $scope.mode = modeName || 'graph';
+    $location.search('mode', $scope.mode);
   }
+  
+  var init = function() {
+    var search = $location.search();
+    $scope.setMode(search.mode);
+
+    if (!search.queries) {
+      $scope.$broadcast('querySet', 'root', defaultQuery);
+    } else {
+      var qs = angular.fromJson(search.queries);
+      angular.forEach(qs, function(v, k) {
+        $scope.$broadcast('querySet', k, v);
+      });
+    }
+  };
+
+  init();
 };
 
 QueryCtrl.$inject = ['$scope', '$timeout', '$routeParams', '$location', '$http', 'core', 'metadata'];
