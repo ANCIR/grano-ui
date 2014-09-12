@@ -6,6 +6,7 @@ function QueryCtrl($scope, $timeout, $routeParams, $location, $http, core, metad
   var queries = {},
       defaultQuery = [{
         'id': null,
+        'degree': null,
         'schemata': null,
         'properties': {'name': null}
       }];
@@ -28,7 +29,6 @@ function QueryCtrl($scope, $timeout, $routeParams, $location, $http, core, metad
   });
   
   var search = $location.search();
-  console.log(search);
   if (!search.queries) {
     $scope.$broadcast('querySet', 'root', defaultQuery);
   } else {

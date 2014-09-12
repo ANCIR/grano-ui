@@ -101,12 +101,12 @@ grano.directive('gnQueryPanel', ['queryUtils', function(queryUtils) {
       scope.addLayers = function() {
         var lastObject = scope.layers[scope.layers.length-1];
         if (lastObject.obj == 'entity') {
-          scope.layers.push({'obj': 'relation',
+          scope.layers.push({'obj': 'relation', 'as_list': true,
                   'fields': {'schema': null, 'reverse': null, 'properties': {}},
                   'filters': {'properties': {}}});
         }
         scope.layers.push({'obj': 'entity',
-                'fields': {'schemata': null, 'properties': {'name': null}},
+                'fields': {'schemata': null, 'degree': null, 'properties': {'name': null}},
                 'filters': {'properties': {}}});
         scope.update();
       };

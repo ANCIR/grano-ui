@@ -110,7 +110,7 @@ grano.directive('gnQueryGraph', [function() {
                     .data(force.nodes())
                 .enter().append("g")
                     .attr("class", "node")
-                    .on('mousedown', expandNode)
+                    .on('dblclick', expandNode)
                     .call(force.drag);
 
             node.append('svg:circle')
