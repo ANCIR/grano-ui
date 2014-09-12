@@ -1,7 +1,7 @@
 
 function QueryCtrl($scope, $timeout, $routeParams, $location, $http, core, metadata) {
   $scope.loadProject($routeParams.slug);
-  $scope.loading = false;
+  $scope.loading = true;
   $scope.showPanel = true;
 
   var queries = {},
