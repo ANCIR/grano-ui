@@ -80,8 +80,8 @@ grano.directive('gnQueryTable', ['core', '$http', 'queryUtils', 'metadata',
                 if (next !== null) {
                   traverse(o[next], level+1);
                 } else {
-                  rows.push(currentRow);
-                  currentRow = {};
+                  rows.push(angular.copy(currentRow));
+                  //currentRow = {};
                 }
               });
             };
