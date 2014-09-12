@@ -6,13 +6,14 @@ Steal here: http://bl.ocks.org/d3noob/5141278
 */
 
 grano.colors = [
-    "#F68B1F", "#CF3D1E", "#F15623", "#FFC60B", "#DFCE21",
-    "#BCD631", "#95C93D", "#48B85C", "#00833D", "#00B48D", 
+    "#BCD631", "#F68B1F", "#CF3D1E", "#00833D", "#F15623", "#FFC60B", "#DFCE21",
+    "#95C93D", "#48B85C", "#00B48D", 
     "#60C4B1", "#27C4F4", "#478DCB", "#3E67B1", "#4251A3", "#59449B", 
     "#6E3F7C", "#6A246D", "#8A4873", "#EB0080", "#EF58A0", "#C05A89"
     ];
 
-grano.directive('gnQueryGraph', ['$window', '$compile', function($window, $compile) {
+grano.directive('gnQueryGraph', ['$window', '$timeout', '$compile',
+    function($window, $timeout, $compile) {
     return {
       restrict: 'EA',
       scope: {
@@ -246,6 +247,12 @@ grano.directive('gnQueryGraph', ['$window', '$compile', function($window, $compi
                     d.y = Math.max(d.radius, Math.min(h - d.radius, d.y));
                     return "translate(" + d.x + "," + d.y + ")";
                 });
+        });
+
+        scope.$on('queryMode', function(event, mode) {
+            if (mode == 'graph') {
+                $timeout(function() { update(); });
+            }
         });
 
         scope.$on('queryResult', function(event, queryName, data) {

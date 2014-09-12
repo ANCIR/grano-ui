@@ -2,6 +2,7 @@
   .loading-bay {
     position: relative;
     width: 100%;
+    z-index: 1000;
   }
 
   .loading-bay .alert {
@@ -56,7 +57,9 @@
 </div>
 
 <div class="row" ng-show="mode == 'graph'">
-  <div class="col-sm-12" gn-query-graph id="graph" project="project"></div>
+  <div class="col-sm-12">
+    <div gn-query-graph id="graph" project="project"></div>
+  </div>
 </div>
 
 <div class="row" ng-show="mode == 'table'">

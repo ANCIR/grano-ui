@@ -31,6 +31,7 @@ function QueryCtrl($scope, $timeout, $routeParams, $location, $http, core, metad
   $scope.setMode = function(modeName) {
     $scope.mode = modeName || 'graph';
     $location.search('mode', $scope.mode);
+    $scope.$broadcast('queryMode', $scope.mode);  
   }
   
   var init = function() {
