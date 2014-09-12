@@ -14,8 +14,8 @@ grano.colors = [
     "#6E3F7C", "#6A246D", "#8A4873", "#EB0080", "#EF58A0", "#C05A89"
     ];
 
-grano.directive('gnQueryGraph', ['$window', '$timeout', '$compile',
-    function($window, $timeout, $compile) {
+grano.directive('gnQueryGraph', ['$window', '$timeout', '$compile', '$location',
+    function($window, $timeout, $compile, $location) {
     return {
       restrict: 'EA',
       scope: {
@@ -136,7 +136,6 @@ grano.directive('gnQueryGraph', ['$window', '$timeout', '$compile',
                     schemata.push(d.schemata[i].name);
                 }
                 var key = schemata.sort().join('|');
-                //console.log(key);
                 return color(key);
             };
 
@@ -162,7 +161,11 @@ grano.directive('gnQueryGraph', ['$window', '$timeout', '$compile',
                     .data(force.nodes())
                 .enter().append("g")
                     .attr("class", "node")
-                    .on('dblclick', expandNode)
+                    .on('dragstart', function(d) {
+                        d3.event.sourceEvent.stopPropagation();
+                    })
+                    .on('click', expandNode)
+                    .on('dblclick', viewNode)
                     .on('mouseenter', mouseEnter)
                     .on('mouseleave', mouseLeave)
                     .call(force.drag);
@@ -209,7 +212,12 @@ grano.directive('gnQueryGraph', ['$window', '$timeout', '$compile',
             }).style('stroke', '#ccc');
         };
 
+        var viewNode = function(d) {
+            $location.path('/p/' + scope.project.slug + '/entities/' + d.id);
+        };
+
         var expandNode = function(d) {
+            if (d3.event.defaultPrevented) return;
             var q_name = 'expand_' + d.id,
                 q = {
                     'id': d.id,
