@@ -1,3 +1,12 @@
+grano.numWords = {
+  1: 'First',
+  2: 'Second',
+  3: 'Third',
+  4: 'Fourth',
+  5: 'Fifth',
+  6: 'Sixth'
+}
+
 grano.directive('gnQueryTable', ['core', '$http', 'queryUtils', 'metadata',
     function (core, $http, queryUtils, metadata) {
     return {
@@ -21,6 +30,47 @@ grano.directive('gnQueryTable', ['core', '$http', 'queryUtils', 'metadata',
           scope.$emit('querySet', 'root', queryUtils.pack(layers));
         };
 
+        scope.addColumn = function(level, name) {
+          var layers = queries['root'];
+          layers[level].fields.properties[name] = null;
+          scope.$emit('querySet', 'root', queryUtils.pack(layers));
+        };
+
+        var getAvailableColumns = function () {
+          var layers = [];
+          for (var layerId in queries['root']) {
+            var attrs = [],
+                num = Math.floor(layerId/2) + 1,
+                layer = queries['root'][layerId];
+
+            var schema = [layer.filters.schema || layer.filters.schemata];
+            if (layer.obj == 'entity') { 
+              schema.push('base');
+            }
+
+            for (var name in attributes) {
+              if (schema.indexOf(name) != -1) {
+                for (var i in attributes[name]) {
+                  var attr = attributes[name][i];
+                  if (angular.isUndefined(layer.fields.properties[attr.name])) {
+                    attrs.push(attr);
+                  }
+                }
+              }
+            }
+
+            if (attrs.length) {
+              layers.push({
+                'obj': layer.obj,
+                'level': layerId,
+                'numword': grano.numWords[num],
+                'attributes': attrs
+              });  
+            }
+          }
+          return layers;
+        };
+
         var sortColumns = function(a, b) {
           a = a.split('.', 2);
           b = b.split('.', 2);
@@ -30,8 +80,7 @@ grano.directive('gnQueryTable', ['core', '$http', 'queryUtils', 'metadata',
           return a[1] > b[1] ? 1 : -1;
         };
 
-        var getAttribute = function(obj, name) {
-          //console.log(obj, name);
+        var getSchemata = function(obj) {
           var schemata = obj.schemata || obj.schema;
           if (!angular.isArray(schemata)) {
             schemata = [schemata];
@@ -39,6 +88,12 @@ grano.directive('gnQueryTable', ['core', '$http', 'queryUtils', 'metadata',
           if (obj.obj == 'entity') { // HACK?
             schemata.push({'name': 'base'});
           }
+          return schemata;
+        };
+
+        var getAttribute = function(obj, name) {
+          var schemata = getSchemata(obj);
+
           for (var i in schemata) {
             var schema = schemata[i].name;
             for (var attr in attributes[schema]) {
@@ -64,6 +119,8 @@ grano.directive('gnQueryTable', ['core', '$http', 'queryUtils', 'metadata',
               });  
               attributes[schema.name] = attrs;
             });
+
+            scope.availableColumns = getAvailableColumns();
 
             var columns = [],
                 headers = {},

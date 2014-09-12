@@ -44,18 +44,6 @@ grano.directive('gnQueryPanelLayer', ['metadata', function(metadata) {
         return 'to';
       };
 
-      scope.availableFields = function () {
-        var attrs = [];
-        angular.forEach(attributes, function(a) {
-          var taken = false;
-          angular.forEach(scope.layer.fields.properties, function(v, k) {
-            if (k == a.name) taken = true;
-          });
-          if (!taken) attrs.push(a);
-        });
-        return attrs;
-      };
-
       scope.availableFilters = function () {
         var attrs = [];
         angular.forEach(attributes, function(a) {
@@ -67,10 +55,6 @@ grano.directive('gnQueryPanelLayer', ['metadata', function(metadata) {
           if (!taken) attrs.push(a);
         });
         return attrs;
-      };
-
-      scope.addField = function(attr) {
-        scope.layer.fields.properties[attr.name] = null;
       };
 
       scope.addFilter = function(attr) {

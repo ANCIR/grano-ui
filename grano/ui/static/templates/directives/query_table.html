@@ -8,6 +8,27 @@
         <i class="fa fa-link" ng-show="headers[column].obj != 'entity'"></i>
         {{headers[column].attr.label}}
       </th>
+      <th>
+        <div class="btn-group" dropdown ng-show="availableColumns.length">
+          <a href class="dropdown-toggle" ng-disabled="disabled">
+            <i class="fa fa-plus-square"></i>
+          </a>
+          <ul class="dropdown-menu" role="menu">
+            <li role="presentation" class="dropdown-header" ng-repeat-start="layer in availableColumns">
+              <span ng-show="layer.obj == 'entity'">
+                {{layer.numword}} entity fields
+              </span>
+              <span ng-show="layer.obj == 'relation'">
+                {{layer.numword}} relation fields
+              </span>
+            </li>
+            <li ng-repeat="attr in layer.attributes">
+              <a href ng-click="addColumn(layer.level, attr.name)">{{attr.label}}</a>
+            </li>
+            <li ng-show='!$last' ng-repeat-end class="divider"></li>
+          </ul>
+        </div>
+      </th>
     </tr>
     <tr ng-repeat="row in rows">
       <td ng-repeat="column in columns" class="obj-{{headers[column].obj}}">
@@ -16,6 +37,7 @@
         </a>
         <span ng-hide="headers[column].attr.name=='name'">{{row[column].value.value}}</span>
       </td>
+      <td></td>
     </tr>
   </table>
 </div>

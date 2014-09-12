@@ -19,22 +19,5 @@
     </span>
   </div>
   <div class="panel-body">
-    <div class="dropdown">
-      <p>
-        Showing
-        <span ng-show="layer.fields.properties.length==0">no details, </span>
-        <span ng-repeat="(name, n) in layer.fields.properties">
-          <strong>{{name}}</strong>, 
-        </span>
-        <a href dropdown-toggle>
-          add columns.
-        </a>
-        <ul class="dropdown-menu" role="menu">
-          <li ng-repeat="attr in availableFields()">
-            <a href dropdown-toggle ng-click="addField(attr)">{{attr.label}}</a>
-          </li>
-        </ul>
-      </p>
-    </div>
   </div>
 </div>
