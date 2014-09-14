@@ -340,3 +340,91 @@ table.table {
   color: @unboxed-text-color;
 }
 
+
+/* Query tool page */
+
+.query-tool {
+
+  .loading-bay {
+    position: relative;
+    width: 100%;
+    z-index: 1000;
+
+    .alert {
+      position: absolute;
+      width: 100%;
+    }
+  }
+
+  .graph-area {
+    position: relative;
+
+    .floating {
+      right: 0em;
+      position: absolute;
+    }
+  }
+
+  th {
+    //white-space: nowrap;
+  }
+
+  td.obj-relation,
+  th.obj-relation {
+    background: repeating-linear-gradient(
+      45deg,
+      #fff,
+      #fff 10px,
+      #fafafa 10px,
+      #fafafa 20px
+    );
+  }
+
+  .query-panel {
+
+    .panel-body {
+      padding: 0;
+    }
+
+    .list-group {
+      margin-bottom: 0;
+    }
+
+    .list-group-tem {
+      border-left: 0;
+      border-right: 0;
+    }
+
+    .list-group-item:last-child {
+      border-bottom-right-radius: 0px;
+      border-bottom-left-radius: 0px;
+    }
+  }
+}
+
+.network-graph {
+  svg {
+    height: 20em;
+    width: 100%;
+  }
+
+  path.link {
+    fill: none;
+    stroke: #ccc;
+    stroke-width: 3px;
+  }
+
+  circle {
+    fill: #ccc;
+    stroke: #f3f3f3;
+    cursor: pointer;
+    stroke-width: 1px;
+  }
+
+  text {
+    fill: #000;
+    font: 12px 'Open Sans', sans-serif;
+    font-weight: bold;
+    pointer-events: none;
+  }
+}

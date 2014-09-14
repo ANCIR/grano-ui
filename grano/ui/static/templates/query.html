@@ -1,62 +1,3 @@
-<style>
-  .loading-bay {
-    position: relative;
-    width: 100%;
-    z-index: 1000;
-  }
-
-  .loading-bay .alert {
-    position: absolute;
-    width: 100%;
-  }
-
-  #graph svg {
-      height: 20em;
-      width: 100%;
-  }
-
-  #graph path.link {
-    fill: none;
-    stroke: #ccc;
-    stroke-width: 3px;
-  }
-
-  #graph circle {
-    fill: #ccc;
-    stroke: #f3f3f3;
-    cursor: pointer;
-    stroke-width: 1px;
-  }
-
-  #graph text {
-    fill: #000;
-    font: 12px 'Open Sans', sans-serif;
-    font-weight: bold;
-    pointer-events: none;
-  }
-
-  .graph-area {
-    position: relative;
-  }
-
-  .floating {
-    right: 0em;
-    position: absolute;
-  }
-
-  td.obj-relation, th.obj-relation {
-    background: repeating-linear-gradient(
-      45deg,
-      #fff,
-      #fff 10px,
-      #fafafa 10px,
-      #fafafa 20px
-    );
-  }
-  
-);
-
-</style>
 
 <div class="">
   <div class="pull-right">
@@ -69,32 +10,34 @@
         ng-class="{'active': mode == 'table'}" ng-click="setMode('table')"><i class="fa fa-th"></i> Table</button>
     </div>
   </div>
-  <h1 class="unboxed">Motherfucking Query Tool</h1>
+  <h1 class="unboxed">Query Tool</h1>
 </div>
 
-<div class="loading-bay">
-  <div class="alert alert-warning" role="alert"
-    ng-show="loading">
-    <strong>Loading data from the server...</strong>
+<div class="query-tool">
+  <div class="loading-bay">
+    <div class="alert alert-warning" role="alert"
+      ng-show="loading">
+      <strong>Loading data from the server...</strong>
+    </div>
   </div>
-</div>
 
-<div class="row" ng-show="mode == 'graph'">
-  <div class="col-sm-12 graph-area">
-    <div class="floating col-md-4" ng-show="showPanel">
+  <div class="row" ng-show="mode == 'graph'">
+    <div class="col-sm-12 graph-area">
+      <div class="floating col-md-4" ng-show="showPanel">
+        <gn-query-panel project="project"></gn-query-panel>
+      </div>
+      <div gn-query-graph class="network-graph" project="project"></div>
+    </div>
+  </div>
+
+  <div class="row" ng-show="mode == 'table'">
+    <div ng-class="{'col-md-8': showPanel, 'col-md-12': !showPanel}">
+      <div class="box">
+        <gn-query-table project="project"></gn-query-table>
+      </div>
+    </div>
+    <div ng-show="showPanel" class="col-md-4" style="overflow-z: scroll">
       <gn-query-panel project="project"></gn-query-panel>
     </div>
-    <div gn-query-graph id="graph" project="project"></div>
-  </div>
-</div>
-
-<div class="row" ng-show="mode == 'table'">
-  <div ng-class="{'col-md-8': showPanel, 'col-md-12': !showPanel}">
-    <div class="box">
-      <gn-query-table project="project"></gn-query-table>
-    </div>
-  </div>
-  <div ng-show="showPanel" class="col-md-4" style="overflow-z: scroll">
-    <gn-query-panel project="project"></gn-query-panel>
   </div>
 </div>
