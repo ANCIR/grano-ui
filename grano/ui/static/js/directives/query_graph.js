@@ -131,12 +131,7 @@ grano.directive('gnQueryGraph', ['$window', '$timeout', '$compile', '$location',
             };
 
             var getColor = function(d) {
-                var schemata = [];
-                for (var i in d.schemata) {
-                    schemata.push(d.schemata[i].name);
-                }
-                var key = schemata.sort().join('|');
-                return color(key);
+                return color(d.schema.name);
             };
 
             force
@@ -221,7 +216,7 @@ grano.directive('gnQueryGraph', ['$window', '$timeout', '$compile', '$location',
             var q_name = 'expand_' + d.id,
                 q = {
                     'id': d.id,
-                    'schemata': [],
+                    'schema': null,
                     'degree': null,
                     'properties': {'name': null},
                     'relations': [{
@@ -230,7 +225,7 @@ grano.directive('gnQueryGraph', ['$window', '$timeout', '$compile', '$location',
                         'other': {
                             'id': null,
                             'degree': null,
-                            'schemata': [],
+                            'schema': null,
                             'properties': {'name': null}
                         }
                     }]
@@ -284,7 +279,7 @@ grano.directive('gnQueryGraph', ['$window', '$timeout', '$compile', '$location',
                 queryNodes[obj.id] = {
                     'id': obj.id,
                     'isRoot': false,
-                    'schemata': obj.schemata,
+                    'schema': obj.schema,
                     'degree': obj.degree,
                     'name': obj.properties.name.value
                 };

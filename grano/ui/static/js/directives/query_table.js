@@ -43,19 +43,11 @@ grano.directive('gnQueryTable', ['core', '$http', 'queryUtils', 'metadata',
                 num = Math.floor(layerId/2) + 1,
                 layer = queries['root'][layerId];
 
-            var schema = [layer.filters.schema || layer.filters.schemata];
-            if (layer.obj == 'entity') { 
-              schema.push('base');
-            }
-
-            for (var name in attributes) {
-              if (schema.indexOf(name) != -1) {
-                for (var i in attributes[name]) {
-                  var attr = attributes[name][i];
-                  if (angular.isUndefined(layer.fields.properties[attr.name])) {
-                    attrs.push(attr);
-                  }
-                }
+            var schema = layer.filters.schema;    
+            for (var i in attributes[schema]) {
+              var attr = attributes[name][i];
+              if (angular.isUndefined(layer.fields.properties[attr.name])) {
+                attrs.push(attr);
               }
             }
 
@@ -80,26 +72,11 @@ grano.directive('gnQueryTable', ['core', '$http', 'queryUtils', 'metadata',
           return a[1] > b[1] ? 1 : -1;
         };
 
-        var getSchemata = function(obj) {
-          var schemata = obj.schemata || obj.schema;
-          if (!angular.isArray(schemata)) {
-            schemata = [schemata];
-          };
-          if (obj.obj == 'entity') { // HACK?
-            schemata.push({'name': 'base'});
-          }
-          return schemata;
-        };
-
         var getAttribute = function(obj, name) {
-          var schemata = getSchemata(obj);
-
-          for (var i in schemata) {
-            var schema = schemata[i].name;
-            for (var attr in attributes[schema]) {
-              if (attr == name) {
-                return attributes[schema][attr];
-              }
+          var schema = obj.schema.name;
+          for (var attr in attributes[schema]) {
+            if (attr == name) {
+              return attributes[schema][attr];
             }
           }
         };

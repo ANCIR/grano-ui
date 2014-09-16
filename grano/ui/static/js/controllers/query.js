@@ -8,7 +8,7 @@ function QueryCtrl($scope, $timeout, $routeParams, $location, $http, core, metad
       defaultQuery = [{
         'id': null,
         'degree': null,
-        'schemata': [],
+        'schema': null,
         'properties': {'name': null}
       }];
 

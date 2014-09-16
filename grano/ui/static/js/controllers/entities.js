@@ -133,9 +133,14 @@ function EntitiesNewCtrl($scope, $routeParams, $location, $http, $modal, core, m
         return !$scope.entity.properties.name.value;
     };
 
-    metadata.getAttributes('entity').then(function(attributes) {
-        $scope.attributes = attributes;
-        $scope.entity.properties.name.attribute = attributes.name;
+    metadata.getSchemata().then(function(schemata) {
+        var ent_schemata = [];
+        angular.forEach(schemata, function(schema) {
+            if (schema.obj == 'entity' && !schema.hidden) {
+                ent_schemata.push(schema);
+            }
+        })
+        $scope.schemata = schema;
     });
 }
 

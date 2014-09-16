@@ -6,8 +6,8 @@
                 ng-class="{'selected': previewEntity && previewEntity.id==entity.id}">
                 <td ng-click="showEntityPreview(entity)">
                   <a class="structured">{{entity.properties.name.value}}</a>
-                  <span class="light" ng-repeat="schema in entity.schemata" ng-hide="schema.hidden || previewEntity">
-                       &middot; {{schema.label}}
+                  <span class="light" ng-hide="previewEntity">
+                    &middot; {{entity.schema.label}}
                   </span>
                 </td>
             </tr>

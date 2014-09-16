@@ -89,7 +89,7 @@
                   </tr>
               </thead>
               <tbody>
-                  <tr ng-repeat="attribute in schema.attributes">
+                  <tr ng-repeat="attribute in schema.attributes" ng-hide="attribute.inherited">
                     <td>
                         <input type="text" class="form-control input-sm" name="label"
                           ng-model="attribute.label">

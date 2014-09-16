@@ -25,9 +25,6 @@ grano.factory('queryUtils', [function() {
           if (k == 'properties') {
             v = angular.extend(query.properties || {}, v);
           }
-          if (k == 'schemata' && !angular.isArray(v)) {
-            v = [v];
-          }
           query[k] = v;
         });
       });
@@ -74,7 +71,6 @@ grano.factory('queryUtils', [function() {
             obj = obj[key];
           }
           
-
           if (obj == null) {
             var target = layer.fields;
             if (prefix) target = target[prefix];
@@ -90,14 +86,7 @@ grano.factory('queryUtils', [function() {
       get('id', query.id);
       get('reverse', query.reverse);
       get('degree', query.degree);
-      if (layer.obj == 'entity') {
-        get('schemata', query.schemata, 'name');
-        if (layer.fields.schemata == null) {
-          layer.fields.schemata = [];
-        }
-      } else {
-        get('schema', query.schema, 'name');
-      }
+      get('schema', query.schema, 'name');
       angular.forEach(query.properties || {}, function(v, k) {
         get(k, v, 'value', 'properties');
       });

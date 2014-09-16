@@ -22,7 +22,7 @@ grano.directive('gnQueryPanel', ['queryUtils', function(queryUtils) {
                   'filters': {'properties': {}}});
         }
         scope.layers.push({'obj': 'entity',
-                'fields': {'schemata': [], 'degree': null, 'properties': {'name': null}},
+                'fields': {'schema': null, 'degree': null, 'properties': {'name': null}},
                 'filters': {'properties': {}}});
         scope.update();
       };

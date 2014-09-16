@@ -15,17 +15,13 @@ grano.directive('gnQueryPanelLayer', ['metadata', function(metadata) {
       scope.visibleSchemata = [];
 
       scope.setSchema = function(e) {
-        if (scope.layer.obj == 'relation') {
-          scope.layer.filters.schema = e.name;  
-        } else {
-          scope.layer.filters.schemata = e.name;
-        }
+        scope.layer.filters.schema = e.name;
       };
 
       scope.getSchemaLabel = function() {
         var label = scope.anyLabel();
         angular.forEach(schemata, function(s) {
-          name = scope.layer.filters.schema || scope.layer.filters.schemata;
+          name = scope.layer.filters.schema;
           if (name == s.name) {
             label = s.meta.plural_upper || s.label;
           }

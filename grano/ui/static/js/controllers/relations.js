@@ -63,7 +63,7 @@ function RelationsNewCtrl($scope, $routeParams, $modalInstance, $location, $http
     metadata.getSchemata().then(function(ss) {
         $scope.schemata = [];
         angular.forEach(ss, function(s) {
-            if (s.obj == 'relation') {
+            if (s.obj == 'relation' && !s.hidden) {
                 $scope.schemata.push(s);
             }
         });
