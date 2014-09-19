@@ -45,7 +45,7 @@ grano.directive('gnQueryTable', ['core', '$http', 'queryUtils', 'metadata',
 
             var schema = layer.filters.schema;    
             for (var i in attributes[schema]) {
-              var attr = attributes[name][i];
+              var attr = attributes[schema][i];
               if (angular.isUndefined(layer.fields.properties[attr.name])) {
                 attrs.push(attr);
               }

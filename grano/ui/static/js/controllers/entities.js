@@ -140,7 +140,7 @@ function EntitiesNewCtrl($scope, $routeParams, $location, $http, $modal, core, m
                 ent_schemata.push(schema);
             }
         })
-        $scope.schemata = schema;
+        $scope.schemata = ent_schemata;
     });
 }
 
