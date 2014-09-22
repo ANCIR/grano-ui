@@ -103,24 +103,16 @@ EntitiesViewCtrl.$inject = ['$scope', '$routeParams', '$location', '$http', '$mo
 
 function EntitiesNewCtrl($scope, $routeParams, $location, $http, $modal, core, metadata) {
     $scope.loadProject($routeParams.slug);
+    $scope.schemata = [];
+    $scope.attributes = [];
     $scope.entity = {
         project: $routeParams.slug,
+        schema: null,
         properties: {name: {value: null, datatype: 'string', name: 'name'}}
     };
 
-    $scope.createEntity = function(form) {
+    $scope.create = function(form) {
         $scope.$broadcast('save', $scope.entity);
-        $scope.entity.schemata = [];
-        angular.forEach($scope.entity.properties, function(p, k) {
-            var schema = $scope.attributes[k].schema.name;
-            if (p.attribute) {
-                delete p.attribute;
-            }
-            if ($scope.entity.schemata.indexOf(schema) == -1) {
-                $scope.entity.schemata.push(schema);
-            }
-        });
-
         var res = $http.post(core.call('/entities'), $scope.entity);
         res.success(function(data) {
             $location.path('/p/' + $scope.project.slug + '/entities/' + data.id);
@@ -133,14 +125,30 @@ function EntitiesNewCtrl($scope, $routeParams, $location, $http, $modal, core, m
         return !$scope.entity.properties.name.value;
     };
 
-    metadata.getSchemata().then(function(schemata) {
-        var ent_schemata = [];
-        angular.forEach(schemata, function(schema) {
+    $scope.$watch('entity.schema', function(s) {
+        if (!s) return;
+
+        var attributes = [];
+        for (var i in s.attributes) {
+            var attr = s.attributes[i];
+            if (!attr.hidden) {
+                attributes.push(attr);
+            }
+        }
+
+        $scope.attributes = attributes.sort(attributeSorter);
+        // TODO: Remove properties that don't exist any more.
+    });
+
+    metadata.getSchemata().then(function(ss) {
+        var schemata = [];
+        angular.forEach(ss, function(schema) {
             if (schema.obj == 'entity' && !schema.hidden) {
-                ent_schemata.push(schema);
+                schemata.push(schema);
             }
         })
-        $scope.schemata = ent_schemata;
+        $scope.schemata = schemata;
+        $scope.entity.schema = schemata[0];
     });
 }
 

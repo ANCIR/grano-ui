@@ -6,3 +6,10 @@ function makeId() {
     };
     return (S4()+S4()+S4());
 }
+
+
+function attributeSorter(a, b) {
+    if (a.name == 'name') return -1;
+    if (b.name == 'name') return 1;
+    return a.label > b.label ? 1 : -1;
+}

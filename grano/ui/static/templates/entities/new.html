@@ -1,15 +1,32 @@
-<div class="panel panel-default">
-  <div class="panel-heading">
-      <h3 class="panel-title">Create a new entity</h3>
+<h1 class="unboxed">Create a new entity</h1>
+
+<div class="row">
+  <div class="col-md-9">
+    <div class="box">
+      <form class="form-horizontal" role="form" name="newEntity" ng-submit="create(newEntity)">
+        <div class="form-group" ng-class="{'has-error': newEntity.schema.$invalid}">
+          <label class="col-sm-3 control-label" for="schema">Schema</label>
+          <div class="col-sm-9">
+            <select class="form-control" name="schema" ng-model="entity.schema"
+              ng-options="s.label for s in schemata"></select>
+            <p class="help-block" ng-show="newEntity.schema.$invalid" ng-bind="newEntity.schema.$message"></p>
+          </div>
+        </div>
+
+        <div class="form-group" ng-repeat="attr in attributes">
+          <label class="col-sm-3 control-label" for="{{attr.name}}">{{attr.label}}</label>
+          <div class="col-sm-9">
+            <gn-property-edit property="entity.properties[attr.name]" attribute="attr"></gn-property-edit>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <div class="col-sm-offset-3 col-sm-9">
+            <button type="submit" class="btn btn-primary" ng-disabled="canCreate()">Save</button>
+          </div>
+        </div>
+      </form>
+    </div>
   </div>
-  <div class="panel-body"> 
-    <form role="form" name="newEntity" ng-submit="createEntity(newEntity)">
-      <div class="form-group">
-        <gn-property-multi-edit obj="entity" attributes="attributes"></gn-property-multi-edit>
-      </div>
-      <button type="submit"
-        ng-disabled="canCreate()"
-        class="btn btn-default">Create</button>
-    </form>
-  </div>
+  <div class="col-md-3"></div>
 </div>
