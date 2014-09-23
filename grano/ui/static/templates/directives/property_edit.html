@@ -1,12 +1,12 @@
 
 <input type="text" class="form-control {{fieldClass}}" name="value" ng-model="property.value"
-    placeholder="The meaning of life" ng-show="attribute.datatype=='string'">
+    ng-show="attribute.datatype=='string'">
 
 <input type="number" class="form-control {{fieldClass}}" name="value" ng-model="property.value"
-    placeholder="23" ng-show="attribute.datatype=='integer'">
+    ng-show="attribute.datatype=='integer'">
 
 <input type="text" class="form-control {{fieldClass}}" name="value" ng-model="property.value"
-    placeholder="3.1415" ng-show="attribute.datatype=='float'">
+    ng-show="attribute.datatype=='float'">
 
 <div class="checkbox" ng-show="attribute.datatype=='boolean'">
     <label>
@@ -16,8 +16,9 @@
 </div>
 
 <p class="input-group" ng-show="attribute.datatype=='datetime'">
-    <input class="form-control {{fieldClass}}"
-        datepicker-popup placeholder="2038-01-19" name="value" show-weeks="false"
-        type="text" ng-model="property.value" show-button-bar="false" is-open="openDatePicker">
-    <span class="input-group-addon"><i class="fa fa-calendar"></i></span>   
+    <input type="text" class="form-control {{fieldClass}}" datepicker-popup="dd.MM.yyyy" ng-model="property.value"
+        close-text="Close" is-open="dateOpened" show-button-bar="false" />
+    <span class="input-group-btn">
+        <button type="button" class="btn btn-default" ng-click="dateOpen($event)"><i class="fa fa-calendar"></i></button>
+    </span>
 </p>

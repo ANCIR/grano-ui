@@ -101,27 +101,32 @@ function EntitiesViewCtrl($scope, $routeParams, $location, $http, $modal, core, 
 EntitiesViewCtrl.$inject = ['$scope', '$routeParams', '$location', '$http', '$modal', 'core', 'session'];
 
 
-function EntitiesNewCtrl($scope, $routeParams, $location, $http, $modal, core, metadata) {
+function EntitiesEditCtrl($scope, $routeParams, $location, $http, $modal, core, metadata) {
     $scope.loadProject($routeParams.slug);
     $scope.schemata = [];
-    $scope.attributes = [];
+    $scope.schemaAttributes = [];
+    $scope.isNew = !$routeParams.id;;
     $scope.entity = {
         project: $routeParams.slug,
-        schema: null,
         properties: {name: {value: null, datatype: 'string', name: 'name'}}
     };
 
-    $scope.create = function(form) {
+    $scope.save = function(form) {
+        var data = angular.copy($scope.entity);
+        data.schema = data.schema.name;
         $scope.$broadcast('save', $scope.entity);
-        var res = $http.post(core.call('/entities'), $scope.entity);
+        var url = core.call('/entities');
+        if (!$scope.isNew) {
+            url = $scope.entity.api_url;
+        }
+        var res = $http.post(url, data);
         res.success(function(data) {
             $location.path('/p/' + $scope.project.slug + '/entities/' + data.id);
         });
         res.error(grano.handleFormError(form));
-
     };
 
-    $scope.canCreate = function() {
+    $scope.canSave = function() {
         return !$scope.entity.properties.name.value;
     };
 
@@ -136,8 +141,7 @@ function EntitiesNewCtrl($scope, $routeParams, $location, $http, $modal, core, m
             }
         }
 
-        $scope.attributes = attributes.sort(attributeSorter);
-        // TODO: Remove properties that don't exist any more.
+        $scope.schemaAttributes = attributes.sort(attributeSorter);
     });
 
     metadata.getSchemata().then(function(ss) {
@@ -149,10 +153,25 @@ function EntitiesNewCtrl($scope, $routeParams, $location, $http, $modal, core, m
         })
         $scope.schemata = schemata;
         $scope.entity.schema = schemata[0];
+
+        if (!$scope.isNew) {
+            var res = $http.get(core.call('/entities/' + $routeParams.id));
+            res.success(function(data) {
+                var schema = null;
+                for (var i in $scope.schemata) {
+                    var schema = $scope.schemata[i];
+                    if ($scope.schemata[i].name == data.schema.name) {
+                        data.schema = $scope.schemata[i];
+                    }
+                }
+
+                $scope.entity = data;
+            });
+        }
     });
 }
 
-EntitiesNewCtrl.$inject = ['$scope', '$routeParams', '$location', '$http', '$modal', 'core', 'metadata'];
+EntitiesEditCtrl.$inject = ['$scope', '$routeParams', '$location', '$http', '$modal', 'core', 'metadata'];
 
 
 function EntitiesDeleteCtrl($scope, $routeParams, $location, $http, $route, $modal, $modalInstance, session, entity) {

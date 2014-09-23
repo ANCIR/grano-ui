@@ -50,13 +50,18 @@ grano.config(['$routeProvider', '$locationProvider',
   });
 
   $routeProvider.when('/p/:slug/entities/new', {
-    templateUrl: 'entities/new.html',
-    controller: EntitiesNewCtrl
+    templateUrl: 'entities/edit.html',
+    controller: EntitiesEditCtrl
   });
 
   $routeProvider.when('/p/:slug/entities/:id', {
     templateUrl: 'entities/view.html',
     controller: EntitiesViewCtrl
+  });
+
+  $routeProvider.when('/p/:slug/entities/:id/edit', {
+    templateUrl: 'entities/edit.html',
+    controller: EntitiesEditCtrl
   });
 
   $routeProvider.when('/p/:slug/relations/:id', {
