@@ -1,6 +1,5 @@
 
-function ProjectsViewCtrl($scope, $routeParams, $location, $http, $modal,
-        $timeout, core, session) {
+function ProjectsViewCtrl($scope, $routeParams, $location, $http, $modal, $timeout, core) {
     $scope.loadProject($routeParams.slug);
     $scope.query = {};
 
@@ -20,11 +19,10 @@ function ProjectsViewCtrl($scope, $routeParams, $location, $http, $modal,
     };
 }
 
-ProjectsViewCtrl.$inject = ['$scope', '$routeParams', '$location', '$http', '$modal',
-    '$timeout', 'core', 'session'];
+ProjectsViewCtrl.$inject = ['$scope', '$routeParams', '$location', '$http', '$modal', '$timeout', 'core'];
 
 
-function ProjectsNewCtrl($scope, $routeParams, $modalInstance, $location, $http, core, session) {
+function ProjectsNewCtrl($scope, $routeParams, $modalInstance, $location, $http, core) {
     $scope.project = {};
 
     $scope.cancel = function() {
@@ -41,7 +39,7 @@ function ProjectsNewCtrl($scope, $routeParams, $modalInstance, $location, $http,
     };
 }
 
-ProjectsNewCtrl.$inject = ['$scope', '$routeParams', '$modalInstance', '$location', '$http', 'core', 'session'];
+ProjectsNewCtrl.$inject = ['$scope', '$routeParams', '$modalInstance', '$location', '$http', 'core'];
 
 
 function ProjectsEditCtrl($scope, $route, $routeParams, $location, $http, $modal, metadata, core) {
@@ -80,7 +78,7 @@ function ProjectsEditCtrl($scope, $route, $routeParams, $location, $http, $modal
 ProjectsEditCtrl.$inject = ['$scope', '$route', '$routeParams', '$location', '$http', '$modal', 'metadata', 'core'];
 
 
-function ProjectsDeleteCtrl($scope, $routeParams, $location, $http, $route, $modal, $modalInstance, project) {
+function ProjectsDeleteCtrl($scope, $routeParams, $location, $http, $route, $modal, $modalInstance, metadata, project) {
     $scope.project = project;
 
     $scope.cancel = function() {
@@ -90,13 +88,14 @@ function ProjectsDeleteCtrl($scope, $routeParams, $location, $http, $route, $mod
     $scope.delete = function() {
         var res = $http.delete($scope.project.api_url);
         res.error(function(data) {
+            metadata.reset();
             $location.path('/');
             $modalInstance.dismiss('ok');
         });
     };
 }
 
-ProjectsDeleteCtrl.$inject = ['$scope', '$routeParams', '$location', '$http', '$route', '$modal', '$modalInstance', 'project'];
+ProjectsDeleteCtrl.$inject = ['$scope', '$routeParams', '$location', '$http', '$route', '$modal', '$modalInstance', 'metadata', 'project'];
 
 
 function ProjectsTruncateCtrl($scope, $routeParams, $location, $http, $route, $modal, $modalInstance, metadata, project) {

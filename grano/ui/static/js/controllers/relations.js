@@ -1,5 +1,5 @@
 
-function RelationsViewCtrl($scope, $routeParams, $location, $http, $modal, core, session) {
+function RelationsViewCtrl($scope, $routeParams, $location, $http, $modal, core) {
     $scope.navSection = 'relations';
 
     $scope.loadProject($routeParams.slug);
@@ -31,7 +31,7 @@ function RelationsViewCtrl($scope, $routeParams, $location, $http, $modal, core,
     $scope.reloadRelation($routeParams.id);
 }
 
-RelationsViewCtrl.$inject = ['$scope', '$routeParams', '$location', '$http', '$modal', 'core', 'session'];
+RelationsViewCtrl.$inject = ['$scope', '$routeParams', '$location', '$http', '$modal', 'core'];
 
 
 function RelationsNewCtrl($scope, $routeParams, $modalInstance, $location, $http, core,
@@ -74,7 +74,7 @@ RelationsNewCtrl.$inject = ['$scope', '$routeParams', '$modalInstance', '$locati
     'metadata', 'project', 'source', 'target'];
 
 
-function RelationsDeleteCtrl($scope, $routeParams, $location, $http, $route, $modal, $modalInstance, session, relation) {
+function RelationsDeleteCtrl($scope, $routeParams, $location, $http, $route, $modal, $modalInstance, relation) {
     $scope.relation = relation;
 
     $scope.cancel = function() {
@@ -90,4 +90,4 @@ function RelationsDeleteCtrl($scope, $routeParams, $location, $http, $route, $mo
     };
 }
 
-RelationsDeleteCtrl.$inject = ['$scope', '$routeParams', '$location', '$http', '$route', '$modal', '$modalInstance', 'session', 'relation'];
+RelationsDeleteCtrl.$inject = ['$scope', '$routeParams', '$location', '$http', '$route', '$modal', '$modalInstance', 'relation'];

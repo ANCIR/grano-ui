@@ -1,5 +1,5 @@
 
-function SchemataIndexCtrl($scope, $routeParams, $location, $http, $modal, $timeout, core, session, metadata) {
+function SchemataIndexCtrl($scope, $routeParams, $location, $http, $modal, $timeout, core, metadata) {
     $scope.loadProject($routeParams.slug);
     $scope.entity_schemata = [];
     $scope.relation_schemata = [];
@@ -18,10 +18,10 @@ function SchemataIndexCtrl($scope, $routeParams, $location, $http, $modal, $time
     });
 }
 
-SchemataIndexCtrl.$inject = ['$scope', '$routeParams', '$location', '$http', '$modal', '$timeout', 'core', 'session', 'metadata'];
+SchemataIndexCtrl.$inject = ['$scope', '$routeParams', '$location', '$http', '$modal', '$timeout', 'core', 'metadata'];
 
 
-function SchemataViewCtrl($scope, $routeParams, $location, $http, $route, $modal, $timeout, metadata, core, session) {
+function SchemataViewCtrl($scope, $routeParams, $location, $http, $route, $modal, $timeout, metadata, core) {
     $scope.loadProject($routeParams.slug);
     $scope.schema = {};
 
@@ -84,10 +84,10 @@ function SchemataViewCtrl($scope, $routeParams, $location, $http, $route, $modal
 
 }
 
-SchemataViewCtrl.$inject = ['$scope', '$routeParams', '$location', '$http', '$route', '$modal', '$timeout', 'metadata', 'core', 'session'];
+SchemataViewCtrl.$inject = ['$scope', '$routeParams', '$location', '$http', '$route', '$modal', '$timeout', 'metadata', 'core'];
 
 
-function SchemataDeleteCtrl($scope, $location, $modalInstance, $http, session, schema) {
+function SchemataDeleteCtrl($scope, $location, $modalInstance, $http, metadata, schema) {
     $scope.schema = schema;
 
     $scope.cancel = function() {
@@ -98,11 +98,12 @@ function SchemataDeleteCtrl($scope, $location, $modalInstance, $http, session, s
         var res = $http.delete($scope.schema.api_url);
         res.error(function(data) {
             $modalInstance.dismiss('ok');
+            metadata.reset();
             $location.path('/p/' + $scope.schema.project.slug + '/schemata');
         });
     };
 }
 
-SchemataDeleteCtrl.$inject = ['$scope', '$location', '$modalInstance', '$http', 'session', 'schema'];
+SchemataDeleteCtrl.$inject = ['$scope', '$location', '$modalInstance', '$http', 'metadata', 'schema'];
 
 
