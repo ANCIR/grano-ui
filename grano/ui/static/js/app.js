@@ -64,9 +64,19 @@ grano.config(['$routeProvider', '$locationProvider',
     controller: EntitiesEditCtrl
   });
 
+  $routeProvider.when('/p/:slug/relations/new', {
+    templateUrl: 'relations/edit.html',
+    controller: RelationsEditCtrl
+  });
+
   $routeProvider.when('/p/:slug/relations/:id', {
     templateUrl: 'relations/view.html',
     controller: RelationsViewCtrl
+  });
+
+  $routeProvider.when('/p/:slug/relations/:id/edit', {
+    templateUrl: 'relations/edit.html',
+    controller: RelationsEditCtrl
   });
 
   $routeProvider.when('/p/:slug/import', {

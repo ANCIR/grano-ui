@@ -12,6 +12,10 @@
             </div>
             <div class="col-md-4">
                 <div class="btn-group pull-right">
+                    <a class="btn btn-sm btn-default"
+                        gn-permission  project="project" role="editor"
+                        href="#/p/{{relation.project.slug}}/relations/{{relation.id}}/edit">
+                            <i class="fa fa-edit"></i> Edit</a>
                     <button type="button" class="btn btn-sm btn-default"
                         gn-permission project="project" role="editor"
                         ng-click="deleteRelation()"><i class="fa fa-trash-o"></i> Delete</button>

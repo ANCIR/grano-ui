@@ -1,0 +1,53 @@
+<h1 class="unboxed">
+  <span ng-show="isNew">Create a new relation</span>
+  <span ng-hide="isNew">Edit: {{relation.schema.label}}</span>
+</h1>
+
+<div class="row">
+  <div class="col-md-9">
+    <div class="box">
+      <form class="form-horizontal" role="form" name="newRelation" ng-submit="save(newRelation)">
+
+        <div class="form-group" ng-class="{'has-error': newRelation.source.$invalid}">
+          <label class="col-sm-3 control-label" for="source">Source</label>
+          <div class="col-sm-9">
+            <gn-entity-suggest entity="relation.source" project="project" exclude="relation.target"></gn-entity-suggest>
+            <p class="help-block" ng-show="newRelation.source.$invalid" ng-bind="newRelation.source.$message"></p>
+          </div>
+        </div>
+
+        <div class="form-group" ng-class="{'has-error': newRelation.target.$invalid}">
+          <label class="col-sm-3 control-label" for="target">Target</label>
+          <div class="col-sm-9">
+            <gn-entity-suggest entity="relation.target" project="project" exclude="relation.source"></gn-entity-suggest>
+            <p class="help-block" ng-show="newRelation.target.$invalid" ng-bind="newRelation.target.$message"></p>
+          </div>
+        </div>
+
+        <div class="form-group" ng-class="{'has-error': newRelation.schema.$invalid}">
+          <label class="col-sm-3 control-label" for="schema">Schema</label>
+          <div class="col-sm-9">
+            <select class="form-control" name="schema" ng-model="relation.schema"
+              ng-options="s.label for s in schemata"></select>
+            <p class="help-block" ng-show="newRelation.schema.$invalid" ng-bind="newRelation.schema.$message"></p>
+            <span class="help-block">Select an appropriate type for this relation, this will determine which fields are available.</span>
+          </div>
+        </div>
+
+        <div class="form-group" ng-repeat="attr in schemaAttributes">
+          <label class="col-sm-3 control-label" for="{{attr.name}}">{{attr.label}}</label>
+          <div class="col-sm-9">
+            <gn-property-edit property="relation.properties[attr.name]" attribute="attr"></gn-property-edit>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <div class="col-sm-offset-3 col-sm-9">
+            <button type="submit" class="btn btn-primary" ng-disabled="!canSave()">Save</button>
+          </div>
+        </div>
+      </form>
+    </div>
+  </div>
+  <div class="col-md-3"></div>
+</div>

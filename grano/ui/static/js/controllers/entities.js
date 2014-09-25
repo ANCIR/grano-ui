@@ -105,7 +105,7 @@ function EntitiesEditCtrl($scope, $routeParams, $location, $http, $modal, core, 
     $scope.loadProject($routeParams.slug);
     $scope.schemata = [];
     $scope.schemaAttributes = [];
-    $scope.isNew = !$routeParams.id;;
+    $scope.isNew = !$routeParams.id;
     $scope.entity = {
         project: $routeParams.slug,
         properties: {name: {value: null, datatype: 'string', name: 'name'}}
@@ -127,7 +127,7 @@ function EntitiesEditCtrl($scope, $routeParams, $location, $http, $modal, core, 
     };
 
     $scope.canSave = function() {
-        return !$scope.entity.properties.name.value;
+        return $scope.entity.properties.name.value;
     };
 
     $scope.$watch('entity.schema', function(s) {

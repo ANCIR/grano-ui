@@ -11,6 +11,9 @@
       <button type="button" class="btn btn-sm btn-default"
         gn-permission project="project" role="editor"
         ng-click="mergeEntity()"><i class="fa fa-link"></i> Merge</button>
+      <a class="btn btn-sm btn-default"
+        gn-permission  project="project" role="editor"
+        href="#/p/{{entity.project.slug}}/entities/{{entity.id}}/edit"><i class="fa fa-edit"></i> Edit</a>
       <div class="btn-group">
         <button type="button" class="btn btn-sm btn-default dropdown-toggle" data-toggle="dropdown">
           <i class="fa fa-download"></i> Data

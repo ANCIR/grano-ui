@@ -34,44 +34,90 @@ function RelationsViewCtrl($scope, $routeParams, $location, $http, $modal, core)
 RelationsViewCtrl.$inject = ['$scope', '$routeParams', '$location', '$http', '$modal', 'core'];
 
 
-function RelationsNewCtrl($scope, $routeParams, $modalInstance, $location, $http, core,
-        metadata, project, source, target) {
+function RelationsEditCtrl($scope, $routeParams, $location, $http, $modal, core, metadata) {
+    $scope.loadProject($routeParams.slug);
+    $scope.schemata = [];
+    $scope.schemaAttributes = [];
+    $scope.isNew = !$routeParams.id;
     $scope.relation = {
-        project: project,
-        source: angular.copy(source),
-        target: angular.copy(target)
-    };
-    $scope.project = project;
-    $scope.source = source;
-    $scope.target = target;
-
-    //console.log($scope.relation);
-
-    $scope.cancel = function() {
-        $modalInstance.dismiss('cancel');
+        project: $routeParams.slug,
+        properties: {}
     };
 
-    $scope.create = function(form) {
-        var res = $http.post(core.call('/relations'), $scope.relation);
+    $scope.save = function(form) {
+        var data = angular.copy($scope.relation);
+        data.schema = data.schema.name;
+        $scope.$broadcast('save', $scope.relation);
+        var url = core.call('/relations');
+        if (!$scope.isNew) {
+            url = $scope.relation.api_url;
+        }
+        var res = $http.post(url, data);
         res.success(function(data) {
-            $modalInstance.dismiss('ok');
-            $location.path('/p/' + data.project.slug + '/relations/' + data.id);
+            $location.path('/p/' + $scope.project.slug + '/relations/' + data.id);
         });
         res.error(grano.handleFormError(form));
     };
 
-    metadata.getSchemata().then(function(ss) {
-        $scope.schemata = [];
-        angular.forEach(ss, function(s) {
-            if (s.obj == 'relation' && !s.hidden) {
-                $scope.schemata.push(s);
+    $scope.canSave = function() {
+        return $scope.relation.source && $scope.relation.source.id &&
+               $scope.relation.target && $scope.relation.target.id;
+    };
+
+    $scope.$watch('relation.schema', function(s) {
+        if (!s) return;
+        var attributes = [];
+        for (var i in s.attributes) {
+            var attr = s.attributes[i];
+            if (!attr.hidden) {
+                attributes.push(attr);
             }
-        });
+        }
+        $scope.schemaAttributes = attributes.sort(attributeSorter);
     });
+
+    metadata.getSchemata().then(function(ss) {
+        var schemata = [];
+        angular.forEach(ss, function(schema) {
+            if (schema.obj == 'relation' && !schema.hidden) {
+                schemata.push(schema);
+            }
+        })
+        $scope.schemata = schemata;
+        $scope.relation.schema = schemata[0];
+
+        if (!$scope.isNew) {
+            var res = $http.get(core.call('/relations/' + $routeParams.id));
+            res.success(function(data) {
+                var schema = null;
+                for (var i in $scope.schemata) {
+                    var schema = $scope.schemata[i];
+                    if ($scope.schemata[i].name == data.schema.name) {
+                        data.schema = $scope.schemata[i];
+                    }
+                }
+
+                $scope.relation = data;
+            });
+        }
+    });
+
+    var query = $location.search();
+    if (query.source) {
+        var res = $http.get(core.call('/entities/' + query.source));
+        res.success(function(data) {
+            $scope.relation.source = data;
+        });
+    }
+    if (query.target) {
+        var res = $http.get(core.call('/entities/' + query.target));
+        res.success(function(data) {
+            $scope.relation.target = data;
+        });
+    }
 }
 
-RelationsNewCtrl.$inject = ['$scope', '$routeParams', '$modalInstance', '$location', '$http', 'core',
-    'metadata', 'project', 'source', 'target'];
+RelationsEditCtrl.$inject = ['$scope', '$routeParams', '$location', '$http', '$modal', 'core', 'metadata'];
 
 
 function RelationsDeleteCtrl($scope, $routeParams, $location, $http, $route, $modal, $modalInstance, relation) {

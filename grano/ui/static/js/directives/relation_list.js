@@ -34,22 +34,6 @@ grano.directive('gnRelationList', ['core', '$http', '$sce', '$modal', 'metadata'
                 });
             };
 
-            scope.createRelation = function() {
-                var d = $modal.open({
-                    templateUrl: 'relations/new.html',
-                    controller: 'RelationsNewCtrl',
-                    resolve: {
-                        project: function () { return scope.project; },
-                        source: function () {
-                            return scope.localName == 'source' ? scope.entity : null;
-                        },
-                        target: function () {
-                            return scope.localName == 'target' ? scope.entity : null;
-                        }
-                    }
-                });
-            };
-
             scope.$watch('entity', function(e) {
                 if (!e || !e.id) return;
 
