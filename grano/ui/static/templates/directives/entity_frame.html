@@ -3,7 +3,7 @@
     <div class="box" ng-transclude></div>
   </div>
   <div class="col-md-3">
-    <ul class="nav nav-pills nav-stacked nav-styled">
+    <ul class="nav nav-pills nav-stacked nav-styled" ng-show="entity.id">
       <li ng-hide="'view' === section">
         <a href="#/p/{{entity.project.slug}}/entities/{{entity.id}}"><i class="fa fa-eye"></i> View</a>
       </li>

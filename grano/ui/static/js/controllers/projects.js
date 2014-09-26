@@ -50,7 +50,7 @@ function ProjectsEditCtrl($scope, $route, $routeParams, $location, $http, $modal
         var res = $http.post(core.call('/projects/' + $scope.project.slug), $scope.project);
         res.success(function(data) {
             metadata.reset();
-            $route.reload();
+            $location.path('/p/' + $routeParams.slug);
         });
         res.error(grano.handleFormError(form));
     };

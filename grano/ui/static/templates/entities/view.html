@@ -1,14 +1,9 @@
 <h1 class="unboxed">{{entity.properties.name.value}}</h1>
 
 <gn-entity-frame section="view" entity="entity" project="project">
-  <div class="row">
-    <div class="col-lg-6">
-      <gn-property-list obj="entity" refresh="reloadEntity(id)"></gn-property-list>
-    </div>
-    <div class="col-lg-6">
-      <gn-relation-list entity="entity" direction="inbound"></gn-relation-list>
-      <div class="clearfix"></div>
-      <gn-relation-list entity="entity" direction="outbound"></gn-relation-list>
-    </div>
-  </div>
+  <gn-property-list obj="entity" refresh="reloadEntity(id)"></gn-property-list>
+  
+  <gn-relation-list entity="entity" direction="inbound"></gn-relation-list>
+  <div class="clearfix"></div>
+  <gn-relation-list entity="entity" direction="outbound"></gn-relation-list>
 </gn-entity-frame>

@@ -60,25 +60,7 @@ function EntitiesViewCtrl($scope, $routeParams, $location, $http, $modal, core, 
         });    
     };
 
-    $scope.deleteEntity = function() {
-        var d = $modal.open({
-            templateUrl: 'entities/delete.html',
-            controller: 'EntitiesDeleteCtrl',
-            resolve: {
-                entity: function () { return $scope.entity; }
-            }
-        });
-    };
 
-    $scope.mergeEntity = function() {
-        var d = $modal.open({
-            templateUrl: 'entities/merge.html',
-            controller: 'EntitiesMergeCtrl',
-            resolve: {
-                orig: function () { return $scope.entity; }
-            }
-        });
-    };
 
     $scope.reloadEntity($routeParams.id);
     
@@ -98,7 +80,7 @@ function EntitiesEditCtrl($scope, $routeParams, $location, $http, $modal, core, 
     };
 
     $scope.save = function(form) {
-        var data = angular.copy($scope.entity);
+        var data = $scope.entity; //angular.copy($scope.entity);
         data.schema = data.schema.name;
         $scope.$broadcast('save', $scope.entity);
         var url = core.call('/entities');
