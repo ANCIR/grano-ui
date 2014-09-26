@@ -1,4 +1,4 @@
-grano.directive('gnSettings', ['$timeout', function ($timeout) {
+grano.directive('gnSettingsFrame', ['$timeout', function ($timeout) {
     return {
         restrict: 'E',
         transclude: true,

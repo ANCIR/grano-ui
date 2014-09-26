@@ -1,53 +1,14 @@
-<div class="panel panel-default">
-  <div class="panel-heading panel-heading-buttons">
-    <div class="row">
-      <div class="col-md-6">
-        <h3 class="panel-title">
-          <strong>
-            {{entity.properties.name.value}}
-          </strong>
-        </h3>
-      </div>
-      <div class="col-md-6">
-        <div class="btn-group pull-right">
-          <button type="button" class="btn btn-sm btn-default"
-            gn-permission project="project" role="editor"
-            ng-click="mergeEntity()"><i class="fa fa-link"></i> Merge</button>
-          <a class="btn btn-sm btn-default"
-            gn-permission  project="project" role="editor"
-            href="#/p/{{entity.project.slug}}/entities/{{entity.id}}/edit"><i class="fa fa-edit"></i> Edit</a>
-          <div class="btn-group">
-          <!--button type="button" class="btn btn-sm btn-default dropdown-toggle" data-toggle="dropdown">
-            <i class="fa fa-download"></i> Data
-            <span class="caret"></span>
-          </button>
-          <ul class="dropdown-menu">
-            <li>
-              <a href="{{config.API_ROOT}}/entities/{{entity.id}}">Entity data (JSON)</a>
-              <a href="{{config.API_ROOT}}/entities/{{entity.id}}/graph?format=json">Graph (JSON)</a>
-              <a href="{{config.API_ROOT}}/entities/{{entity.id}}/graph?format=gexf">Graph (GEXF)</a>
-            </li>
-          </ul-->
-        </div>
+<h1 class="unboxed">{{entity.properties.name.value}}</h1>
 
-        <button type="button" class="btn btn-sm btn-default"
-        gn-permission project="project" role="editor"
-        ng-click="deleteEntity()"><i class="fa fa-trash-o"></i> Delete</button>
-      </div>
-      </div>
+<gn-entity-frame section="view" entity="entity" project="project">
+  <div class="row">
+    <div class="col-lg-6">
+      <gn-property-list obj="entity" refresh="reloadEntity(id)"></gn-property-list>
     </div>
-
-  </div>
-  <div class="panel-body"> 
-    <div class="row">
-      <div class="col-lg-6">
-        <gn-property-list obj="entity" refresh="reloadEntity(id)"></gn-property-list>
-      </div>
-      <div class="col-lg-6">
-        <gn-relation-list entity="entity" direction="inbound"></gn-relation-list>
-        <div class="clearfix"></div>
-        <gn-relation-list entity="entity" direction="outbound"></gn-relation-list>
-      </div>
+    <div class="col-lg-6">
+      <gn-relation-list entity="entity" direction="inbound"></gn-relation-list>
+      <div class="clearfix"></div>
+      <gn-relation-list entity="entity" direction="outbound"></gn-relation-list>
     </div>
   </div>
-</div>
+</gn-entity-frame>
