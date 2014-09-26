@@ -3,20 +3,13 @@
     <thead>
         <tr>
             <th colspan="2">Properties</th>
-            <th>
-                <button type="button" ng-click="editProperty(null)"
-                    gn-permission project="project" role="editor"
-                    ng-disabled="!canCreate()"
-                    class="btn btn-xs btn-success pull-right"><i class="fa fa-plus"></i></button>
-            </th>
+            <th></th>
         </tr>
     </thead>
     <tbody>
         <tr ng-repeat="property in getProperties()">
             <th width="25%">
-                <a href="#/p/{{obj.project.slug}}/schemata/{{attributes[property.name].schema.name}}"
-                   tooltip-placement="bottom"
-                   tooltip="Schema: {{attributes[property.name].schema.label}}">{{attributes[property.name].label}}</a>
+                {{attributes[property.name].label}}
             </th>
             <td class="value-col">
                 <gn-property-view property="property" attribute="attributes[property.name]"></gn-prop-value>
@@ -26,16 +19,6 @@
                     <a class="btn btn-xs btn-default" href="{{property.source_url}}"
                         tooltip-placement="bottom" tooltip="Source"
                         ng-show="property.source_url" target="_blank"><i class="fa fa-link"></i></a>
-                    <gn-permission project="project" role="editor">
-                        <a class="btn btn-xs btn-default"
-                            tooltip-placement="bottom" tooltip="Edit"
-                            ng-click="editProperty(attributes[property.name])"><i class="fa fa-edit"></i></a>
-                    </gn-permission>
-                    <gn-permission project="project" role="editor">
-                        <a class="btn btn-xs btn-default" ng-disabled="!canDisable(attributes[property.name])"
-                            tooltip-placement="bottom" tooltip="Remove"
-                            ng-click="disableProperty(attributes[property.name])"><i class="fa fa-minus"></i></a>
-                    </gn-permission>
                 </div>
             </td>
         </tr>

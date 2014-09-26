@@ -151,10 +151,10 @@ function EntitiesDeleteCtrl($scope, $routeParams, $location, $http, $route, $mod
 
     $scope.delete = function() {
         var res = $http.delete($scope.entity.api_url);
+        var slug = $scope.entity.project.slug;
         res.error(function(data) {
             $modalInstance.dismiss('ok');
-            $location.search('preview', null);
-            $route.reload();
+            $location.path('/p/' + slug);
         });
     };
 }

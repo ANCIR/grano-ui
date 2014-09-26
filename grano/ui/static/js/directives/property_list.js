@@ -63,22 +63,14 @@ grano.directive('gnPropertyList', ['core', '$http', '$sce', '$modal', 'metadata'
                 if (!o || !o.id) return;
                 scope.project = o.project;
 
-                if (o.schemata) {
-                    //scope.obj_type = 'entity';
-                    metadata.getAttributes('entity').then(function(attributes) {
-                        scope.attributes = attributes;
+                metadata.getSchema(o.schema.name).then(function(schema) {
+                    scope.attributes = {};
+                    angular.forEach(schema.attributes, function(attr) {
+                        attr.schema = schema;
+                        scope.attributes[attr.name] = attr;
                     });
-                } else if (o.schema) {
-                    //scope.obj_type = 'relation';
-                    metadata.getSchema(o.schema.name).then(function(schema) {
-                        scope.attributes = {};
-                        angular.forEach(schema.attributes, function(attr) {
-                            attr.schema = schema;
-                            scope.attributes[attr.name] = attr;
-                        });
-                        //scope.attributes = schema.attributes;
-                    });
-                }
+                });
+
             });
         }
     };
