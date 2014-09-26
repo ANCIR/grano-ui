@@ -17,7 +17,6 @@ function AccountCtrl($scope, $location, $modalInstance, $http, core, session) {
         res.success(function(data) {
             $scope.account = data;
             $scope.session.account = data;
-            //$route.reload();
             $modalInstance.dismiss('ok');
         });
         res.error(grano.handleFormError(form));

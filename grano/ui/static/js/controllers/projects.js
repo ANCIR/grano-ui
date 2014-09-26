@@ -22,7 +22,7 @@ function ProjectsViewCtrl($scope, $routeParams, $location, $http, $modal, $timeo
 ProjectsViewCtrl.$inject = ['$scope', '$routeParams', '$location', '$http', '$modal', '$timeout', 'core'];
 
 
-function ProjectsNewCtrl($scope, $routeParams, $modalInstance, $location, $http, core) {
+function ProjectsNewCtrl($scope, $routeParams, $modalInstance, $location, $http, core, session) {
     $scope.project = {};
 
     $scope.cancel = function() {
@@ -31,6 +31,7 @@ function ProjectsNewCtrl($scope, $routeParams, $modalInstance, $location, $http,
 
     $scope.create = function(form) {
         var res = $http.post(core.call('/projects'), $scope.project);
+        session.reset();
         res.success(function(data) {
             $location.path('/p/' + data.slug);
             $modalInstance.dismiss('ok');
@@ -39,7 +40,7 @@ function ProjectsNewCtrl($scope, $routeParams, $modalInstance, $location, $http,
     };
 }
 
-ProjectsNewCtrl.$inject = ['$scope', '$routeParams', '$modalInstance', '$location', '$http', 'core'];
+ProjectsNewCtrl.$inject = ['$scope', '$routeParams', '$modalInstance', '$location', '$http', 'core', 'session'];
 
 
 function ProjectsEditCtrl($scope, $route, $routeParams, $location, $http, $modal, metadata, core) {

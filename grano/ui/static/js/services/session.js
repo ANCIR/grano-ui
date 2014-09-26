@@ -1,6 +1,10 @@
 grano.factory('session', ['$http', '$q', 'core', function($http, $q, core) {
     var dfd = null;
 
+    var reset = function() {
+        dfd = null;
+    }
+
     var get = function(cb) {
         if (dfd === null) {
             var dt = new Date();
@@ -11,6 +15,7 @@ grano.factory('session', ['$http', '$q', 'core', function($http, $q, core) {
     };
 
     return {
-        get: get
+        get: get,
+        reset: reset
     };
 }]);
