@@ -5,14 +5,8 @@ function EntitiesIndexCtrl($scope, $rootScope, $routeParams, $location, $http, $
 
     $scope.loadProject($routeParams.slug);
     $scope.query = {value: $location.search().q};
-    $scope.project = {};
     $scope.entities = {};
     $scope.previewEntity = null;
-
-    $http.get(core.call('/projects/' + $routeParams.slug)).then(function(res) {
-        $scope.project = res.data;
-        core.setTitle($scope.project.label);
-    });
 
     $scope.updateFilter = function() {
         if (filterTimeout) {
@@ -34,23 +28,9 @@ function EntitiesIndexCtrl($scope, $rootScope, $routeParams, $location, $http, $
     $rootScope.$on('updateSearch', $scope.updateSearch);
 
     $scope.loadEntities = function(url, params) {
-        $scope.showEntityPreview(null);
         $http.get(url, {params: params}).then(function(res) {
             $scope.entities = res.data;
         });
-    };
-
-    $scope.showEntityPreview = function(entity) {
-        if (entity && $scope.previewEntity != null && $scope.previewEntity.id == entity.id) {
-            $scope.previewEntity = null;
-            $location.search('preview', null);
-            core.setTitle($scope.project.label);
-            return;
-        }
-        if (entity && $location.search().preview != entity.id) {
-            $location.search('preview', entity.id);        
-        }
-        $scope.previewEntity = entity;
     };
 
     $scope.uploadFile = function() {
@@ -64,10 +44,6 @@ function EntitiesIndexCtrl($scope, $rootScope, $routeParams, $location, $http, $
     };
 
     $scope.updateSearch();
-
-    if ($location.search().preview) {
-        $scope.showEntityPreview({'id': $location.search().preview});
-    }
 }
 
 EntitiesIndexCtrl.$inject = ['$scope', '$rootScope', '$routeParams', '$location', '$http', '$modal', '$timeout', 'core', 'session'];
@@ -90,6 +66,16 @@ function EntitiesViewCtrl($scope, $routeParams, $location, $http, $modal, core, 
             controller: 'EntitiesDeleteCtrl',
             resolve: {
                 entity: function () { return $scope.entity; }
+            }
+        });
+    };
+
+    $scope.mergeEntity = function() {
+        var d = $modal.open({
+            templateUrl: 'entities/merge.html',
+            controller: 'EntitiesMergeCtrl',
+            resolve: {
+                orig: function () { return $scope.entity; }
             }
         });
     };

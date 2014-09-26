@@ -45,9 +45,8 @@ function RelationsEditCtrl($scope, $routeParams, $location, $http, $modal, core,
     };
 
     $scope.save = function(form) {
-        var data = angular.copy($scope.relation);
+        var data = $scope.relation;
         data.schema = data.schema.name;
-        $scope.$broadcast('save', $scope.relation);
         var url = core.call('/relations');
         if (!$scope.isNew) {
             url = $scope.relation.api_url;
