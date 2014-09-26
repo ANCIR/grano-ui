@@ -6,7 +6,7 @@ grano.directive('gnSettings', ['$timeout', function ($timeout) {
             'project': '=',
             'section': '@'
         },
-        templateUrl: 'directives/settings.html',
+        templateUrl: 'directives/settings_frame.html',
         link: function (scope, element, attrs, model) {
         }
     };
