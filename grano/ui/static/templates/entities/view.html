@@ -2,8 +2,24 @@
 
 <gn-entity-frame section="view" entity="entity" project="project">
   <gn-property-list obj="entity" refresh="reloadEntity(id)"></gn-property-list>
-  
-  <gn-relation-list entity="entity" direction="inbound"></gn-relation-list>
-  <div class="clearfix"></div>
-  <gn-relation-list entity="entity" direction="outbound"></gn-relation-list>
 </gn-entity-frame>
+
+<h3 class="unboxed">Incoming relations</h3>
+<div class="row">
+  <div class="col-md-9">
+    <div class="box">
+        <gn-relation-list entity="entity" direction="inbound"></gn-relation-list>
+    </div>
+  </div>
+  <div class="col-md-3"></div>
+</div>
+
+<h3 class="unboxed">Outgoing relations</h3>
+<div class="row">
+  <div class="col-md-9">
+    <div class="box">
+        <gn-relation-list entity="entity" direction="outbound"></gn-relation-list>
+    </div>
+  </div>
+  <div class="col-md-3"></div>
+</div>
