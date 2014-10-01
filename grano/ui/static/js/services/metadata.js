@@ -37,12 +37,10 @@ grano.factory('metadata', ['$http', '$rootScope', '$location', '$q', 'core',
         }
 
         if(!schemata) {
-            //dfd.resolve(schemata);
             var url = core.call('/projects/' + project.slug + '/schemata');
             schemata = $http.get(url, {params: {limit: 1000, full: true}});
         }
         schemata.then(function(res) {
-            //schemata = res.data.results;
             dfd.resolve(res.data.results);
         });
         return dfd.promise;

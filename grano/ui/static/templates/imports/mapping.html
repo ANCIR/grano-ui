@@ -28,7 +28,10 @@
             <thead>
                 <tr>
                     <th>Column name</th>
-                    <th>Import as</th>
+                    <th ng-show="editMode=='object'">Source</th>
+                    <th ng-show="editMode=='object'">Relation</th>
+                    <th ng-show="editMode=='object'">Target</th>
+                    <th ng-show="editMode=='attribute'">Import as</th>
                     <th colspan="{{sampleData.rows.length}}" class="hidden-xs">
                         Sample data
                     </th>
@@ -38,10 +41,13 @@
                 <tr ng-repeat="header in sampleData.headers" ng-hide="mode=='relations' && editMode == 'attribute' && !mapping[header].object">
                     <th>{{header}}</th>
                     <td ng-show="editMode=='object'">
-                        <input type="radio" ng-model="mapping[header].object" value="source">&nbsp;Source&nbsp;
-                        <input type="radio" ng-model="mapping[header].object" value="relation">&nbsp;Relation&nbsp;
-                        <input type="radio" ng-model="mapping[header].object" value="target">&nbsp;Target&nbsp;
-                        <!--<input type="radio" ng-model="mapping[header].object" value="">&nbsp;Ignore&nbsp;!-->
+                        <input type="radio" ng-model="mapping[header].object" value="source">
+                    </td>
+                    <td ng-show="editMode=='object'">
+                        <input type="radio" ng-model="mapping[header].object" value="relation">
+                    </td>
+                    <td ng-show="editMode=='object'">
+                        <input type="radio" ng-model="mapping[header].object" value="target">
                     </td>
                     <td ng-show="editMode=='attribute'">
                         <select class="form-control input-sm"

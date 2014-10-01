@@ -96,7 +96,10 @@ function ImportModesCtrl($scope, $rootScope, $routeParams, $location, $http,
         $location.search({
             'file': $location.search().file,
             'mode': $scope.data.mode,
-            'schema': $scope.relationSchema
+            'relationSchema': $scope.relationSchema,
+            'sourceSchema': $scope.sourceSchema,
+            'targetSchema': $scope.targetSchema,
+            'entitySchema': $scope.entitySchema
         });
         $location.path('/p/' + $scope.project.slug + '/import/mapping');
     };
@@ -106,17 +109,24 @@ function ImportModesCtrl($scope, $rootScope, $routeParams, $location, $http,
     };
 
     metadata.getSchemata().then(function(schemata) {
+        var entitySchemata = [], relationSchemata = [];
+
         angular.forEach(schemata, function(s) {
-            if (s.obj=='relation') {
-                $scope.relationSchemaOptions.push(s);
+            if (!s.hidden) {
+                if (s.obj=='relation') {
+                    relationSchemata.push(s);
+                } else {
+                    entitySchemata.push(s);
+                }
             }
         });
-        if ($scope.relationSchemaOptions.length > 0) {
-            $scope.relationSchema = $scope.relationSchemaOptions[0].name;    
-        }
-        if ($location.search().schema) {
-            $scope.relationSchema = $location.search().schema;
-        }
+        $scope.relationSchemaOptions = relationSchemata;
+        $scope.entitySchemaOptions = entitySchemata;
+        var search = $location.search();
+        $scope.relationSchema = search.relationSchema || relationSchemata[0].name;
+        $scope.sourceSchema = $location.search().sourceSchema || entitySchemata[0].name;
+        $scope.targetSchema = $location.search().targetSchema || entitySchemata[0].name;
+        $scope.entitySchema = $location.search().entitySchema || entitySchemata[0].name;
     });
 
     var url = core.call('/files/' + $location.search().file + '/_table?limit=0');
@@ -137,6 +147,8 @@ function ImportMappingCtrl($scope, $rootScope, $routeParams, $location, $http,
 
     var relationAttributes = [],
         entityAttributes = [],
+        sourceAttributes = [],
+        targetAttributes = [],
         selectBase = [{name: '', label: "Don't import"},
                       {name: '_source_url', label: "Source URL (for this data)"}];
 
@@ -159,7 +171,10 @@ function ImportMappingCtrl($scope, $rootScope, $routeParams, $location, $http,
 
     $scope.beginImport = function() {
         $scope.request.mode = $scope.mode;
-        $scope.request.relation_schema = $location.search().schema
+        $scope.request.relation_schema = $location.search().relationSchema;
+        $scope.request.source_schema = $location.search().sourceSchema;
+        $scope.request.target_schema = $location.search().targetSchema;
+        $scope.request.entity_schema = $location.search().entitySchema;
         $scope.request.file = $location.search().file
         $scope.request.mapping = {}
         angular.forEach($scope.mapping, function(v, k) {
@@ -182,9 +197,12 @@ function ImportMappingCtrl($scope, $rootScope, $routeParams, $location, $http,
                 {name: 'canonical', label: 'Preferred name'}
             ]
             return selectBase.concat(options);
-        } else if ($scope.mode=='entities' ||
-            $scope.mapping[header].object!='relation') {
+        } else if ( $scope.mode == 'entities' ) {
             return selectBase.concat(entityAttributes);
+        } else if ( $scope.mapping[header].object != 'source' ) {
+            return selectBase.concat(sourceAttributes);
+        } else if ( $scope.mapping[header].object != 'target' ) {
+            return selectBase.concat(targetAttributes);
         }
         return selectBase.concat(relationAttributes);
     };
@@ -215,20 +233,21 @@ function ImportMappingCtrl($scope, $rootScope, $routeParams, $location, $http,
     };
 
     var init = function() {
-        metadata.getAttributes('entity').then(function(attributes) {
-            entityAttributes = [];
-            angular.forEach(attributes, function(a) {
-                a.label = $scope.truncate(a.label, 20);
-                entityAttributes.push(a);
-            });
-        });
-
-        metadata.getAttributes('relation').then(function(attributes) {
-            relationAttributes = [];
-            angular.forEach(attributes, function(a) {
-                if (a.schema.name==$location.search().schema) {
-                    a.label = $scope.truncate(a.label, 20);
-                    relationAttributes.push(a);    
+        var search = $location.search();
+        metadata.getSchemata().then(function(schemata) {
+            angular.forEach(schemata, function(s) {
+                var attrs = s.attributes.sort(attributeSorter);
+                if (s.name == search.entitySchema) {
+                    entityAttributes = attrs;
+                }
+                if (s.name == search.sourceSchema) {
+                    sourceAttributes = attrs;
+                }
+                if (s.name == search.targetSchema) {
+                    targetAttributes = attrs;
+                }
+                if (s.name == search.relationSchema) {
+                    relationAttributes = attrs;
                 }
             });
         });
