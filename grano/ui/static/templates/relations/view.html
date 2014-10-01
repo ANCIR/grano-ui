@@ -1,25 +1,31 @@
 <h1 class="unboxed">Relation: {{relation.schema.label}}</h1>
 
 <gn-relation-frame section="view" relation="relation" project="project">
-  <div class="row">
-    <div class="col-md-1 col-xs-2">
-      <strong>Source:</strong>
-    </div>
-    <div class="col-md-5 col-xs-10">
-      <a href="#/p/{{relation.project.slug}}/entities/{{relation.source.id}}">
-        {{relation.source.properties.name.value}}</a>
-    </div>
-    <div class="col-md-1 col-xs-2">
-      <strong>Target:</strong>
-    </div>
-    <div class="col-md-5 col-xs-10">
-      <a href="#/p/{{relation.project.slug}}/entities/{{relation.target.id}}">
-        {{relation.target.properties.name.value}}</a>
-    </div>
-  </div>
-  <div class="row">
-    <div class="col-md-12">
-      <gn-property-list obj="relation" refresh="reloadRelation(id)"></gn-property-list>
-    </div>
-  </div>
+  
+<table class="table">
+    <thead>
+        <tr>
+            <th width="50%">
+                Source
+            </th>
+            <th>
+                Target
+            </th>
+        </tr>
+    </thead>
+    <tbody>
+      <tr>
+          <td>
+            <a href="#/p/{{relation.project.slug}}/entities/{{relation.source.id}}">
+              {{relation.source.properties.name.value}}</a>
+          </td>
+          <td>
+            <a href="#/p/{{relation.project.slug}}/entities/{{relation.target.id}}">
+              {{relation.target.properties.name.value}}</a>
+          </td>
+      </tr>
+    </tbody>
+  </table>
+
+  <gn-property-list obj="relation" refresh="reloadRelation(id)"></gn-property-list>
 </gn-entity-frame>
