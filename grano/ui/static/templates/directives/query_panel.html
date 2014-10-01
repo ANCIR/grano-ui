@@ -1,9 +1,9 @@
-<div ng-repeat="layer in layers">
-  <gn-query-panel-layer project="project" layer="layer"
-  update="update()" remove="removeLayer(layer)"></gn-query-panel-layer>
-</div>
-<div class="pull-right">
-  <button type="button" class="btn btn-default" ng-click="addLayers()">
-  <i class="fa fa-plus"></i> Add relationships
-  </button>
+<div class="box">
+    <div ng-repeat="layer in layers">
+      <gn-query-panel-layer project="project" layer="layer"
+      update="update()" remove="removeLayer(layer)"></gn-query-panel-layer>
+    </div>
+    <button type="button" class="btn btn-default" ng-click="addLayers()">
+        <i class="fa fa-plus"></i> Add relationships
+    </button>
 </div>
