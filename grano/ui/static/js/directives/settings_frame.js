@@ -11,7 +11,3 @@ grano.directive('gnSettingsFrame', ['$timeout', function ($timeout) {
         }
     };
 }]);
-
-
-
-

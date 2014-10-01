@@ -1,0 +1,18 @@
+<div class="row">
+  <div class="col-md-9">
+    <div class="box" ng-transclude></div>
+  </div>
+  <div class="col-md-3">
+    <ul class="nav nav-pills nav-stacked nav-styled" ng-show="relation.id">
+      <li ng-hide="'view' === section">
+        <a href="#/p/{{relation.project.slug}}/relations/{{relation.id}}"><i class="fa fa-eye"></i> View</a>
+      </li>
+      <li ng-class="{active: 'edit' === section}" gn-permission project="project" role="editor">
+        <a href="#/p/{{relation.project.slug}}/relations/{{relation.id}}/edit"><i class="fa fa-edit"></i> Edit</a>
+      </li>
+      <li gn-permission project="project" role="editor">
+        <a ng-click="deleteRelation()"><i class="fa fa-trash-o"></i> Delete</a>
+      </li>
+    </ul>
+  </div>
+</div>

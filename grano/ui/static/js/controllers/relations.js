@@ -12,22 +12,6 @@ function RelationsViewCtrl($scope, $routeParams, $location, $http, $modal, core)
         });
     };
 
-    $scope.deleteRelation = function() {
-        var after = '/p/' + $scope.relation.project.slug + '/entities/' + $scope.relation.source.id;
-        var d = $modal.open({
-            templateUrl: 'relations/delete.html',
-            controller: 'RelationsDeleteCtrl',
-            resolve: {
-                relation: function () { return $scope.relation; }
-            }
-        });
-        d.result.then(function(result) {
-            if (result == 'ok') {
-                $location.path(after);
-            } 
-        });
-    };
-
     $scope.reloadRelation($routeParams.id);
 }
 
