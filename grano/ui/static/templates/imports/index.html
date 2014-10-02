@@ -1,52 +1,45 @@
-<h1 class="unboxed">Raw data import</h1>
+<h1 class="unboxed">Data imports</h1>
 
-<div class="row">
-  <div class="col-md-9">
-    <div class="box">
-        <table class="table">
-            <thead>
-                <tr>
-                    <th width="60%">Import</th>
-                    <th>State</th>
-                    <th>Started</th>
-                    <th class="numeric">Progress</th>
-                </tr>
-            </thead>
-            <tbody>
-                <tr ng-show="pipelines.total == 0">
-                    <td colspan="4">
-                        <div class="alert alert-info">
-                            <strong>No imports.</strong> You haven't started any data imports yet. 
-                        </div>
-                    </td>
-                </tr>
-                <tr ng-repeat="pipeline in pipelines.results">
-                    <td>
-                        <a download href="{{config.API_ROOT}}/files/{{pipeline.config.file}}/_serve">{{pipeline.label}}</a>
-                    </td>
-                    <td>
-                        <span class="label" ng-class="{
-                            'label-default': pipeline.status=='pending',
-                            'label-info': pipeline.status=='running',
-                            'label-success': pipeline.status=='complete',
-                            'label-danger': pipeline.status=='failed'
-                            }">{{pipeline.status}}</span>
-                    </td>
-                    <td>{{pipeline.started_at | datetime}}</td>
-                    <td class="numeric">{{pipeline.percent_complete}} %</td>
-                </tr>
-            </tbody>
-        </table>
-        <gn-pager class="pull-right" response="pipelines" load="loadPipelines(url)"></gn-pager>
+<gn-settings-frame section="imports" project="project">
+    <table class="table">
+        <thead>
+            <tr>
+                <th width="60%">Import</th>
+                <th>State</th>
+                <th>Started</th>
+                <th class="numeric">Progress</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr ng-show="pipelines.total == 0">
+                <td colspan="4">
+                    <div class="alert alert-info">
+                        <strong>No imports.</strong> You haven't started any data imports yet. 
+                    </div>
+                </td>
+            </tr>
+            <tr ng-repeat="pipeline in pipelines.results">
+                <td>
+                    <a download href="{{config.API_ROOT}}/files/{{pipeline.config.file}}/_serve">{{pipeline.label}}</a>
+                </td>
+                <td>
+                    <span class="label" ng-class="{
+                        'label-default': pipeline.status=='pending',
+                        'label-info': pipeline.status=='running',
+                        'label-success': pipeline.status=='complete',
+                        'label-danger': pipeline.status=='failed'
+                        }">{{pipeline.status}}</span>
+                </td>
+                <td>{{pipeline.started_at | datetime}}</td>
+                <td class="numeric">{{pipeline.percent_complete}} %</td>
+            </tr>
+        </tbody>
+    </table>
+    <gn-pager response="pipelines" load="loadPipelines(url)"></gn-pager>
+
+    <div gn-permission project="project" role="editor">
+        <a class="btn btn-default" ng-click="uploadFile()"><i class="fa fa-cloud-upload"></i> Import data</a>
     </div>
-  </div>
-  <div class="col-md-3">
-    <ul class="nav nav-pills nav-stacked nav-styled">
-      <li gn-permission project="project" role="editor">
-        <a ng-click="uploadFile()"><i class="fa fa-cloud-upload"></i> Import data</a>
-      </li>
-    </ul>
-  </div>
-</div>
 
-
+    <div class="clearfix"></div>
+</gn-settings-frame>
