@@ -1,46 +1,52 @@
 
 function EntitiesIndexCtrl($scope, $rootScope, $routeParams, $location, $http, $modal, $timeout, core, session) {
-    var params = {project: $routeParams.slug, 'limit': 25},
+    var params = {project: $routeParams.slug, 'limit': 25, 'facet': 'schema', 'sort': '-degree'},
         filterTimeout = null;
 
     $scope.loadProject($routeParams.slug);
-    $scope.query = {value: $location.search().q};
+    $scope.query_text = null;
     $scope.entities = {};
+    $scope.schemaFacets = [];
     $scope.previewEntity = null;
-
-    $scope.updateFilter = function() {
-        if (filterTimeout) {
-            $timeout.cancel(filterTimeout);
-        }
-
-        filterTimeout = $timeout(function() {
-            $location.search('q', $scope.query.value);
-            $scope.updateSearch();
-        }, 500);
-    };
 
     $scope.updateSearch = function() {
         var fparams = angular.copy(params);
+        $scope.query_text = $location.search().q;
         angular.extend(fparams, $location.search());
         $scope.loadEntities(core.call('/entities'), fparams);
     };
 
-    $rootScope.$on('updateSearch', $scope.updateSearch);
-
     $scope.loadEntities = function(url, params) {
         $http.get(url, {params: params}).then(function(res) {
             $scope.entities = res.data;
+            var facets = [];
+            angular.forEach(res.data.facets.schema.results, function(e) {
+                e[0].count = e[1];
+                facets.push(e[0]);
+            });
+            $scope.schemaFacets = facets;
         });
     };
 
-    $scope.uploadFile = function() {
-        var d = $modal.open({
-            templateUrl: 'imports/upload.html',
-            controller: 'ImportUploadCtrl',
-            resolve: {
-                project: function() { return $scope.project; }
-            }
-        });
+    getSchemata = function() {
+        var schemata = $location.search().schema || [];
+        return angular.isArray(schemata) ? schemata : [schemata]; 
+    }
+
+    $scope.hasSchema = function(name) {
+        return getSchemata().indexOf(name) != -1;
+    };
+
+    $scope.toggleSchema = function(name) {
+        var schemata = getSchemata(),
+            index = schemata.indexOf(name);
+        if (index == -1) {
+            schemata.push(name);
+        } else {
+            schemata.splice(index, 1);
+        }
+        $location.search('schema', schemata);
+        $scope.updateSearch();
     };
 
     $scope.updateSearch();

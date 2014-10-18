@@ -1,19 +1,42 @@
+<h1 class="unboxed">
+  <span ng-show="query_text">Searching for '{{query_text}}'</span>
+  <span ng-hide="query_text">{{project.label}}</span>
+</h1>
+
+
 <div class="row">
-  <div class="col-md-12">
-    <table class="table table-hover table-condensed">
-        <tbody>
-            <tr ng-repeat="entity in entities.results" class="longname">
-                <td>
-                  <a class="structured" href="#/p/{{project.slug}}/entities/{{entity.id}}">
-                    {{entity.properties.name.value}}
-                  </a>
-                  <span class="light">
-                    &middot; {{entity.schema.label}}
-                  </span>
-                </td>
-            </tr>
-        </tbody>
-    </table>
-    <gn-pager class="pull-right" response="entities" load="loadEntities(url)"></gn-pager>
+  <div class="col-md-9">
+    <div class="box">
+      <table class="table table-hover table-condensed">
+          <tbody>
+              <tr ng-repeat="entity in entities.results" class="longname">
+                  <td>
+                    <a class="structured" href="#/p/{{project.slug}}/entities/{{entity.id}}">
+                      {{entity.properties.name.value}}
+                    </a>
+                    <span class="light">
+                      &middot; {{entity.schema.label}},
+                      <span ng-show="entity.degree == 0">no connections</span>
+                      <span ng-show="entity.degree == 1">one connection</span>
+                      <span ng-show="entity.degree > 1">{{entity.degree}} connections</span>
+                    </span>
+                  </td>
+              </tr>
+          </tbody>
+      </table>
+      <gn-pager class="pull-right" response="entities" load="loadEntities(url)"></gn-pager>
+    </div>
+  </div>
+  <div class="col-md-3">
+    <ul class="nav nav-pills nav-stacked nav-styled">
+      <li ng-repeat="schema in schemaFacets" ng-class="{'active': hasSchema(schema.name)}">
+        <a ng-click="toggleSchema(schema.name)">
+          {{schema.label}} <small>({{schema.count}})</small>
+        </a>
+      </li>
+    </ul>
   </div>
 </div>
+
+
+
