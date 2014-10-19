@@ -28,6 +28,16 @@ function EntitiesIndexCtrl($scope, $rootScope, $routeParams, $location, $http, $
         });
     };
 
+    $scope.uploadFile = function() {
+        var d = $modal.open({
+            templateUrl: 'imports/upload.html',
+            controller: 'ImportUploadCtrl',
+            resolve: {
+                project: function() { return $scope.project; }
+            }
+        });
+    };
+
     getSchemata = function() {
         var schemata = $location.search().schema || [];
         return angular.isArray(schemata) ? schemata : [schemata]; 

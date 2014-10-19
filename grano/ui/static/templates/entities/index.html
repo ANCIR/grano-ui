@@ -7,27 +7,56 @@
 <div class="row">
   <div class="col-md-9">
     <div class="box">
+      <div class="btn-toolbar pull-right" role="toolbar">
+        <div class="btn-group">
+          <a class="btn btn-default" href="#/p/{{project.slug}}/entities/new"><i class="fa fa-plus"></i> New entities</a>
+          <a class="btn btn-default" ng-click="uploadFile()"><i class="fa fa-cloud-upload"></i> Upload data</a>
+          <a class="btn btn-default" href="{{config.API_ROOT}}/projects/{{project.slug}}/aliases" download>
+            <i class="fa fa-cloud-download"></i> Download aliases</a>
+        </div>
+        <div class="btn-group">
+          <a class="btn btn-default" href="#/p/{{project.slug}}/query"><i class="fa fa-filter"></i> Query tool</a>
+          <a class="btn btn-default" href="#/p/{{project.slug}}/settings"><i class="fa fa-cogs"></i> Settings</a>
+        </div>
+      </div>
+      <div class="clearfix"></div>
+      <br/>
+
+      <div class="alert alert-success" ng-show="entities.total == 0">
+        <strong>Welcome to {{project.label}}.</strong> As a next step, you should
+        <a href="#/p/{{project.slug}}/schemata" class="alert-link">edit the data model</a>
+        to describe the types of entities and relations that will be part of this project.
+      </div>
+
       <table class="table table-hover table-condensed">
-          <tbody>
-              <tr ng-repeat="entity in entities.results" class="longname">
-                  <td>
-                    <a class="structured" href="#/p/{{project.slug}}/entities/{{entity.id}}">
-                      {{entity.properties.name.value}}
-                    </a>
-                    <span class="light">
-                      &middot; {{entity.schema.label}},
-                      <span ng-show="entity.degree == 0">no connections</span>
-                      <span ng-show="entity.degree == 1">one connection</span>
-                      <span ng-show="entity.degree > 1">{{entity.degree}} connections</span>
-                    </span>
-                  </td>
-              </tr>
-          </tbody>
+        <tbody>
+          <tr ng-repeat="entity in entities.results" class="longname">
+            <td>
+              <a class="structured" href="#/p/{{project.slug}}/entities/{{entity.id}}">
+                {{entity.properties.name.value}}
+              </a>
+            </td>
+            <td>
+              <span class="light">
+                {{entity.schema.label}}
+              </span>
+            </td>
+            <td>
+              <span class="light">
+                <span ng-show="entity.degree == 0">no connections</span>
+                <span ng-show="entity.degree == 1">one connection</span>
+                <span ng-show="entity.degree > 1">{{entity.degree}} connections</span>
+              </span>
+            </td>
+          </tr>
+        </tbody>
       </table>
       <gn-pager class="pull-right" response="entities" load="loadEntities(url)"></gn-pager>
     </div>
   </div>
   <div class="col-md-3">
+
+    <!-- schema facet -->
     <ul class="nav nav-pills nav-stacked nav-styled">
       <li ng-repeat="schema in schemaFacets" ng-class="{'active': hasSchema(schema.name)}">
         <a ng-click="toggleSchema(schema.name)">
@@ -35,6 +64,23 @@
         </a>
       </li>
     </ul>
+
+    <br/>
+    <div class="box">
+      <img ng-src="{{config.STATIC_ROOT}}images/refine.png" style="width: 70px; float: right;">
+      <h4>Clean your data with Refine</h4>
+      <div class="clearfix"></div>
+      <br/>
+      <p>
+          <a href="http://openrefine.org" target="_blank">OpenRefine</a> is a powerful data cleaning tool 
+          that can be connected to {{config.APP_NAME}} to match raw data to the entities
+          in this project.
+      </p>
+      <p>
+          Use the this endpoint in Refine's <a target="_blank" href="https://github.com/OpenRefine/OpenRefine/wiki/Reconciliation">Reconciliation</a> to match data against this project.
+      </p>
+      <input class="form-control" readonly value="{{config.API_ROOT}}/projects/{{project.slug}}/reconcile">
+    </div> 
   </div>
 </div>
 

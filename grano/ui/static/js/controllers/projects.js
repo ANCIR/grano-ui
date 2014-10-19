@@ -1,22 +1,6 @@
 
-function ProjectsViewCtrl($scope, $routeParams, $location, $http, $modal, $timeout, core) {
-    $scope.loadProject($routeParams.slug);
-    $scope.query = {};
-
-    $scope.searchEntities = function() {
-        $location.path('/p/' + $routeParams.slug + '/entities');
-        $location.search('q', $scope.query.value);
-    };
-
-    $scope.uploadFile = function() {
-        var d = $modal.open({
-            templateUrl: 'imports/upload.html',
-            controller: 'ImportUploadCtrl',
-            resolve: {
-                project: function() { return $scope.project; }
-            }
-        });
-    };
+function ProjectsViewCtrl($scope, $routeParams, $location) {
+    $location.path('/p/' + $routeParams.slug + '/entities');
 }
 
 ProjectsViewCtrl.$inject = ['$scope', '$routeParams', '$location', '$http', '$modal', '$timeout', 'core'];
