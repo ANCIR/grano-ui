@@ -31,24 +31,7 @@ grano.directive('gnQueryGraph', ['$window', '$timeout', '$compile', '$location',
             node = null;
         var w = null, h = null, min_r = null, max_r = null;
 
-        var force = d3.layout.force();
-
-        /*
-        vis.append("svg:defs").selectAll("marker")
-                .data(["end"])
-            .enter().append("svg:marker")
-                .attr("id", String)
-                .attr("viewBox", "0 -5 10 10")
-                .attr("refX", 15)
-                //.attr("refY", -1.5)
-                .attr("refY", -1.5)
-                .attr("markerWidth", 5)
-                .attr("markerHeight", 5)
-                .attr("fill", "#ccc")
-                .attr("orient", "auto")
-            .append("svg:path")
-                .attr("d", "M0,-5L10,0L0,5");
-        */
+        var d3cola = cola.d3adaptor();
 
         angular.element($window).bind('resize', function() {
             update();
@@ -61,14 +44,20 @@ grano.directive('gnQueryGraph', ['$window', '$timeout', '$compile', '$location',
             max_r = w * (1/30);
             min_r = 0.3 * max_r;
 
-            var dist = max_r * 4;
+            var dist = max_r * 2;
 
+            d3cola.linkDistance(dist)
+                //.symmetricDiffLinkLengths(max_r * 4)
+                //.avoidOverlaps(true)
+                .size([w, h]);
+            /*
             force.stop()
                 .linkDistance(dist)
                 .chargeDistance(dist * 2)
                 .gravity(0.01)
                 .charge(-100)
                 .size([w, h])
+            */
         }
 
         function updateGraph() {
@@ -134,14 +123,13 @@ grano.directive('gnQueryGraph', ['$window', '$timeout', '$compile', '$location',
                 return color(d.schema.name);
             };
 
-            force
-                //.gravity(0)
+            d3cola
                 .nodes(graph.nodes)
                 .links(graph.links)
-                .start();
+                .start(10, 15, 20);
 
             path = path_group.selectAll("path")
-                .data(force.links());
+                .data(d3cola.links());
 
 
             path.enter().append("svg:path")
@@ -153,7 +141,7 @@ grano.directive('gnQueryGraph', ['$window', '$timeout', '$compile', '$location',
             vis.selectAll(".node").remove();
             // define the nodes
             node = vis.selectAll(".node")
-                    .data(force.nodes())
+                    .data(d3cola.nodes())
                 .enter().append("g")
                     .attr("class", "node")
                     .on('dragstart', function(d) {
@@ -163,7 +151,7 @@ grano.directive('gnQueryGraph', ['$window', '$timeout', '$compile', '$location',
                     .on('dblclick', viewNode)
                     .on('mouseenter', mouseEnter)
                     .on('mouseleave', mouseLeave)
-                    .call(force.drag);
+                    .call(d3cola.drag);
 
             node.append('svg:circle')
                 .style('fill', getColor)
@@ -233,7 +221,7 @@ grano.directive('gnQueryGraph', ['$window', '$timeout', '$compile', '$location',
             scope.$emit('querySet', q_name, q);
         }
 
-        force.on('tick', function() {
+        d3cola.on('tick', function() {
             path.attr("d", function(d) {
                 var dx = d.target.x - d.source.x,
                     dy = d.target.y - d.source.y,
