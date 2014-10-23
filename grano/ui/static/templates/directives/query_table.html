@@ -6,7 +6,7 @@
           <a href ng-click="removeColumn(headers[column].level, headers[column].attr.name)"><i class="fa fa-times"></i></a>
         </div>
         <i class="fa fa-link" ng-show="headers[column].obj != 'entity'"></i>
-        {{headers[column].attr.label}}
+        {{getLevelName(headers[column].level)}} {{headers[column].label}}
       </th>
       <th>
         <div class="btn-group" dropdown ng-show="availableColumns.length">
@@ -15,12 +15,7 @@
           </a>
           <ul class="dropdown-menu" role="menu">
             <li role="presentation" class="dropdown-header" ng-repeat-start="layer in availableColumns">
-              <span ng-show="layer.obj == 'entity'">
-                {{layer.numword}} entity fields
-              </span>
-              <span ng-show="layer.obj == 'relation'">
-                {{layer.numword}} relation fields
-              </span>
+              {{getLevelName(layer.level)}} {{layer.label}}
             </li>
             <li ng-repeat="attr in layer.attributes">
               <a href ng-click="addColumn(layer.level, attr.name)">{{attr.label}}</a>

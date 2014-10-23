@@ -18,6 +18,8 @@ grano.directive('gnQueryTable', ['core', '$http', 'queryUtils', 'metadata',
       link: function (scope, element, attrs, model) {
 
         var attributes = {},
+            schemata = {},
+            levelNames = {},
             queries = {};
 
         scope.rows = [];
@@ -43,7 +45,8 @@ grano.directive('gnQueryTable', ['core', '$http', 'queryUtils', 'metadata',
                 num = Math.floor(layerId/2) + 1,
                 layer = queries['root'][layerId];
 
-            var schema = layer.filters.schema;    
+            var baseSchema = layer.obj == 'entity' ? 'Entity' : 'Relation',
+                schema = layer.filters.schema || baseSchema;    
             for (var i in attributes[schema]) {
               var attr = attributes[schema][i];
               if (angular.isUndefined(layer.fields.properties[attr.name])) {
@@ -55,7 +58,6 @@ grano.directive('gnQueryTable', ['core', '$http', 'queryUtils', 'metadata',
               layers.push({
                 'obj': layer.obj,
                 'level': layerId,
-                'numword': grano.numWords[num],
                 'attributes': attrs
               });  
             }
@@ -76,36 +78,70 @@ grano.directive('gnQueryTable', ['core', '$http', 'queryUtils', 'metadata',
           var schema = obj.schema.name;
           for (var attr in attributes[schema]) {
             if (attr == name) {
-              return attributes[schema][attr];
+              var a = angular.copy(attributes[schema][attr]);
+              a.schema = schema; 
+              return a;
             }
           }
+        };
+
+        var updateLevelNames = function(name) {
+          // make names for layers of the query ("first entity, second entity")
+          var names = [], seen = [];
+          for (var level in queries[name]) {
+            var qd = queries[name][level],
+                baseSchema = qd.obj == 'entity' ? 'Entity' : 'Relation',
+                schema = qd.filters.schema || baseSchema;
+            //console.log(schema, schemata);
+            if (schemata[schema]) {
+              schema = schemata[schema].label;
+            }
+            seen.push(schema);
+            var sameCount = 0;
+            for (var i in seen) {
+              if (seen[i] == schema) {
+                sameCount++;
+              }
+            }
+            if (sameCount > 1) {
+              schema = grano.numWords[sameCount] + ' ' + schema.toLowerCase();
+            }
+            names.push(schema);
+          }
+          levelNames[name] = names;
+        }
+
+        scope.getLevelName = function(level) {
+          var names = levelNames['root'] || []
+          return names[level] || '';
         };
 
         scope.$on('queryUpdate', function(event, name, query) {
           queries[name] = queryUtils.unpack(query, 0);
         });
-        
+
+
         scope.$on('queryResult', function(event, name, data) {
           if (name != 'root') return;
-
-          metadata.getSchemata().then(function(schemata) {
-            angular.forEach(schemata, function(schema) {
+          
+          metadata.getSchemata().then(function(ss) {
+            angular.forEach(ss, function(schema) {
               var attrs = {};
               angular.forEach(schema.attributes, function(a) {
                 attrs[a.name] = a;
-              });  
+              });
               attributes[schema.name] = attrs;
+              schemata[schema.name] = schema;
             });
 
             scope.availableColumns = getAvailableColumns();
 
             var columns = [],
                 headers = {},
-                currentRow = {},
                 rows = [];
-                //layers = queries[name];
 
-            var traverse = function(obj, level) {
+            var traverse = function(row, obj, level) {
+              var row = angular.copy(row);
               if (!angular.isArray(obj)) {
                 obj = [obj];
               }
@@ -115,30 +151,35 @@ grano.directive('gnQueryTable', ['core', '$http', 'queryUtils', 'metadata',
                   var key = level + '.' + k;
                   if (columns.indexOf(key) == -1) {
                     columns.push(key);
+                    var attr = getAttribute(o, k);
                     headers[key] = {
-                      'attr': getAttribute(o, k),
+                      'attr': attr,
+                      'label': attr.label.toLowerCase(),
                       'obj': o.obj,
                       'level': level
                     };
                   }
-                  currentRow[key] = {'id': o.id, 'value': v};
+                  row[key] = {'id': o.id, 'value': v};
                 });
 
                 var next = queryUtils.nextLevel(o);
                 if (next !== null) {
-                  traverse(o[next], level+1);
+                  traverse(row, o[next], level+1);
                 } else {
-                  rows.push(angular.copy(currentRow));
-                  //currentRow = {};
+                  if (rows.indexOf(row) == -1) {
+                    rows.push(row);
+                  }
                 }
               });
             };
-
-            traverse(data.results, 0);
+            
+            updateLevelNames(name);
+            traverse({}, data.results, 0);
 
             scope.columns = columns.sort(sortColumns);
             scope.headers = headers;
             scope.rows = rows;
+
           });
         });
 
