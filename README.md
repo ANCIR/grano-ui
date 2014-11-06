@@ -17,9 +17,12 @@ To install the package from GitHub, you need to follow these steps from within t
 
 ```bash
 git clone https://github.com/granoproject/grano-ui.git
-cd grano-ui
+cd [grano dir]
+virtualenv env
+source env/bin/activate
+cd [grano-ui dir]
 python setup.py develop
-bower install
+bower install (in docker, use --allow-root or su app -c "bower install")
 ```
 
 
@@ -33,5 +36,9 @@ PLUGINS = ['ui']
 ## Configuration
 
 By default, ``grano-ui`` will deploy itself to the web root of ``grano`` when it has been activated as a plugin. You can change that path by setting a ``UI_PREFIX``, starting with a forward slash. 
+
+```python
+UI_PREFIX = '/grano'
+```
 
 Further, asset compilation and minification can be enabled by setting the ``ASSETS_DEBUG`` variable to ``False``.
