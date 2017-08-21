@@ -1,0 +1,4 @@
+git+https://github.com/CodeForAfrica/grano.git
+cssmin>=0.1.4
+Flask-Assets>=0.10
+jsmin>=2.0.9
