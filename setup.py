@@ -31,7 +31,7 @@ setup(
     install_requires=[
         'grano',
         'cssmin==0.1.4',
-        'Flask-Assets==0.10',
+        'Flask-Assets==0.12',
         'jsmin>=2.0.9'
     ],
     dependency_links=[
