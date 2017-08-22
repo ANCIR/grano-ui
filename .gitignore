@@ -6,3 +6,5 @@ grano/ui/static/.webassets-cache/*
 grano/ui/static/prod/*
 
 dist/*
+
+build
