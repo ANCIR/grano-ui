@@ -19,15 +19,21 @@ setup(
         "Programming Language :: Python",
         ],
     keywords='sql graph sna networks journalism ddj entities',
-    author='Code for Africa',
-    author_email='support@codeforafrica.org',
-    url='https://github.com/CodeForAfrica/grano-ui',
+    author='Friedrich Lindenberg',
+    author_email='friedrich@pudo.org',
+    url='http://granoproject.org',
     license='MIT',
     packages=find_packages(exclude=['ez_setup', 'examples', 'tests']),
     package_data={'grano': ['ui/static/layout.html']},
     namespace_packages=[],
     include_package_data=True,
     zip_safe=False,
+    install_requires=[
+        'grano>=0.3.1',
+        'cssmin==0.1.4',
+        'Flask-Assets==0.10',
+        'jsmin>=2.0.9'
+    ],
     entry_points={
         'grano.startup': [
             'ui = grano.ui.base:Installer'
