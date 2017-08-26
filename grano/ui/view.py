@@ -2,7 +2,7 @@ import os
 from json import dumps
 
 from flask import Blueprint, render_template
-from flask import make_response, url_for
+from flask import make_response, url_for as flask_url_for
 
 from grano.core import app, app_name, app_version
 
@@ -52,3 +52,14 @@ def config(**kw):
     res = make_response(res)
     res.headers['Content-Type'] = 'application/javascript'
     return res
+
+
+def url_for(*a, **kw):
+    """Generate external URLs with HTTPS (if configured)."""
+    try:
+        kw['_external'] = True
+        if app.config.get('PREFERRED_URL_SCHEME'):
+            kw['_scheme'] = app.config.get('PREFERRED_URL_SCHEME')
+        return flask_url_for(*a, **kw)
+    except RuntimeError:
+        return None
