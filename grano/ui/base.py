@@ -1,7 +1,7 @@
 from flask import url_for
 
-from flask.ext.assets import Environment
-from flask.ext.assets import ManageAssets
+from flask_assets import Environment
+from flask_assets import ManageAssets
 
 from grano.core import app
 from grano.interface import Startup

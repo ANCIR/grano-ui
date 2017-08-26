@@ -30,8 +30,8 @@ setup(
     zip_safe=False,
     install_requires=[
         'grano',
-        'cssmin==0.1.4',
-        'Flask-Assets==0.12',
+        'cssmin>=0.1.4',
+        'Flask-Assets',
         'jsmin>=2.0.9'
     ],
     dependency_links=[
