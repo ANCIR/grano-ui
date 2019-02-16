@@ -19,7 +19,7 @@ setup(
         "Programming Language :: Python",
         ],
     keywords='sql graph sna networks journalism ddj entities',
-    author='Code for Africa',
+    author='Code for Africa / ANCIR',
     author_email='support@codeforafrica.org',
     url='http://granoproject.org',
     license='MIT',
@@ -35,7 +35,7 @@ setup(
         'jsmin>=2.0.9'
     ],
     dependency_links=[
-        'https://github.com/CodeForAfrica/grano/tarball/master#egg=grano'
+        'https://github.com/ANCIR/grano/tarball/master#egg=grano'
     ],
     entry_points={
         'grano.startup': [
